@@ -14,7 +14,6 @@ public class BoardController {
     @GetMapping("/test")
     public ResponseEntity<?> testController() {
         log.info("TEST");
-
         return ResponseEntity.ok(true);
     }
 }

@@ -1,9 +1,12 @@
 package io.chb.chb.core.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -30,12 +33,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     logout() : 로그아웃에 대한 정보
     */
 
+ /*   @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeRequests()
+                    .antMatchers("/chb/signIn").permitAll()
+                    .antMatchers("/chb/adminTest").hasRole("ADMIN")
+                    .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/chb/sign-in")
+                .defaultSuccessUrl("/chb/main")
+                .failureUrl("/chb/sign-in")
+                .and()
+                .logout()
+                .logoutUrl("/chb/sign-in")
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+    }
+*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/security-login/info").authenticated()
-                .antMatchers("/security-login/admin/**").hasAuthority(UserRole.ADMIN.name())
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
@@ -48,5 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/security-login/logout")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

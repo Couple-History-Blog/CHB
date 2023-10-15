@@ -51,7 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
     }
 */
-    @Override
+
+  /*  @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
@@ -68,10 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutUrl("/security-login/logout")
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
-    }
+    }*/
 
-    @Bean
+/*    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 }

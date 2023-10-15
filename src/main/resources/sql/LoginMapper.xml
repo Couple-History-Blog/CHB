@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.chb.chb.domain.login.LoginMapper">
+
+    <insert id="signUp"
+            parameterType="io.chb.chb.domain.user.UserDTO">
+        INSERT INTO USER_INFO (
+                               USER_ID
+                             , USER_PASSWORD
+                             , USER_NAME
+                             , SEX_TYPE
+                            )
+        VALUES (
+                #{userId}
+              , #{userPassword}
+              , #{userName}
+              , #{sexType}
+                )
+    </insert>
+
+</mapper>

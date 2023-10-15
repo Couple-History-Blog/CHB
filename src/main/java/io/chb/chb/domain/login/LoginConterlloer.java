@@ -45,7 +45,7 @@ public class LoginConterlloer {
     public ResponseEntity<String> signUp(String userId, String userPassword, String userName, String sexType) {
         UserDTO userInfo = UserDTO.builder().userId(userId)
                                             .userName(userName)
-                                            .userPassword(userPassword)
+                                            .userPassword(passwordEncoder.encode(userPassword))
                                             .sexType(sexType)
                                     .build();
 

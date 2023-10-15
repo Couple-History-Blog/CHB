@@ -71,8 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID");
     }*/
 
-/*    @Bean
-    public PasswordEncoder passwordEncoder() {
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }*/
+    }
+
 }

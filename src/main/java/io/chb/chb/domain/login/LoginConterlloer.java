@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,9 +54,9 @@ public class LoginConterlloer {
                         .ifPresent(user -> new BaseException(ErrorType.USER_ALREADY_EXIST));
 
         loginService.signUp(userInfo);
-        return new ResponseEntity<>(ResponseCode.NEW_USER_CREATED.getMessage(), HttpStatus.CREATED);
+        return ResponseEntity.ok().body(ResponseCode.NEW_USER_CREATED.getMessage());
     }
 
-    // TODO 아이디로 커플 신청
+
 }
 

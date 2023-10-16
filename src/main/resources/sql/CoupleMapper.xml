@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.chb.chb.domain.couple.CoupleMapper">
+
+    <select id="getCoupleStatusByUserId"
+            parameterType="java.lang.String"
+            resultType="io.chb.chb.domain.couple.CoupleDTO">
+        SELECT OWN_USER_ID      AS USER_ID
+             , OTHER_USER_ID
+             , OWN_ACCEPT_YN
+             , OTHER_ACCEPT_YN
+        FROM BE_COUPLE_WAIT_STATUS
+        WHERE OWN_USER_ID = #{userId}
+    </select>
+
+</mapper>

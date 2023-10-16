@@ -23,9 +23,4 @@ public class UserDTO {
     private boolean beCoupleYn;
     private String userRole;
 
-    // 커플 계정 전용
-    private String coupleId;
-    private Date startCoupleDate;
-    private Date coupleIngDate;
-
 }

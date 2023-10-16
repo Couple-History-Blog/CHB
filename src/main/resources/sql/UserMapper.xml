@@ -5,7 +5,7 @@
 <mapper namespace="io.chb.chb.domain.user.UserMapper">
 
     <select id="findByUserId"
-            parameterType="string"
+            parameterType="java.lang.String"
             resultType="io.chb.chb.domain.user.UserDTO">
         SELECT USER_ID
              , USER_PASSWORD

@@ -31,10 +31,14 @@ public class CoupleController {
     }
 
     @GetMapping("/couple-waiting")
-    public ResponseEntity<String> coupleWaitPage(String userId) {
-        CoupleDTO coupleInfo = coupleService.getCoupleStatusByUserId(userId);
+    public ResponseEntity<String> coupleWaitPage(CoupleDTO couple) {
+        CoupleDTO coupleInfo = coupleService.getCoupleStatusByUserId(couple.getUserId());
 
-        if (coupleInfo.isOtherAcceptYn()) return ResponseEntity.ok().body(ResponseCode.BE_COUPLE_SUCCESS.getMessage());
+        if (coupleInfo.isOtherUserAcceptYn()) {
+            coupleService.updateUserForCouple(couple);
+            coupleService.createNewCouple(couple);
+            return ResponseEntity.ok().body(ResponseCode.BE_COUPLE_SUCCESS.getMessage());
+        }
 
         return ResponseEntity.ok().body(ResponseCode.NOT_APPLY_COUPLE.getMessage());
     }

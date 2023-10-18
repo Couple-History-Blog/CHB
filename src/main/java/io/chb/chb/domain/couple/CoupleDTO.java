@@ -22,6 +22,6 @@ public class CoupleDTO {
     private String otherUserId;
 
     // 커플 계정 STATUS
-    private boolean ownAcceptYn;
-    private boolean otherAcceptYn;
+    private boolean ownUserAcceptYn;
+    private boolean otherUserAcceptYn;
 }

@@ -12,8 +12,16 @@ public class CoupleServiceImpl implements CoupleService {
     }
 
     public void applyBeCouple(CoupleDTO userInfo) {
-        return coupleMapper.applyBeCouple(userInfo);
+        coupleMapper.applyBeCouple(userInfo);
     }
+    public void updateUserForCouple(CoupleDTO couple) {
+        coupleMapper.updateUserStatus(couple);
+        coupleMapper.updateUserCoupleYn(couple);
+    }
+    public void createNewCouple(CoupleDTO couple) {
+        coupleMapper.createNewCouple(couple);
+    }
+
     public CoupleDTO getCoupleStatusByUserId(String userId) {
         return coupleMapper.getCoupleStatusByUserId(userId);
     }

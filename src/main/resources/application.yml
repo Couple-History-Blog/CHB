@@ -1,2 +1,27 @@
 server:
   port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+
+jasypt:
+  encryptor:
+    password: qnpfzns590192N#$!na
+
+spring:
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: ENC(KDO718FX0Zs420L6+A7p34vaf4rJ7MN+hzHuBj7CVMkaGrr8OHvmIA==)
+      username: ENC(xkR3N9xS8F2m68yQ5SxuiQ==)
+      password: ENC(+OKoqfQo35Xvz4gIx60IMqt5y7xVxilE)
+      maximum-pool-size: 5
+      connection-timeout: 0
+
+
+mybatis:
+  type-aliases-package: io.hsquare.api.**.dto
+  mapper-locations: mybatis/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+

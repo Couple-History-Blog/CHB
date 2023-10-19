@@ -36,7 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
-
 ### ETC
 /src/main/java/io/chb/chb/core/config/JasyptConfig.java
 src/test/java/io/chb/chb/JasyptConfigTest.java
+
+### TEST
+/src/test/

@@ -41,4 +41,4 @@ out/
 src/test/java/io/chb/chb/JasyptConfigTest.java
 
 ### TEST
-/src/test/*
+/src/test/**

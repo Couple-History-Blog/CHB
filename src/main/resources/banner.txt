@@ -1,21 +1,21 @@
-${AnsiColor.MAGENTA}         _____                    _____                    _____
-${AnsiColor.MAGENTA}        /\    \                  /\    \                  /\    \
-${AnsiColor.MAGENTA}       /::\    \                /::\____\                /::\    \
-${AnsiColor.MAGENTA}      /::::\    \              /:::/    /               /::::\    \
-${AnsiColor.MAGENTA}     /::::::\    \            /:::/    /               /::::::\    \
-${AnsiColor.BLUE}    /:::/\:::\    \          /:::/    /               /:::/\:::\    \
-${AnsiColor.BLUE}   /:::/  \:::\    \        /:::/____/               /:::/__\:::\    \
-${AnsiColor.BLUE}  /:::/    \:::\    \      /::::\    \              /::::\   \:::\    \
-${AnsiColor.BLUE} /:::/    / \:::\    \    /::::::\    \   _____    /::::::\   \:::\    \
-${AnsiColor.BLUE}/:::/    /   \:::\    \  /:::/\:::\    \ /\    \  /:::/\:::\   \:::\ ___\
-${AnsiColor.BLUE}:::/____/     \:::\____\/:::/  \:::\    /::\____\/:::/__\:::\   \:::|    |
-${AnsiColor.BRIGHT_CYAN}:::\    \      \::/    /\::/    \:::\  /:::/    /\:::\   \:::\  /:::|____|
-${AnsiColor.BRIGHT_CYAN}\:::\    \      \/____/  \/____/ \:::\/:::/    /  \:::\   \:::\/:::/    /
-${AnsiColor.BRIGHT_CYAN} \:::\    \                       \::::::/    /    \:::\   \::::::/    /
-${AnsiColor.BRIGHT_CYAN}  \:::\    \                       \::::/    /      \:::\   \::::/    /
-${AnsiColor.BRIGHT_CYAN}   \:::\    \                      /:::/    /        \:::\  /:::/    /
-${AnsiColor.YELLOW}    \:::\    \                    /:::/    /          \:::\/:::/    /
-${AnsiColor.YELLOW}     \:::\    \                  /:::/    /            \::::::/    /
-${AnsiColor.YELLOW}      \:::\____\                /:::/    /              \::::/    /
-${AnsiColor.YELLOW}       \::/    /                \::/    /                \::/____/
-${AnsiColor.YELLOW}        \/____/                  \/____/                  ~~
+${AnsiColor.MAGENTA}                   _____                    _____                    _____
+${AnsiColor.MAGENTA}                  /\    \                  /\    \                  /\    \
+${AnsiColor.MAGENTA}                 /::\    \                /::\____\                /::\    \
+${AnsiColor.MAGENTA}                /::::\    \              /:::/    /               /::::\    \
+${AnsiColor.MAGENTA}               /::::::\    \            /:::/    /               /::::::\    \
+${AnsiColor.BLUE}              /:::/\:::\    \          /:::/    /               /:::/\:::\    \
+${AnsiColor.BLUE}             /:::/  \:::\    \        /:::/____/               /:::/__\:::\    \
+${AnsiColor.BLUE}            /:::/    \:::\    \      /::::\    \              /::::\   \:::\    \
+${AnsiColor.BLUE}           /:::/    / \:::\    \    /::::::\    \   _____    /::::::\   \:::\    \
+${AnsiColor.BLUE}          /:::/    /   \:::\    \  /:::/\:::\    \ /\    \  /:::/\:::\   \:::\ ___\
+${AnsiColor.BLUE}          :::/____/     \:::\____\/:::/  \:::\    /::\____\/:::/__\:::\   \:::|    |
+${AnsiColor.BRIGHT_CYAN}          :::\    \      \::/    /\::/    \:::\  /:::/    /\:::\   \:::\  /:::|____|
+${AnsiColor.BRIGHT_CYAN}          \:::\    \      \/____/  \/____/ \:::\/:::/    /  \:::\   \:::\/:::/    /
+${AnsiColor.BRIGHT_CYAN}           \:::\    \                       \::::::/    /    \:::\   \::::::/    /
+${AnsiColor.BRIGHT_CYAN}            \:::\    \                       \::::/    /      \:::\   \::::/    /
+${AnsiColor.BRIGHT_CYAN}             \:::\    \                      /:::/    /        \:::\  /:::/    /
+${AnsiColor.YELLOW}              \:::\    \                    /:::/    /          \:::\/:::/    /
+${AnsiColor.YELLOW}               \:::\    \                  /:::/    /            \::::::/    /
+${AnsiColor.YELLOW}                \:::\____\                /:::/    /              \::::/    /
+${AnsiColor.YELLOW}                 \::/    /                \::/    /                \::/____/
+${AnsiColor.YELLOW}                  \/____/                  \/____/                  ~~

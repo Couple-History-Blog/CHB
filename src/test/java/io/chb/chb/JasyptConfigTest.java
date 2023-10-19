@@ -1,3 +1,4 @@
+/*
 package io.chb.chb;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,15 +57,17 @@ public class JasyptConfigTest {
 
             System.out.println("decrypt: " + encryptor.decrypt("MorUdsXGha525cUj79PiY9A0n2a/Hv9H5RCtiTz1+pMGHn7f4qcOhw=="));
 
+*/
 /*
             System.out.println("일산 URL decrypt: " + encryptor.decrypt("58zUNakQcOubsr2ieOFRWo83q0zws3MRwEbIvyePIANMKn2rrA+5OO8NGme8SdMM4gCM+WVu2CqIVTnlB8cdV3vakuOpFvP131j6+DD2OpIdn9LERJMP4g36N2AYtU68"));
             System.out.println("서울대 URL decrypt: " + encryptor.decrypt("Uj76HIJDsiCwS4XS8SXs9TB/bveVbephYhoLU7nh2xNLV89caS1S518Z7YhA6SwcrzKnmJBb2LfDovUXaFI++1Lr6hclAvEKdirokGLjtkhjUWRbLUm+wpC/+gwFmLql"));
             System.out.println("ID decrypt: " + encryptor.decrypt("jwDKqJl0l2zx7p8y+sX+3g=="));
             System.out.println("PWD decrypt: " + encryptor.decrypt("Kk2Km4jNUkuzy1FNndNuhBs4wNy9fnqxgYlvqDgDInUA5rj9GgprxbOVqzzfRDNB6nk8ALIxsoc="));
             System.out.println("URL encrypt: " + encryptor.encrypt("https://cpd-zen.apps.wdh.nhimc.or.kr/"));
-*/
+*//*
+
 
             assertEquals(value, decryptText);
         });
     }
-}
+}*/

@@ -4,6 +4,21 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.3'
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs += ['BE/src/main/java']
+        }
+        // 다른 리소스 디렉토리도 변경해야 한다면 추가
+        resources {
+            srcDirs += ['BE/src/main/resources']
+        }
+    }
+    // 다른 소스 세트도 필요한 경우 추가
+}
+
+
+
 group = 'io.chb'
 version = '0.0.1-SNAPSHOT'
 

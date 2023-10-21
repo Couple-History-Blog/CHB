@@ -1,21 +1,31 @@
 // assets
 import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
+import { IconCalendarHeart } from '@tabler/icons-react';
 
 // constant
 const icons = {
   IconTypography,
   IconPalette,
   IconShadow,
-  IconWindmill
+  IconWindmill,
+  IconCalendarHeart
 };
 
 // ==============================|| UTILITIES MENU ITEMS ||============================== //
 
-const utilities = {
+const CoupleTitles = {
   id: 'utilities',
-  title: 'Utilities',
+  title: '데이트 관련 페이지',
   type: 'group',
   children: [
+    {
+      id: 'util-coupleCalendar',
+      title: '데이트 일정',
+      type: 'item',
+      url: '/utils/coupleCalendar',
+      icon: icons.IconCalendarHeart,
+      breadcrumbs: false
+    },
     {
       id: 'util-typography',
       title: 'Typography',
@@ -67,4 +77,4 @@ const utilities = {
   ]
 };
 
-export default utilities;
+export default CoupleTitles;

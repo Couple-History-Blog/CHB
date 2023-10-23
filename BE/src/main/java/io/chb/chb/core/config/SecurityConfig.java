@@ -5,12 +5,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @AllArgsConstructor
 @Configuration
@@ -66,13 +70,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID");
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("wtf2327") // 여기에 사용자의 이메일 주소를 아이디로 사용
-                .password("$2a$10$wIrs83gwbwgTdjnRLYVTZOzxby9BMn7N/zj8ulsvEQ73PXcHBaXNG")
-                .roles("USER");
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:3000"); // 모든 origin을 허용하거나 필요에 따라 원하는 origin을 설정
+        configuration.addAllowedMethod(HttpMethod.POST.name()); // 모든 HTTP 메서드를 허용하거나 필요에 따라 원하는 메서드를 설정
+        configuration.addAllowedMethod(HttpMethod.GET.name());
+        configuration.addAllowedHeader("*"); // 모든 헤더를 허용하거나 필요에 따라 원하는 헤더를 설정
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 CORS 설정을 적용
+
+        return source;
     }
 
     @Bean

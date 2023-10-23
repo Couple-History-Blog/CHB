@@ -10,13 +10,17 @@
                                USER_ID
                              , USER_PASSWORD
                              , USER_NAME
-                             , SEX_TYPE
+                             , USER_SEX_TYPE
+                             , USER_BRTH_DATE
+                             , USER_NICK_NAME
                             )
         VALUES (
                 #{userId}
               , #{userPassword}
               , #{userName}
-              , #{sexType}
+              , #{userSexType}
+              , #{userBrthDate}
+              , #{userNickName}
                 )
     </insert>
 

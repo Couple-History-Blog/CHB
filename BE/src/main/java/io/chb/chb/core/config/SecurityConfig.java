@@ -1,16 +1,23 @@
 package io.chb.chb.core.config;
 
+import io.chb.chb.core.util.WebUtil;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private WebUtil webUtil;
 
     /*
     authorizeRequest() : 인증, 인가가 필요한 URL 지정
@@ -33,43 +40,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     logout() : 로그아웃에 대한 정보
     */
 
- /*   @Override
+
+    private static String WEB_MAIN_URL;
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        WEB_MAIN_URL = webUtil.buildMainUrl();
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/chb/signIn").permitAll()
+                    .antMatchers("/chb/sign-in").permitAll()
+                    .antMatchers("/chb/sign-up").permitAll()
+                    .antMatchers("/chb/test").permitAll()
                     .antMatchers("/chb/adminTest").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/chb/sign-in")
-                .defaultSuccessUrl("/chb/main")
-                .failureUrl("/chb/sign-in")
+                    .loginPage(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
+                    .defaultSuccessUrl(WEB_MAIN_URL)
+                    .failureUrl(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
                 .and()
                 .logout()
-                .logoutUrl("/chb/sign-in")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
+                    .logoutUrl("/chb/sign-out")
+                    .logoutSuccessUrl(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID");
     }
-*/
 
-  /*  @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/security-login/info").authenticated()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .usernameParameter("loginId")
-                .passwordParameter("password")
-                .loginPage("/security-login/login")
-                .defaultSuccessUrl("/security-login")
-                .failureUrl("/security-login/login")
-                .and()
-                .logout()
-                .logoutUrl("/security-login/logout")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID");
-    }*/
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .inMemoryAuthentication()
+                .withUser("wtf2327") // 여기에 사용자의 이메일 주소를 아이디로 사용
+                .password("$2a$10$wIrs83gwbwgTdjnRLYVTZOzxby9BMn7N/zj8ulsvEQ73PXcHBaXNG")
+                .roles("USER");
+    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {

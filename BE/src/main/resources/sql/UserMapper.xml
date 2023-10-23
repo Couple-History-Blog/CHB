@@ -10,9 +10,11 @@
         SELECT USER_ID
              , USER_PASSWORD
              , USER_NAME
-             , SEX_TYPE
+             , USER_SEX_TYPE
              , BE_COUPLE_YN
              , USER_ROLE
+             , USER_BRTH_DATE
+             , USER_NICK_NAME
           FROM USER_INFO
          WHERE USER_ID = #{userId}
     </select>

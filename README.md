@@ -8,3 +8,7 @@
 # Banner
 - `SITE`         : https://devops.datenkollektiv.de/banner.txt/index.html
 - `FONT`         : alpha
+
+# Version
+- `NODE`         : 16.1.0
+- `NPM`          : 7.11.2

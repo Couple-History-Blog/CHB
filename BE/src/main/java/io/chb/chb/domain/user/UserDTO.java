@@ -22,4 +22,13 @@ public class UserDTO {
     private String userRole;
     private Date userBrthDate;
 
+    // Token 관리를 위함
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    public static class TokenInfo {
+        private String accessToken;
+        private String refreshToken;
+        private Long refreshTokenExpirationTime;
+    }
 }

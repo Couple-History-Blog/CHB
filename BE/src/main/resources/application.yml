@@ -8,6 +8,12 @@ jasypt:
   encryptor:
     password: qnpfzns590192N#$!na
 
+jwt:
+  secretKey: ENC(dhXWiwVrwHOx1ez9sw3OsFLIUu/dlZDbmPlltPB8KDpj6ptAtYPlUg==)
+  tokenValidTime: 1800000
+  refreshTokenTime: 3600000
+
+
 spring:
   datasource:
     hikari:

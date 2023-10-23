@@ -1,17 +1,22 @@
 package io.chb.chb.core.config;
 
+import io.chb.chb.core.config.jwt.JwtAuthenticationFilter;
+import io.chb.chb.core.config.jwt.JwtTokenProvider;
 import io.chb.chb.core.util.WebUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -22,6 +27,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private WebUtil webUtil;
+    private final JwtTokenProvider jwtTokenProvider;
+
 
     /*
     authorizeRequest() : 인증, 인가가 필요한 URL 지정
@@ -47,6 +54,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static String WEB_MAIN_URL;
 
+    // authenticationManager를 Bean 등록합니다.
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         WEB_MAIN_URL = webUtil.buildMainUrl();
@@ -67,21 +81,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logoutUrl("/chb/sign-out")
                     .logoutSuccessUrl(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
                     .invalidateHttpSession(true)
-                    .deleteCookies("JSESSIONID");
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // 모든 origin을 허용하거나 필요에 따라 원하는 origin을 설정
-        configuration.addAllowedMethod(HttpMethod.POST.name()); // 모든 HTTP 메서드를 허용하거나 필요에 따라 원하는 메서드를 설정
-        configuration.addAllowedMethod(HttpMethod.GET.name());
-        configuration.addAllowedHeader("*"); // 모든 헤더를 허용하거나 필요에 따라 원하는 헤더를 설정
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // 모든 경로에 대해 CORS 설정을 적용
-
-        return source;
+                    .deleteCookies("JSESSIONID")
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class) // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣는다
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Bean

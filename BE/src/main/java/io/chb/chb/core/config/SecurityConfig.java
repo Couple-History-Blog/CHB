@@ -54,32 +54,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static String WEB_MAIN_URL;
 
-    // authenticationManager를 Bean 등록합니다.
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         WEB_MAIN_URL = webUtil.buildMainUrl();
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/chb/sign-in").permitAll()
-                    .antMatchers("/chb/sign-up").permitAll()
-                    .antMatchers("/chb/test").permitAll()
+//                    .antMatchers("/chb/sign-in").permitAll()
+//                    .antMatchers("/chb/sign-up").permitAll()
+//                    .antMatchers("/chb/test").permitAll()
+                    .antMatchers("/chb/**").permitAll()
+//                    .antMatchers("/chb/api/account/me").permitAll()
                     .antMatchers("/chb/adminTest").hasRole("ADMIN")
-                    .anyRequest().authenticated()
+//                    .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
+//                    .loginPage(webUtil.buildUrl(WEB_MAIN_URL, "/login"))
                     .defaultSuccessUrl(WEB_MAIN_URL)
-                    .failureUrl(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
+                    .failureUrl(webUtil.buildUrl(WEB_MAIN_URL, "/login"))
                 .and()
                 .logout()
                     .logoutUrl("/chb/sign-out")
-                    .logoutSuccessUrl(webUtil.buildUrl(WEB_MAIN_URL, "/pages/login/login3"))
+                    .logoutSuccessUrl(webUtil.buildUrl(WEB_MAIN_URL, "/login"))
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
                 .and()

@@ -37,26 +37,44 @@ repositories {
 }
 
 dependencies {
+
+    // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+
+    // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     //Encryption
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 
-    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    // DB
     implementation 'mysql:mysql-connector-java:[8.0,)'
 
+
+    // JWT
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // Util
+    implementation 'org.modelmapper:modelmapper:2.4.4'
     compileOnly 'org.projectlombok:lombok'
-//    runtimeOnly 'com.mysql:mysql-connector-j'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     annotationProcessor 'org.projectlombok:lombok'
+//    implementation 'org.projectlombok:lombok:1.18.20'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.apache.commons:commons-lang3:3.0'
 
+    // Swagger
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+
+    // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.projectlombok:lombok:1.18.20'

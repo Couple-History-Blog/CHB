@@ -1,14 +1,22 @@
 package io.chb.chb.domain.user;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Date;
+import javax.persistence.ElementCollection;
+import javax.persistence.FetchType;
+import java.util.*;
+import java.util.stream.Collectors;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDTO {
+@AllArgsConstructor
+public class UserDTO implements UserDetails {
 
     // 일반 계정 및 커플 계정 공용
     private String userId;
@@ -22,13 +30,56 @@ public class UserDTO {
     private String userRole;
     private Date userBrthDate;
 
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+
     // Token 관리를 위함
     @Builder
     @Getter
     @AllArgsConstructor
     public static class TokenInfo {
+        private String user;
         private String accessToken;
         private String refreshToken;
         private Long refreshTokenExpirationTime;
     }
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

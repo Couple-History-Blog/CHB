@@ -7,6 +7,7 @@ import io.chb.chb.core.exception.ErrorType;
 import io.chb.chb.core.util.UserUtils;
 import io.chb.chb.domain.user.UserDTO;
 import io.chb.chb.domain.user.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
@@ -36,6 +37,7 @@ public class LoginController {
     private final RedisTemplate redisTemplate;
 
 
+    @ApiOperation(value = "사용자 정보", notes = "로그인 처리 및 JwtToken 반환해준다.")
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestParam(value = "userId", required = false) String userId
                                   , @RequestParam(value= "userPassword", required = false) String userPassword) {
@@ -55,6 +57,7 @@ public class LoginController {
         return ResponseEntity.ok().body(userTokenInfo);
     }
 
+    @ApiOperation(value = "사용자 가입 정보", notes = "회원가입 처리")
     @PostMapping("/sign-up")
     public ResponseEntity<String> signUp(@RequestBody UserDTO userInfo) {
         userUtils.encodeUserPassword(userInfo);
@@ -68,8 +71,9 @@ public class LoginController {
         return ResponseEntity.ok().body(ResponseCode.NEW_USER_CREATED.getMessage());
     }
 
+    @ApiOperation(value = "사용자 정보", notes = "로그아웃 처리")
     @PostMapping("/sign-out")
-    public ResponseEntity<?> signOut(@RequestBody UserDTO.TokenInfo userInfo) {
+    public ResponseEntity<?> signOut(@RequestBody (required = false) UserDTO.TokenInfo userInfo) {
         String accessToken = userInfo.getAccessToken();
 
         // 1. Access Token 검증

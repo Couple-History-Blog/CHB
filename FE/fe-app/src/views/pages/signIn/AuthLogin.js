@@ -34,6 +34,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
+import ko from './../../../assets/language/ko.json';
+
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -43,6 +45,7 @@ const FirebaseLogin = ({ ...others }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
+  const KOR_LOGIN_MESSAGE = ko['sign-in'];
 
   const googleHandler = async () => {
     console.error('Login');
@@ -113,7 +116,7 @@ const FirebaseLogin = ({ ...others }) => {
         </Grid>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Sign in with Email address</Typography>
+            <Typography variant="subtitle1">{ KOR_LOGIN_MESSAGE.signInSubTitle }</Typography>
           </Box>
         </Grid>
       </Grid>
@@ -204,7 +207,7 @@ const FirebaseLogin = ({ ...others }) => {
                 label="정보 저장하기"
               />
               <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
-                Forgot Password?
+                  { KOR_LOGIN_MESSAGE.lostPassword }
               </Typography>
             </Stack>
             {errors.submit && (

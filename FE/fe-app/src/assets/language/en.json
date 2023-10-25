@@ -1,7 +1,8 @@
 {
   "sign-in": {
       "signInSubTitle": "Sign in with Email address",
-      "pwd": "ㅅㄷㄴㅅ"
+      "pwd": "Forgot Password?",
+      "noAccountComment":  "Don&apos;t have an account?"
   },
   "sign-out": {
 

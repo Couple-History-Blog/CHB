@@ -9,13 +9,13 @@ import {
     LOGIN,
     LOGIN_TYPE_ALERT,
     LOGOUT,
-    LOGOUT_TYPE_ALERT,
+    LOGOUT_TYPE_ALERT, REGISTER_TYPE_ALERT,
     SERVER_TYPE_ALERT,
     WEB_TYPE_ALERT
 } from 'store/actions';
 import {BASE_PATH} from '../config';
 import accountReducer from 'store/accountReducer';
-import { showErrorAlert, showSuccessAlert} from '../store/slices/alert'; // Redux Toolkit의 알림 액션 import 추가
+import {clearAlert, showErrorAlert, showSuccessAlert} from '../store/slices/alert'; // Redux Toolkit의 알림 액션 import 추가
 
 
 // project imports
@@ -149,6 +149,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         if (alertState.showSuccessAlert) {
             successSweetAlert(alertState.successMessage, alertState.alertType);
         }
+        dispatchAlert(clearAlert());
     }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
 
     const login = async (userId: string, userPassword: string) => {
@@ -200,9 +201,14 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     console.log('ERR : ', error);
                     throw error;
                 }*/
+/*        alert("isChecked => " + isChecked + "\n" +
+            "email => " + email + "\n" +
+            "password => " + password + "\n" +
+            "firstName => " + firstName + "\n" +
+            "lastName => " + lastName);*/
 
         const id = chance.bb_pin();
-        const response = await axios.post('/chb/sign-up', {
+        const response = await axios.post('/sign-up', {
             id,
             email,
             password,

@@ -1,7 +1,7 @@
 import {ReactElement, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {showErrorAlert} from "../store/slices/alert";
+import {clearAlert, showErrorAlert} from "../store/slices/alert";
 import {WEB_TYPE_ALERT} from "../store/actions";
 
 import ko from "../assets/language/ko.json";
@@ -56,6 +56,7 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ condition, t
         if (alertState.showSuccessAlert) {
             successSweetAlert(alertState.successMessage, alertState.alertType);
         }
+        dispatchAlert(clearAlert());
     }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
 
     return null;

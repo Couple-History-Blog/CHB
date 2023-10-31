@@ -30,7 +30,7 @@ public class UserController {
                                        , @RequestParam(value = "serviceToken", required = false) String serviceToken) {
 
         if (jwtTokenProvider.validateToken(userJwtToken)) {
-            return ResponseEntity.ok().body(jwtTokenProvider.getUserPk(userJwtToken));
+            return ResponseEntity.ok().body(jwtTokenProvider.getUserInfo(userJwtToken));
         }
 
         throw new BaseException(ErrorType.CURRENT_USER_NOT_EXISTS);

@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useReducer } from 'react';
+import React, {createContext, useEffect, useReducer, useState} from 'react';
 
 // third-party
 import {Chance} from 'chance';
@@ -21,6 +21,7 @@ import {clearAlert, showErrorAlert, showSuccessAlert} from '../store/slices/aler
 // project imports
 import Loader from 'ui-component/Loader';
 import axios from 'utils/axios';
+import Load from 'utils/loadUtil';
 
 
 // types
@@ -88,6 +89,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     const dispatchAlert = useDispatch(); // Redux Toolkit의 디스패치 함수
     // @ts-ignore
     const alertState = useSelector((state) => state.alert); // Redux Toolkit의 알림 상태
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         const init = async () => {
@@ -226,7 +228,10 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         }
 
         window.localStorage.setItem('users', JSON.stringify(users));
+
+        setIsLoading(true);
         setTimeout(() => {  // 로딩 구현
+            setIsLoading(false);
             navigate('/login', { replace: true });  // true는 뒤로가기 X
         }, 1500);
     };
@@ -254,11 +259,9 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     return (
         <JWTContext.Provider value={{...state, login, logout, register, resetPassword, updateProfile}}>
             {children}
+            <Load isLoading={isLoading} setIsLoading={setIsLoading} />
         </JWTContext.Provider>
     );
-    /*    return (
-            <JWTContext.Provider value={{ ...state, login, logout, register, resetPassword, updateProfile }}>{children}</JWTContext.Provider>
-        );*/
 };
 
 export default JWTContext;

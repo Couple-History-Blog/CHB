@@ -120,17 +120,19 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     });
                 }
             } catch (err) {
+                // @ts-ignore
+                let errMsg = err.message;
+                if (err == 'Wrong Services') errMsg = KOR_SERVER_MESSAGE.serverConnectFail;
+
                 removeUserLocalStorage();
+                setSession(null);
                 console.log("!!!! ERR !!!!! --> ", err)
-                /*                const beforePath = window.location.pathname;
-                                if (beforePath !== BASE_PATH + '/login') {
-                                    dispatchAlert(
-                                        showErrorAlert({
-                                            errorMessage: KOR_WEB_MESSAGE.authorityPage,
-                                            alertType: WEB_TYPE_ALERT
-                                        })
-                                    );
-                                }*/
+                dispatchAlert(
+                    showErrorAlert({
+                        errorMessage: errMsg,
+                        alertType: WEB_TYPE_ALERT
+                    })
+                );
                 dispatch({
                     type: LOGOUT
                 });

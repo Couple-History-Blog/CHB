@@ -16,6 +16,7 @@ import { AuthSliderProps } from 'types';
 
 // assets
 import imgMain from 'assets/images/auth/img-a2-signup.svg';
+import ko from "../../../../assets/language/ko.json";
 
 // carousel items
 const items: AuthSliderProps[] = [
@@ -39,6 +40,7 @@ const Register = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
+    const KOR_LOGIN_MESSAGE = ko['sign-in'];
 
     return (
         <AuthWrapper2>
@@ -50,11 +52,6 @@ const Register = () => {
                         alignItems={matchDownSM ? 'center' : 'flex-start'}
                         justifyContent={matchDownSM ? 'center' : 'space-between'}
                     >
-                        <Grid item sx={{ display: { xs: 'none', md: 'block' }, m: 3 }}>
-                            <Link to="#" aria-label="theme logo">
-                                <Logo />
-                            </Link>
-                        </Grid>
                         <Grid
                             item
                             xs={12}
@@ -70,7 +67,12 @@ const Register = () => {
                                 <AuthCardWrapper border={matchDownMD}>
                                     <Grid container spacing={2} justifyContent="center">
                                         <Grid item xs={12}>
-                                            <Stack alignItems="center" justifyContent="center" spacing={1}>
+                                            <Grid item sx={{ textAlign: 'center', m: 3 }}>
+                                                <Link to="#" aria-label="theme logo">
+                                                    <Logo logoStyle='service-logo' />
+                                                </Link>
+                                            </Grid>
+{/*                                            <Stack alignItems="center" justifyContent="center" spacing={1}>
                                                 <Typography
                                                     color={theme.palette.secondary.main}
                                                     gutterBottom
@@ -85,7 +87,7 @@ const Register = () => {
                                                 >
                                                     Enter your credentials to continue
                                                 </Typography>
-                                            </Stack>
+                                            </Stack>*/}
                                         </Grid>
                                         <Grid item xs={12}>
                                             <AuthRegister />
@@ -101,7 +103,7 @@ const Register = () => {
                                                     variant="subtitle1"
                                                     sx={{ textDecoration: 'none' }}
                                                 >
-                                                    Already have an account?
+                                                    { KOR_LOGIN_MESSAGE.alreadyHaveAccount }
                                                 </Typography>
                                             </Grid>
                                         </Grid>

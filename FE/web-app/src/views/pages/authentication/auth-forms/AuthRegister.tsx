@@ -36,6 +36,11 @@ import { openSnackbar } from 'store/slices/snackbar';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { StringColorProps } from 'types';
+import ko from "../../../../assets/language/ko.json";
+import {clearAlert, showErrorAlert} from "../../../../store/slices/alert";
+import {SERVER_TYPE_ALERT, WEB_TYPE_ALERT} from "../../../../store/actions";
+import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
+import {useSelector} from "react-redux";
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -44,10 +49,15 @@ const JWTRegister = ({ ...others }) => {
     const navigate = useNavigate();
     const scriptedRef = useScriptRef();
     const dispatch = useDispatch();
+    const KOR_LOGIN_MESSAGE = ko['sign-in'];
 
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const [showPassword, setShowPassword] = React.useState(false);
     const [checked, setChecked] = React.useState(true);
+
+    // @ts-ignore
+    const alertState = useSelector((state) => state.alert); // Redux Toolkit의 알림 상태
+    const dispatchAlert = useDispatch(); // Redux Toolkit의 디스패치 함수
 
     const [strength, setStrength] = React.useState(0);
     const [level, setLevel] = React.useState<StringColorProps>();
@@ -71,22 +81,34 @@ const JWTRegister = ({ ...others }) => {
         changePassword('123456');
     }, []);
 
+    // alert useEffect
+    useEffect(() => {
+        if (alertState.showErrorAlert) {
+            errorSweetAlert(alertState.errorMessage, alertState.alertType);
+        }
+        if (alertState.showSuccessAlert) {
+            successSweetAlert(alertState.successMessage, alertState.alertType);
+        }
+        dispatchAlert(clearAlert());
+    }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
+
+
     return (
         <>
-            <Grid container direction="column" justifyContent="center" spacing={2}>
+{/*            <Grid container direction="column" justifyContent="center" spacing={2}>
                 <Grid item xs={12} container alignItems="center" justifyContent="center">
                     <Box sx={{ mb: 2 }}>
                         <Typography variant="subtitle1">Sign up with Email address</Typography>
                     </Box>
                 </Grid>
-            </Grid>
+            </Grid>*/}
 
             <Formik
                 initialValues={{
-                    email: '',
-                    password: '',
-                    firstName: '',
-                    lastName: '',
+                    email: 'test@gmail.com',
+                    password: 'testPwd',
+                    firstName: 'test',
+                    lastName: 'admin',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
@@ -95,8 +117,17 @@ const JWTRegister = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
-                        await register(values.email, values.password, values.firstName, values.lastName);
-                        if (scriptedRef.current) {
+                        if (checked) await register(values.email, values.password, values.firstName, values.lastName);
+                        else {
+                            dispatchAlert(
+                                showErrorAlert({
+                                    errorMessage: KOR_LOGIN_MESSAGE.checkAgreeInformationButton,
+                                    alertType: SERVER_TYPE_ALERT
+                                })
+                            );
+                        }
+                        // TODO 회원가입 성공시 로그인 페이지로 이동
+/*                        if (scriptedRef.current) {
                             setStatus({ success: true });
                             setSubmitting(false);
                             dispatch(
@@ -114,7 +145,7 @@ const JWTRegister = ({ ...others }) => {
                             setTimeout(() => {
                                 navigate('/login', { replace: true });
                             }, 1500);
-                        }
+                        }*/
                     } catch (err: any) {
                         console.error(err);
                         if (scriptedRef.current) {
@@ -245,10 +276,11 @@ const JWTRegister = ({ ...others }) => {
                                     }
                                     label={
                                         <Typography variant="subtitle1">
-                                            Agree with &nbsp;
+                                            { KOR_LOGIN_MESSAGE.agreeWithProvideUserInformation }
+{/*                                            Agree with &nbsp;
                                             <Typography variant="subtitle1" component={Link} to="#">
                                                 Terms & Condition.
-                                            </Typography>
+                                            </Typography>*/}
                                         </Typography>
                                     }
                                 />
@@ -263,7 +295,6 @@ const JWTRegister = ({ ...others }) => {
                         <Box sx={{ mt: 2 }}>
                             <AnimateButton>
                                 <Button
-                                    disableElevation
                                     disabled={isSubmitting}
                                     fullWidth
                                     size="large"
@@ -271,7 +302,7 @@ const JWTRegister = ({ ...others }) => {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Sign up
+                                    { KOR_LOGIN_MESSAGE.signUpComment }
                                 </Button>
                             </AnimateButton>
                         </Box>

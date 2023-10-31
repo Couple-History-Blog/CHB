@@ -176,11 +176,12 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                             <Typography
                                 variant="subtitle1"
                                 component={Link}
-                                to={
+                                to='/forgot'
+/*                                to={
                                     loginProp
                                         ? `/pages/forgot-password/forgot-password${loginProp}`
                                         : '/pages/forgot-password/forgot-password3'
-                                }
+                                }*/
                                 color="secondary"
                                 sx={{ textDecoration: 'none' }}
                             >

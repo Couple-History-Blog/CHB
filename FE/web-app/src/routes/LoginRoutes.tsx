@@ -17,6 +17,7 @@ const AuthRegister = Loadable(lazy(() => import('views/pages/authentication/auth
 const AuthForgotPassword = Loadable(lazy(() => import('views/pages/authentication/authentication3/ForgotPassword3')));
 */
 
+
 // ==============================|| AUTH ROUTING ||============================== //
 
 const LoginRoutes = {

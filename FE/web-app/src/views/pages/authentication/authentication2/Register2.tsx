@@ -97,7 +97,7 @@ const Register = () => {
                                             <Grid item container direction="column" alignItems="center" xs={12}>
                                                 <Typography
                                                     component={Link}
-                                                    to="/pages/login/login2"
+                                                    to="/login"
                                                     variant="subtitle1"
                                                     sx={{ textDecoration: 'none' }}
                                                 >

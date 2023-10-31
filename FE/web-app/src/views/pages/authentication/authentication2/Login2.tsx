@@ -16,6 +16,7 @@ import { AuthSliderProps } from 'types';
 
 // assets
 import imgMain from 'assets/images/auth/img-a2-login.svg';
+import ko from "../../../../assets/language/ko.json";
 
 // carousel items
 const items: AuthSliderProps[] = [
@@ -39,6 +40,7 @@ const Login = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
+    const KOR_LOGIN_MESSAGE = ko['sign-in'];
 
     return (
         <AuthWrapper2>
@@ -97,11 +99,11 @@ const Login = () => {
                                             <Grid item container direction="column" alignItems="center" xs={12}>
                                                 <Typography
                                                     component={Link}
-                                                    to="/pages/register/register2"
+                                                    to="/register"
                                                     variant="subtitle1"
                                                     sx={{ textDecoration: 'none' }}
                                                 >
-                                                    Don&apos;t have an account?
+                                                    { KOR_LOGIN_MESSAGE.noAccountComment }
                                                 </Typography>
                                             </Grid>
                                         </Grid>

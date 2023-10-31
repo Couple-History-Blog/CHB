@@ -7,6 +7,9 @@ import { IconCalendarHeart } from '@tabler/icons-react';
 
 // type
 import { NavItemType } from 'types';
+import ko from "../assets/language/ko.json";
+
+const KOR_WEB_MESSAGE = ko['web']['list']['admin'];
 
 const icons = {
     IconDashboard: IconDashboard,
@@ -18,12 +21,12 @@ const icons = {
 
 const couple: NavItemType = {
     id: 'admin-main',
-    title: <FormattedMessage id="관리자" />,
+    title: KOR_WEB_MESSAGE.groupTitle,
     type: 'group',
     children: [
         {
             id: 'admin-page',
-            title: <FormattedMessage id="관리자 페이지" />,
+            title: KOR_WEB_MESSAGE.pageTitle,
             type: 'item',
             url: '/admin-main',
             icon: icons.IconDeviceAnalytics,

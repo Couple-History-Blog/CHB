@@ -1,12 +1,11 @@
-import { lazy } from 'react';
-
 // project imports
 import MainLayout from 'layout/MainLayout';
 import CoupleProfileView from 'views/chb/couple/CoupleProfileView';
 import DateScheduleView from 'views/chb/couple/DateScheduleView';
 import UserProfileView from 'views/chb/user/UserProfileView';
 import AdminMainView from 'views/chb/admin/AdminView';
-
+import RolesConditionRoute, { hasPermission } from '../routes/RolesConditionRoute';
+import { ADMIN, USER, COUPLE } from './Roles';
 
 // sample page routing
 import SamplePage from 'views/sample-page/index';
@@ -38,7 +37,14 @@ const CHBRoutes = {
         },
         {
             path: '/admin-main',
-            element: <AdminMainView />
+            element: (
+                <RolesConditionRoute
+                    condition={ hasPermission(ADMIN) }
+                    truePath='/admin-main'
+                    falsePath='/profile/user'
+                    element={ <AdminMainView /> }
+                />
+            )
         }
     ]
 }

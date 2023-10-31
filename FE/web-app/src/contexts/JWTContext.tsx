@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useReducer, useState} from 'react';
+import React, {createContext, useEffect, useReducer } from 'react';
 
 // third-party
 import {Chance} from 'chance';
@@ -6,7 +6,6 @@ import jwtDecode from 'jwt-decode';
 
 // reducer - state management
 import {
-    ERROR_ALERT,
     LOGIN,
     LOGIN_TYPE_ALERT,
     LOGOUT,
@@ -16,10 +15,8 @@ import {
 } from 'store/actions';
 import {BASE_PATH} from '../config';
 import accountReducer from 'store/accountReducer';
-import {clearAlert, showErrorAlert, showSuccessAlert} from '../store/slices/alert'; // Redux Toolkit의 알림 액션 import 추가
+import { showErrorAlert, showSuccessAlert} from '../store/slices/alert'; // Redux Toolkit의 알림 액션 import 추가
 
-
-import saveUrl from '../constant/url.json';
 
 // project imports
 import Loader from 'ui-component/Loader';
@@ -31,9 +28,7 @@ import {KeyedObject} from 'types';
 import {InitialLoginContextProps, JWTContextType} from 'types/auth';
 import ko from "../assets/language/ko.json";
 import {signInAsync, userInfoAsync} from '../constant/api';
-import {AlertState} from "../types/alert";
 import {useDispatch, useSelector} from 'react-redux';
-import { bindActionCreators } from "redux";
 import {errorSweetAlert, successSweetAlert} from "../utils/alertUtil";
 
 
@@ -41,7 +36,6 @@ const KOR_LOGIN_MESSAGE = ko['sign-in'];
 const KOR_LOGOUT_MESSAGE = ko['sign-out'];
 const KOR_SERVER_MESSAGE = ko['server'];
 const KOR_WEB_MESSAGE = ko['web'];
-// const { loginState, setLoginState } = AlertHandler();
 const chance = new Chance();
 
 
@@ -52,16 +46,7 @@ const initialState: InitialLoginContextProps = {
     user: null
 };
 
-// constant
-const initialAlertState: AlertState = {
-    alertType: null,
-    errorMessage: null,
-    successMessage: null,
-    showSuccessAlert: false,
-    showErrorAlert: false
-}
-
-const verifyToken: (st: string) => boolean = (serviceToken) => {
+const verifyToken: (st: string | null) => boolean = (serviceToken) => {
     if (!serviceToken) {
         return false;
     }
@@ -83,6 +68,16 @@ const setSession = (serviceToken?: string | null) => {
     }
 };
 
+const setUserInfoToLocalStorage = (userInfo: any) => {
+    localStorage.setItem('userId', userInfo.sub);
+    localStorage.setItem('userRoles', userInfo.roles);
+}
+
+const removeUserLocalStorage = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userRoles');
+}
+
 // ==============================|| JWT CONTEXT & PROVIDER ||============================== //
 const JWTContext = createContext<JWTContextType | null>(null);
 
@@ -101,6 +96,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     setSession(serviceToken);
                     const response = await userInfoAsync({serviceToken});         // 현재 로그인한 사용자 확인
                     const {user} = response.data;
+                    setUserInfoToLocalStorage(response.data);
                     dispatch({
                         type: LOGIN,
                         payload: {
@@ -109,6 +105,8 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                         }
                     });
                 } else {
+                    removeUserLocalStorage();
+                    setSession(null);
                     if (beforePath !== BASE_PATH + '/login') {
                         dispatchAlert(
                             showErrorAlert({
@@ -122,6 +120,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     });
                 }
             } catch (err) {
+                removeUserLocalStorage();
                 console.log("!!!! ERR !!!!! --> ", err)
                 /*                const beforePath = window.location.pathname;
                                 if (beforePath !== BASE_PATH + '/login') {

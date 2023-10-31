@@ -206,12 +206,6 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             userBrthDate: new Date('2003-10-12')
         };
         const response = await signUpAsync(body).then();
-        dispatchAlert(
-            showSuccessAlert({
-                successMessage: KOR_LOGIN_MESSAGE.signUpSuccess,
-                alertType: SIGNUP_TYPE_ALERT
-            })
-        );
         let users = response.data;
 
         if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
@@ -232,6 +226,12 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         setIsLoading(true);
         setTimeout(() => {  // 로딩 구현
             setIsLoading(false);
+            dispatchAlert(
+                showSuccessAlert({
+                    successMessage: KOR_LOGIN_MESSAGE.signUpSuccess,
+                    alertType: SIGNUP_TYPE_ALERT
+                })
+            );
             navigate('/login', { replace: true });  // true는 뒤로가기 X
         }, 1500);
     };

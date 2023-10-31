@@ -9,6 +9,18 @@
 @import ' ~react-18-image-lightbox/style.css';
 @import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+// ==============================|| LOGO ||============================== //
+.layout-logo {
+    height: 50px;
+}
+
+// 회원가입, 로그인, 비밀번호 찾기 용
+.service-logo {
+    width: 70%;
+    height: 70%;
+    display: inline-block
+}
+
 // ==============================|| LIGHT BOX ||============================== //
 .slick-arrow:before {
     color: $grey500;

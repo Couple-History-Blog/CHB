@@ -17,23 +17,15 @@ const icons = {
 // ==============================|| MENU ITEMS - COUPLE ||============================== //
 
 const couple: NavItemType = {
-    id: 'couple-list',
-    title: <FormattedMessage id="커플" />,
+    id: 'admin-main',
+    title: <FormattedMessage id="관리자" />,
     type: 'group',
     children: [
         {
-            id: 'date-schedule',
-            title: <FormattedMessage id='데이트 일정' />,
+            id: 'admin-page',
+            title: <FormattedMessage id="관리자 페이지" />,
             type: 'item',
-            url: '/date/schedule',
-            icon: icons.IconCalendarHeart,
-            breadcrumbs: false
-        },
-        {
-            id: 'couple-profile',
-            title: <FormattedMessage id="커플 프로필" />,
-            type: 'item',
-            url: '/profile/couple',
+            url: '/admin-main',
             icon: icons.IconDeviceAnalytics,
             breadcrumbs: false
         }

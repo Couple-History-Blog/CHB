@@ -1,12 +1,12 @@
-// third-party
-import { FormattedMessage } from 'react-intl';
-
 // assets
 import { IconDashboard, IconDeviceAnalytics } from '@tabler/icons';
 import { IconCalendarHeart } from '@tabler/icons-react';
 
 // type
 import { NavItemType } from 'types';
+import ko from "../assets/language/ko.json";
+
+const KOR_WEB_MESSAGE = ko['web']['list']['couple'];
 
 const icons = {
     IconDashboard: IconDashboard,
@@ -18,12 +18,12 @@ const icons = {
 
 const couple: NavItemType = {
     id: 'couple-list',
-    title: <FormattedMessage id="커플" />,
+    title: KOR_WEB_MESSAGE.groupTitle,
     type: 'group',
     children: [
         {
             id: 'date-schedule',
-            title: <FormattedMessage id='데이트 일정' />,
+            title: KOR_WEB_MESSAGE.dateScheduleTitle,
             type: 'item',
             url: '/date/schedule',
             icon: icons.IconCalendarHeart,
@@ -31,7 +31,7 @@ const couple: NavItemType = {
         },
         {
             id: 'couple-profile',
-            title: <FormattedMessage id="커플 프로필" />,
+            title: KOR_WEB_MESSAGE.ProfileTitle,
             type: 'item',
             url: '/profile/couple',
             icon: icons.IconDeviceAnalytics,

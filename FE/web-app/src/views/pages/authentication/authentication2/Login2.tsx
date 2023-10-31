@@ -41,6 +41,7 @@ const Login = () => {
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
     const KOR_LOGIN_MESSAGE = ko['sign-in'];
+    const KOR_WEB_MESSAGE = ko['web'];
 
     return (
         <AuthWrapper2>
@@ -52,11 +53,6 @@ const Login = () => {
                         alignItems={matchDownSM ? 'center' : 'flex-start'}
                         justifyContent={matchDownSM ? 'center' : 'space-between'}
                     >
-                        <Grid item sx={{ display: { xs: 'none', md: 'block' }, m: 3 }}>
-                            <Link to="#" aria-label="theme logo">
-                                <Logo />
-                            </Link>
-                        </Grid>
                         <Grid
                             item
                             xs={12}
@@ -66,28 +62,25 @@ const Login = () => {
                             sx={{ minHeight: { xs: 'calc(100vh - 68px)', md: 'calc(100vh - 152px)' } }}
                         >
                             <Stack justifyContent="center" alignItems="center" spacing={5} m={2}>
-                                <Box component={Link} to="#" sx={{ display: { xs: 'block', md: 'none' } }}>
-                                    <Logo />
-                                </Box>
                                 <AuthCardWrapper border={matchDownMD}>
                                     <Grid container spacing={2} justifyContent="center">
                                         <Grid item>
+                                            <Grid item sx={{ textAlign: 'center', m: 3 }}>
+                                                <Link to="#" aria-label="theme logo">
+                                                    <Logo logoStyle='service-logo' />
+                                                </Link>
+                                            </Grid>
+{/*
                                             <Stack alignItems="center" justifyContent="center" spacing={1}>
                                                 <Typography
                                                     color={theme.palette.secondary.main}
                                                     gutterBottom
                                                     variant={matchDownSM ? 'h3' : 'h2'}
                                                 >
-                                                    Hi, Welcome Back
-                                                </Typography>
-                                                <Typography
-                                                    variant="caption"
-                                                    fontSize="16px"
-                                                    textAlign={matchDownSM ? 'center' : 'inherit'}
-                                                >
-                                                    Enter your credentials to continue
+                                                    { KOR_WEB_MESSAGE.signUpComment }
                                                 </Typography>
                                             </Stack>
+*/}
                                         </Grid>
                                         <Grid item xs={12}>
                                             <AuthLogin loginProp={2} />
@@ -103,7 +96,7 @@ const Login = () => {
                                                     variant="subtitle1"
                                                     sx={{ textDecoration: 'none' }}
                                                 >
-                                                    { KOR_LOGIN_MESSAGE.noAccountComment }
+                                                    { KOR_LOGIN_MESSAGE.signUpComment }
                                                 </Typography>
                                             </Grid>
                                         </Grid>

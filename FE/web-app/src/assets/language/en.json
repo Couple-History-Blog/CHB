@@ -1,9 +1,11 @@
 {
   "sign-in": {
     "signInSubTitle": "Sign in with Email address",
+    "alreadyHaveAccount": "Already have an account",
     "lostPassword": "Forgot Password?",
-    "noAccountComment":  "Don't have an account?",
+    "signUpComment":  "Don't have an account?",
     "saveSignInInfo":  "Keep me logged in",
+    "agreeWithProvideUserInformation": "Collecting and using personal information",
     "requiredId": "ID is required",
     "requiredPw": "Password is required",
     "inputId": "ID",
@@ -23,6 +25,7 @@
     "authorityPage": "You can join after sign-in.",
     "tokenValidTimeOver": "Login Session is Over.",
     "blockedByAuth": "You do not have access.",
+    "loginPageMainText": "Hi, Welcome Back",
     "list": {
       "couple": {
         "groupTitle": "Couple",

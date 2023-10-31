@@ -79,7 +79,7 @@ const Login = () => {
                                                 variant="subtitle1"
                                                 sx={{ textDecoration: 'none' }}
                                             >
-                                                { KOR_LOGIN_MESSAGE.noAccountComment }
+                                                { KOR_LOGIN_MESSAGE.signUpComment }
                                             </Typography>
                                         </Grid>
                                     </Grid>

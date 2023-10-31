@@ -25,6 +25,7 @@
         "@mui/x-date-pickers": "^5.0.12",
         "@reduxjs/toolkit": "^1.9.1",
         "@tabler/icons": "^1.119.0",
+        "@tabler/icons-react": "^2.40.0",
         "amazon-cognito-identity-js": "^6.1.2",
         "apexcharts": "^3.36.3",
         "axios": "1.2.1",

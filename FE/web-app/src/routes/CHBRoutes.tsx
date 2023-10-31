@@ -9,6 +9,7 @@ import { ADMIN, USER, COUPLE } from './Roles';
 
 // sample page routing
 import SamplePage from 'views/sample-page/index';
+import AuthGuard from "../utils/route-guard/AuthGuard";
 
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -16,7 +17,9 @@ import SamplePage from 'views/sample-page/index';
 const CHBRoutes = {
     path: '/',
     element: (
-        <MainLayout />
+        <AuthGuard>
+            <MainLayout />
+        </AuthGuard>
     ),
     children: [
         {
@@ -41,7 +44,7 @@ const CHBRoutes = {
                 <RolesConditionRoute
                     condition={ hasPermission(ADMIN) }
                     truePath='/admin-main'
-                    falsePath='/profile/user'
+                    falsePath='/'
                     element={ <AdminMainView /> }
                 />
             )

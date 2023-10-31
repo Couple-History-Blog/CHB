@@ -17,6 +17,9 @@ export const errorSweetAlert = (errMsg: string, alertType: string) => {
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
+        },
+        customClass: {
+            container: 'swal-toast-container'
         }
     })
 

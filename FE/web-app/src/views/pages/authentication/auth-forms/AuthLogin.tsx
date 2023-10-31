@@ -37,14 +37,6 @@ import {SUCCESS_ALERT, ERROR_ALERT, SERVER_TYPE_ALERT} from "../../../../store/a
 import {showErrorAlert} from "../../../../store/slices/alert";
 import {useDispatch} from "react-redux";
 
-// constant
-const initialAlertState: AlertState = {
-    alertType: null,
-    errorMessage: null,
-    successMessage: null,
-    showSuccessAlert: false,
-    showErrorAlert: false
-}
 // ===============================|| JWT LOGIN ||=============================== //
 
 const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {

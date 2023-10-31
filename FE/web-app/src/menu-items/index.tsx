@@ -6,12 +6,13 @@ import pages from './pages';
 import utilities from './utilities';
 import support from './support';
 import other from './other';
+import couple from './couple';
 import { NavItemType } from 'types';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems: { items: NavItemType[] } = {
-    items: [dashboard, application, forms, elements, pages, utilities, support, other]
+    items: [dashboard, couple, application, forms, elements, pages, utilities, support, other]
 };
 
 export default menuItems;

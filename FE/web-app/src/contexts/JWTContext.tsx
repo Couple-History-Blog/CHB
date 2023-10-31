@@ -70,7 +70,7 @@ const setSession = (serviceToken?: string | null) => {
 
 const setUserInfoToLocalStorage = (userInfo: any) => {
     localStorage.setItem('userId', userInfo.sub);
-    localStorage.setItem('userRoles', userInfo.roles);
+    localStorage.setItem('userRoles', userInfo.role);
 }
 
 const removeUserLocalStorage = () => {

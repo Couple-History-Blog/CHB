@@ -6,14 +6,13 @@ import MainRoutes from './MainRoutes';
 import LoginRoutes from './LoginRoutes';
 import AuthenticationRoutes from './AuthenticationRoutes';
 import CHBRoutes from './CHBRoutes';
-import Loadable from 'ui-component/Loadable';
 
-const PagesLanding = Loadable(lazy(() => import('views/pages/landing')));
+import CHBLayout from 'layout/MainLayout/coupleHistoryBlog';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-    return useRoutes([{ path: '/', element: <PagesLanding /> },
+    return useRoutes([{ path: '/', element: <CHBLayout /> },
         AuthenticationRoutes,
         LoginRoutes,
         MainRoutes,

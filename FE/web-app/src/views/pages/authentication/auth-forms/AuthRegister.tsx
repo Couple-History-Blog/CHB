@@ -126,26 +126,6 @@ const JWTRegister = ({ ...others }) => {
                                 })
                             );
                         }
-                        // TODO 회원가입 성공시 로그인 페이지로 이동
-/*                        if (scriptedRef.current) {
-                            setStatus({ success: true });
-                            setSubmitting(false);
-                            dispatch(
-                                openSnackbar({
-                                    open: true,
-                                    message: 'Your registration has been successfully completed.',
-                                    variant: 'alert',
-                                    alert: {
-                                        color: 'success'
-                                    },
-                                    close: false
-                                })
-                            );
-
-                            setTimeout(() => {
-                                navigate('/login', { replace: true });
-                            }, 1500);
-                        }*/
                     } catch (err: any) {
                         const errMsg = err.message;
                         dispatchAlert(
@@ -154,12 +134,6 @@ const JWTRegister = ({ ...others }) => {
                                 alertType: SIGNUP_TYPE_ALERT
                             })
                         );
-     /*                   console.error(err);
-                        if (scriptedRef.current) {
-                            setStatus({ success: false });
-                            setErrors({ submit: err.message });
-                            setSubmitting(false);
-                        }*/
                     }
                 }}
             >

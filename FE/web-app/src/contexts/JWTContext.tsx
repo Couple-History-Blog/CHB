@@ -9,7 +9,7 @@ import {
     LOGIN,
     LOGIN_TYPE_ALERT,
     LOGOUT,
-    LOGOUT_TYPE_ALERT, REGISTER_TYPE_ALERT,
+    LOGOUT_TYPE_ALERT, SIGNUP_TYPE_ALERT,
     SERVER_TYPE_ALERT,
     WEB_TYPE_ALERT
 } from 'store/actions';
@@ -27,9 +27,10 @@ import axios from 'utils/axios';
 import {KeyedObject} from 'types';
 import {InitialLoginContextProps, JWTContextType} from 'types/auth';
 import ko from "../assets/language/ko.json";
-import {signInAsync, userInfoAsync} from '../constant/api';
+import {signInAsync, signUpAsync, userInfoAsync} from '../constant/api';
 import {useDispatch, useSelector} from 'react-redux';
 import {errorSweetAlert, successSweetAlert} from "../utils/alertUtil";
+import {useNavigate} from "react-router-dom";
 
 
 const KOR_LOGIN_MESSAGE = ko['sign-in'];
@@ -82,6 +83,7 @@ const removeUserLocalStorage = () => {
 const JWTContext = createContext<JWTContextType | null>(null);
 
 export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
+    const navigate = useNavigate();
     const [state, dispatch] = useReducer(accountReducer, initialState);
     const dispatchAlert = useDispatch(); // Redux Toolkit의 디스패치 함수
     // @ts-ignore
@@ -190,31 +192,24 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     };
 
     const register = async (email: string, password: string, firstName: string, lastName: string) => {
-        // todo: this flow need to be recode as it not verified
-        /*        const body = {
-                    userId: userId,
-                    userPassword: userPassword
-                };
-                try {
-                    const response = await axios.post(saveUrl.signIn, JSON.stringify(body));
-                } catch (error) {
-                    console.log('ERR : ', error);
-                    throw error;
-                }*/
-/*        alert("isChecked => " + isChecked + "\n" +
-            "email => " + email + "\n" +
-            "password => " + password + "\n" +
-            "firstName => " + firstName + "\n" +
-            "lastName => " + lastName);*/
-
         const id = chance.bb_pin();
-        const response = await axios.post('/sign-up', {
-            id,
-            email,
-            password,
-            firstName,
-            lastName
-        });
+        const userName = firstName + lastName;
+        const body = {
+            userId: 'ID',
+            userPassword: password,
+            userName: userName,
+            userSexType: 'SEX',
+            userNickName: 'NICK_NAME',
+            userMail: email,
+            userBrthDate: new Date('2003-10-12')
+        };
+        const response = await signUpAsync(body).then();
+        dispatchAlert(
+            showSuccessAlert({
+                successMessage: KOR_LOGIN_MESSAGE.signUpSuccess,
+                alertType: SIGNUP_TYPE_ALERT
+            })
+        );
         let users = response.data;
 
         if (window.localStorage.getItem('users') !== undefined && window.localStorage.getItem('users') !== null) {
@@ -231,6 +226,9 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         }
 
         window.localStorage.setItem('users', JSON.stringify(users));
+        setTimeout(() => {  // 로딩 구현
+            navigate('/login', { replace: true });  // true는 뒤로가기 X
+        }, 1500);
     };
 
     const logout = () => {

@@ -38,7 +38,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { StringColorProps } from 'types';
 import ko from "../../../../assets/language/ko.json";
 import {clearAlert, showErrorAlert} from "../../../../store/slices/alert";
-import {SERVER_TYPE_ALERT, WEB_TYPE_ALERT} from "../../../../store/actions";
+import {SIGNUP_TYPE_ALERT, SERVER_TYPE_ALERT, WEB_TYPE_ALERT} from "../../../../store/actions";
 import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
 import {useSelector} from "react-redux";
 
@@ -107,8 +107,8 @@ const JWTRegister = ({ ...others }) => {
                 initialValues={{
                     email: 'test@gmail.com',
                     password: 'testPwd',
-                    firstName: 'test',
-                    lastName: 'admin',
+                    firstName: '김',
+                    lastName: '떙떙',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
@@ -147,12 +147,19 @@ const JWTRegister = ({ ...others }) => {
                             }, 1500);
                         }*/
                     } catch (err: any) {
-                        console.error(err);
+                        const errMsg = err.message;
+                        dispatchAlert(
+                            showErrorAlert({
+                                errorMessage: errMsg,
+                                alertType: SIGNUP_TYPE_ALERT
+                            })
+                        );
+     /*                   console.error(err);
                         if (scriptedRef.current) {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });
                             setSubmitting(false);
-                        }
+                        }*/
                     }
                 }}
             >

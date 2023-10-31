@@ -29,6 +29,7 @@ public class UserDTO implements UserDetails {
     private Boolean beCoupleYn;
     private String userRole;
     private Date userBrthDate;
+    private String userMail;            // TODO 회원가입 때 로직 추가
 
 
     @ElementCollection(fetch = FetchType.EAGER)

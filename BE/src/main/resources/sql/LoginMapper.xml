@@ -13,6 +13,7 @@
                              , USER_SEX_TYPE
                              , USER_BRTH_DATE
                              , USER_NICK_NAME
+                             , USER_MAIL
                             )
         VALUES (
                 #{userId}
@@ -21,6 +22,7 @@
               , #{userSexType}
               , #{userBrthDate}
               , #{userNickName}
+              , #{userMail}
                 )
     </insert>
 

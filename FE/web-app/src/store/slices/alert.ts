@@ -31,6 +31,7 @@ const alertSlice = createSlice({
         },
         clearAlert: (state) => {
             state.errorMessage = null;
+            state.successMessage = null;
             state.showErrorAlert = false;
             state.showSuccessAlert = false;
             state.alertType = null;

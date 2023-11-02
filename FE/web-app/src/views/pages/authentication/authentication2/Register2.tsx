@@ -72,22 +72,6 @@ const Register = () => {
                                                     <Logo logoStyle='service-logo' />
                                                 </Link>
                                             </Grid>
-{/*                                            <Stack alignItems="center" justifyContent="center" spacing={1}>
-                                                <Typography
-                                                    color={theme.palette.secondary.main}
-                                                    gutterBottom
-                                                    variant={matchDownSM ? 'h3' : 'h2'}
-                                                >
-                                                    Sign up
-                                                </Typography>
-                                                <Typography
-                                                    variant="caption"
-                                                    fontSize="16px"
-                                                    textAlign={matchDownSM ? 'center' : 'inherit'}
-                                                >
-                                                    Enter your credentials to continue
-                                                </Typography>
-                                            </Stack>*/}
                                         </Grid>
                                         <Grid item xs={12}>
                                             <AuthRegister />
@@ -103,7 +87,7 @@ const Register = () => {
                                                     variant="subtitle1"
                                                     sx={{ textDecoration: 'none' }}
                                                 >
-                                                    { KOR_LOGIN_MESSAGE.alreadyHaveAccount }
+                                                    { KOR_LOGIN_MESSAGE.haveAccount }
                                                 </Typography>
                                             </Grid>
                                         </Grid>

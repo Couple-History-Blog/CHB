@@ -3,6 +3,10 @@ import firebase from 'firebase/compat/app';
 
 // project imports
 import { UserProfile } from 'types/user-profile';
+import {Dispatch, SetStateAction} from "react";
+import {StringColorProps} from "./index";
+import {FormikErrors, FormikTouched} from "formik";
+import {Theme} from "@mui/material/styles";
 
 export type FirebaseContextType = {
     isLoggedIn: boolean;
@@ -37,7 +41,7 @@ export type JWTContextType = {
     user?: UserProfile | null | undefined;
     logout: () => void;
     login: (email: string, password: string) => Promise<void>;
-    register: (email: string, password: string, firstName: string, lastName: string) => Promise<void>;
+    register: (isAvailableId: boolean, userId:string, sexType: string, birthDate: string, email: string, password: string, firstName: string, lastName: string) => Promise<void>;
     resetPassword: (email: string) => void;
     updateProfile: VoidFunction;
 };

@@ -12,6 +12,7 @@
 # Version
 - `NODE`         : 16.1.0
 - `NPM`          : 7.11.2
+- `type-script`   : 4.9.4
 
 # 실행
 - `FE`           : npm run start:custom

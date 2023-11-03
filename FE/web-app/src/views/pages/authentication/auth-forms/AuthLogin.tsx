@@ -33,9 +33,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ko from '../../../../assets/language/ko.json';
 import alertReducer from "../../../../store/alertReducer";
 import {AlertState} from "../../../../types/alert";
-import {SUCCESS_ALERT, ERROR_ALERT, SERVER_TYPE_ALERT} from "../../../../store/actions";
+import { LOGIN_FORM_TYPE } from "../../../../store/actions";
 import {showErrorAlert} from "../../../../store/slices/alert";
 import {useDispatch} from "react-redux";
+import CredentialInputForm from "./CredentialInputForm";
 
 // ===============================|| JWT LOGIN ||=============================== //
 
@@ -54,6 +55,7 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
         setShowPassword(!showPassword);
     };
     const KOR_LOGIN_MESSAGE = ko['sign-in'];
+    const KOR_VALID_MESSAGE = ko['valid'];
     const KOR_SERVER_MESSAGE = ko['server'];
 
     const handleMouseDownPassword = (event: React.MouseEvent) => {
@@ -61,6 +63,11 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
     };
 
     return (
+        <CredentialInputForm
+            formType={ LOGIN_FORM_TYPE }
+            // formType={ REGISTER_FORM_TYPE }
+        />
+/*
         <Formik
             initialValues={{
                 userId: 'wtf2327',
@@ -68,8 +75,12 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                 submit: null
             }}
             validationSchema={Yup.object().shape({
-                userId: Yup.string().max(20, KOR_LOGIN_MESSAGE.inputUserIdOverStandardLength).required(KOR_LOGIN_MESSAGE.requiredId),
-                userPassword: Yup.string().max(30, KOR_LOGIN_MESSAGE.inputUserPwOverStandardLength).required(KOR_LOGIN_MESSAGE.requiredPw)
+                userId: Yup.string()
+                    .required(KOR_VALID_MESSAGE.idNullValid)
+                    .max(20, KOR_VALID_MESSAGE.idLengthOverValid),
+                userPassword: Yup.string()
+                    .required(KOR_VALID_MESSAGE.passwordNullValid)
+                    .max(30, KOR_VALID_MESSAGE.passwordLengthOverValid)
             })}
             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                 try {
@@ -169,11 +180,6 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                                 variant="subtitle1"
                                 component={Link}
                                 to='/forgot'
-/*                                to={
-                                    loginProp
-                                        ? `/pages/forgot-password/forgot-password${loginProp}`
-                                        : '/pages/forgot-password/forgot-password3'
-                                }*/
                                 color="secondary"
                                 sx={{ textDecoration: 'none' }}
                             >
@@ -181,12 +187,6 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                             </Typography>
                         </Grid>
                     </Grid>
-
-{/*                    {errors.submit && (
-                        <Box sx={{ mt: 3 }}>
-                            <FormHelperText error>{errors.submit}</FormHelperText>
-                        </Box>
-                    )}*/}
                     <Box sx={{ mt: 2 }}>
                         <AnimateButton>
                             <Button color="secondary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
@@ -197,6 +197,7 @@ const JWTLogin = ({ loginProp, ...others }: { loginProp?: number }) => {
                 </form>
             )}
         </Formik>
+*/
     );
 };
 

@@ -16,6 +16,7 @@ import { AuthSliderProps } from 'types';
 
 // assets
 import imgMain from 'assets/images/auth/img-a2-forgotpass.svg';
+import ko from "../../../../assets/language/ko.json";
 
 // carousel items
 const items: AuthSliderProps[] = [
@@ -39,6 +40,7 @@ const ForgotPassword = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
+    const KOR_LOGIN_MESSAGE = ko['sign-in'];
 
     return (
         <AuthWrapper2>
@@ -50,11 +52,6 @@ const ForgotPassword = () => {
                         alignItems={matchDownSM ? 'center' : 'flex-start'}
                         justifyContent={matchDownSM ? 'center' : 'space-between'}
                     >
-                        <Grid item sx={{ display: { xs: 'none', md: 'block' }, m: 3 }}>
-                            <Link to="#" aria-label="theme logo">
-                                <Logo />
-                            </Link>
-                        </Grid>
                         <Grid
                             item
                             xs={12}
@@ -64,9 +61,6 @@ const ForgotPassword = () => {
                             sx={{ minHeight: { xs: 'calc(100vh - 68px)', md: 'calc(100vh - 152px)' } }}
                         >
                             <Stack justifyContent="center" alignItems="center" spacing={5} m={2}>
-                                <Box component={Link} to="#" sx={{ display: { xs: 'block', md: 'none' } }}>
-                                    <Logo />
-                                </Box>
                                 <AuthCardWrapper border={matchDownMD}>
                                     <Grid container spacing={2} justifyContent="center">
                                         <Grid item xs={12}>

@@ -16,13 +16,6 @@ const Load = ( { isLoading, setIsLoading }: LoaderProps) => {
         >
             <CircularProgress color="inherit" />
         </Backdrop>
-/*        <Dialog onClose={() => {}} aria-labelledby="simple-dialog-title" open={isLoading}>
-            {isLoading && (
-                <Grid container justifyContent="center" alignItems="center" sx={{ padding: '2vh 2vw' }}>
-                    <CircularProgress color="secondary" aria-label="progress with secondary color" />
-                </Grid>
-            )}
-        </Dialog>*/
     )
 }
 

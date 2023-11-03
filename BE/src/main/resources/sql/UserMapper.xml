@@ -19,4 +19,13 @@
          WHERE USER_ID = #{userId}
     </select>
 
+    <select id="canUseId"
+            parameterType="java.lang.String"
+            resultType="java.lang.Boolean">
+        SELECT NOT EXISTS(
+                            SELECT 1
+                              FROM USER_INFO
+                             WHERE USER_ID = #{userId}
+                        ) as result
+    </select>
 </mapper>

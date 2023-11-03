@@ -37,6 +37,7 @@ import {useNavigate} from "react-router-dom";
 const KOR_LOGIN_MESSAGE = ko['sign-in'];
 const KOR_LOGOUT_MESSAGE = ko['sign-out'];
 const KOR_SERVER_MESSAGE = ko['server'];
+const KOR_VALID_MESSAGE = ko['valid'];
 const KOR_WEB_MESSAGE = ko['web'];
 const chance = new Chance();
 
@@ -193,17 +194,22 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         }
     };
 
-    const register = async (email: string, password: string, firstName: string, lastName: string) => {
+    const register = async (isAvailableId: boolean, userId: string, sexType:string, birthDate: string, email: string, password: string, firstName: string, lastName: string) => {
+        if (!isAvailableId) {
+            dispatchAlert(showErrorAlert({errorMessage: KOR_VALID_MESSAGE.idCheckCanUse,
+                alertType: SERVER_TYPE_ALERT}));
+            return;
+        }
         const id = chance.bb_pin();
         const userName = firstName + lastName;
         const body = {
-            userId: 'ID',
+            userId: userId,
             userPassword: password,
             userName: userName,
-            userSexType: 'SEX',
+            userSexType: sexType,
             userNickName: 'NICK_NAME',
             userMail: email,
-            userBrthDate: new Date('2003-10-12')
+            userBrthDate: new Date(birthDate)
         };
         const response = await signUpAsync(body).then();
         let users = response.data;
@@ -216,7 +222,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     id,
                     email,
                     password,
-                    name: `${firstName} ${lastName}`
+                    name: `${userName}`
                 }
             ];
         }

@@ -11,3 +11,6 @@ export const LOGOUT_TYPE_ALERT = 'LOGOUT'
 export const SIGNUP_TYPE_ALERT = 'REGISTER'
 export const SERVER_TYPE_ALERT = 'SERVER';
 export const WEB_TYPE_ALERT = 'WEB';
+
+export const REGISTER_FORM_TYPE = 'REGISTER';
+export const LOGIN_FORM_TYPE = 'LOGIN';

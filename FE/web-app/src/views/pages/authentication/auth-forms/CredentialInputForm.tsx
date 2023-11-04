@@ -13,7 +13,7 @@ import {
     Button, Checkbox, FormControl, FormControlLabel,
     FormHelperText,
     Grid,
-    IconButton,
+    IconButton, IconProps,
     InputAdornment,
     MenuItem,
     TextField, Typography,
@@ -39,6 +39,9 @@ import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+// fontawesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { fasAddressCard as addressCardIcon } from 'utils/font-awesome/icons';
 
 // @ts-ignore
 const CredentialInputForm = ({formType, ...others}) => {
@@ -374,8 +377,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                                                 style: {height: '62.12px'},
                                                 startAdornment: (
                                                     <InputAdornment position="start">
-                                                        <BadgeIcon fontSize="small"
-                                                                          sx={{color: theme.palette.grey[700]}}/>
+                                                        <FontAwesomeIcon icon={ addressCardIcon } size="lg" />
                                                     </InputAdornment>
                                                 )
                                             }}
@@ -400,10 +402,8 @@ const CredentialInputForm = ({formType, ...others}) => {
                                                 style: {height: '62.12px'},
                                                 startAdornment: (
                                                     <InputAdornment position="start">
-{/*
                                                         <EmailTwoToneIcon fontSize="small"
                                                                           sx={{color: theme.palette.grey[700]}}/>
-*/}
                                                     </InputAdornment>
                                                 )
                                             }}

@@ -64,6 +64,12 @@ const Avatar = ({ className, color, outline, size, sx, ...others }: avatarProps)
                 height: theme.spacing(10.25)
             };
             break;
+        case 'customXl':
+            sizeSX = {
+                width: theme.spacing(35),       // 35 * 8px = 280px
+                height: theme.spacing(35)       // 35 * 8px = 280px
+            };
+            break;
         case 'md':
             sizeSX = {
                 width: theme.spacing(7.5),

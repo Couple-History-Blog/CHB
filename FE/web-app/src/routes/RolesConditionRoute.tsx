@@ -52,11 +52,12 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ condition, t
     useEffect(() => {
         if (alertState.showErrorAlert) {
             errorSweetAlert(alertState.errorMessage, alertState.alertType);
+            dispatchAlert(clearAlert());
         }
         if (alertState.showSuccessAlert) {
             successSweetAlert(alertState.successMessage, alertState.alertType);
+            dispatchAlert(clearAlert());
         }
-        dispatchAlert(clearAlert());
     }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
 
     return null;

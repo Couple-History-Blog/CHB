@@ -46,6 +46,7 @@
     "list": {
       "couple": {
         "groupTitle": "Couple",
+        "applyCoupleAccountTitle": "Apply Couple Account",
         "dateScheduleTitle": "Date Schedule",
         "ProfileTitle": "Couple Profile"
       },

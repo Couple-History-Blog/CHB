@@ -45,6 +45,7 @@
     "list": {
       "couple": {
         "groupTitle": "커플",
+        "applyCoupleAccountTitle": "커플 계정 신청",
         "dateScheduleTitle": "데이트 일정",
         "ProfileTitle": "커플 프로필"
       },

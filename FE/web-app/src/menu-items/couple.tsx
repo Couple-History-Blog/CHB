@@ -1,6 +1,6 @@
 // assets
 import { IconDashboard, IconDeviceAnalytics } from '@tabler/icons';
-import { IconCalendarHeart } from '@tabler/icons-react';
+import { IconCalendarHeart, IconHeartSearch } from '@tabler/icons-react';
 
 // type
 import { NavItemType } from 'types';
@@ -11,8 +11,10 @@ const KOR_WEB_MESSAGE = ko['web']['list']['couple'];
 const icons = {
     IconDashboard: IconDashboard,
     IconDeviceAnalytics: IconDeviceAnalytics,
+    IconHeartSearch: IconHeartSearch,
     IconCalendarHeart: IconCalendarHeart
 };
+
 
 // ==============================|| MENU ITEMS - COUPLE ||============================== //
 
@@ -21,6 +23,14 @@ const couple: NavItemType = {
     title: KOR_WEB_MESSAGE.groupTitle,
     type: 'group',
     children: [
+        {
+            id: 'apply-couple-account',
+            title: KOR_WEB_MESSAGE.applyCoupleAccountTitle,
+            type: 'item',
+            url: '/apply-couple-account',
+            icon: icons.IconHeartSearch,
+            breadcrumbs: false
+        },
         {
             id: 'date-schedule',
             title: KOR_WEB_MESSAGE.dateScheduleTitle,

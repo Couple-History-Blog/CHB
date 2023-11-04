@@ -4,6 +4,7 @@ import CoupleProfileView from 'views/chb/couple/CoupleProfileView';
 import DateScheduleView from 'views/chb/couple/DateScheduleView';
 import UserProfileView from 'views/chb/user/UserProfileView';
 import AdminMainView from 'views/chb/admin/AdminView';
+import ApplyCoupleAccountView from "../views/chb/couple/ApplyCoupleAccountView";
 import RolesConditionRoute, { hasPermission } from '../routes/RolesConditionRoute';
 import { ADMIN, USER, COUPLE } from './Roles';
 
@@ -13,6 +14,7 @@ import AuthGuard from "../utils/route-guard/AuthGuard";
 
 
 // ==============================|| MAIN ROUTING ||============================== //
+const applyCoupleAccountPath = '/apply-couple-account';
 
 const CHBRoutes = {
     path: '/',
@@ -27,12 +29,30 @@ const CHBRoutes = {
             element: <SamplePage />
         },
         {
+            path: applyCoupleAccountPath,
+            element: <ApplyCoupleAccountView />
+        },
+        {
             path: '/profile/couple',
-            element: <CoupleProfileView />
+            element: (
+                <RolesConditionRoute
+                    condition={ hasPermission(COUPLE) }
+                    truePath='/profile/couple'
+                    falsePath={ applyCoupleAccountPath }
+                    element={ <CoupleProfileView /> }
+                />
+                )
         },
         {
             path: '/date/schedule',
-            element: <DateScheduleView />
+            element: (
+                <RolesConditionRoute
+                    condition={ hasPermission(COUPLE) }
+                    truePath='/date/schedule'
+                    falsePath={ applyCoupleAccountPath }
+                    element={ <DateScheduleView /> }
+                />
+            )
         },
         {
             path: '/profile/user',

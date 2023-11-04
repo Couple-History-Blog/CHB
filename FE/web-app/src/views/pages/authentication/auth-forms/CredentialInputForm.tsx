@@ -8,6 +8,18 @@ import {
     SIGNUP_TYPE_ALERT,
     WEB_TYPE_ALERT
 } from "../../../../store/actions";
+import AnimateButton from "../../../../ui-component/extended/AnimateButton";
+import React, {useEffect, useState} from "react";
+import ko from "../../../../assets/language/ko.json";
+import {useSelector} from "react-redux";
+import {useDispatch} from "../../../../store";
+import {StringColorProps} from "../../../../types";
+import useAuth from "../../../../hooks/useAuth";
+import {checkAvailableIdAsync} from "../../../../constant/api";
+import {strengthColor, strengthIndicator} from "../../../../utils/password-strength";
+import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
+
+// material-ui
 import {
     Box,
     Button, Checkbox, FormControl, FormControlLabel,
@@ -19,29 +31,23 @@ import {
     TextField, Typography,
     useMediaQuery
 } from "@mui/material";
-import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import BadgeIcon from '@mui/icons-material/Badge';
-import AnimateButton from "../../../../ui-component/extended/AnimateButton";
-import React, {useEffect} from "react";
+import EmailTwoToneIcon from "@mui/icons-material/EmailTwoTone";
 import {useTheme} from "@mui/material/styles";
-import ko from "../../../../assets/language/ko.json";
-import {useSelector} from "react-redux";
-import {useDispatch} from "../../../../store";
-import {StringColorProps} from "../../../../types";
-import useAuth from "../../../../hooks/useAuth";
-import {checkAvailableIdAsync} from "../../../../constant/api";
-import {strengthColor, strengthIndicator} from "../../../../utils/password-strength";
-import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
-import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
-import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
-import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
 import LockTwoToneIcon from "@mui/icons-material/LockTwoTone";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
+import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
+import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fasAddressCard as addressCardIcon } from 'utils/font-awesome/icons';
+import {DateField} from "@mui/x-date-pickers/DateField/DateField";
 
 // @ts-ignore
 const CredentialInputForm = ({formType, ...others}) => {
@@ -51,6 +57,7 @@ const CredentialInputForm = ({formType, ...others}) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const [strength, setStrength] = React.useState(0);
     const [level, setLevel] = React.useState<StringColorProps>();
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     // { agree }
     const [checked, setChecked] = React.useState(true);
@@ -337,9 +344,33 @@ const CredentialInputForm = ({formType, ...others}) => {
                                         )}
                                     </Field>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12} sm={6} style={{ marginTop: '-16px' }}>
                                     <Field name='birthDate'>
                                         {({field}: { field: FieldInputProps<string>; }) => (
+                                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                                <DatePicker
+                                                    onChange={(newValue) => {
+                                                        newValue ? values.birthDate = newValue.toString() : values.birthDate = '';
+                                                        newValue ? setSelectedDate(new Date(newValue)) : console.log('XXXXX');
+                                                    }}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            fullWidth
+                                                            error={Boolean(touched.birthDate && errors.birthDate)}
+                                                            helperText={Boolean(touched.birthDate && errors.birthDate) ? errors.birthDate : null}
+                                                            margin="normal"
+                                                            { ...params }
+                                                        />
+                                                        )}
+                                                    label="생일"
+                                                    value={selectedDate}
+                                                    inputFormat="yyyy년 MM월 dd일"
+                                                    InputProps={{
+                                                        style: {height: '62.12px'}
+                                                    }}
+                                                />
+                                            </LocalizationProvider>
+/*
                                             <TextField
                                                 fullWidth
                                                 error={Boolean(touched.birthDate && errors.birthDate)}
@@ -357,6 +388,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                                                     shrink: true,
                                                     style: {position: 'relative', top: '-15px', display: 'block'}
                                                 }}/>
+*/
                                         )}
                                     </Field>
                                 </Grid>

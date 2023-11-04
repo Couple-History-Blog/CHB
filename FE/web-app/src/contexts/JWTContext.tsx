@@ -194,7 +194,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         }
     };
 
-    const register = async (isAvailableId: boolean, userId: string, sexType:string, birthDate: string, email: string, password: string, firstName: string, lastName: string) => {
+    const register = async (isAvailableId: boolean, userId: string, sexType:string, birthDate: string, email: string, password: string, firstName: string, lastName: string, nickName: string) => {
         if (!isAvailableId) {
             dispatchAlert(showErrorAlert({errorMessage: KOR_VALID_MESSAGE.idCheckCanUse,
                 alertType: SERVER_TYPE_ALERT}));
@@ -207,7 +207,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             userPassword: password,
             userName: userName,
             userSexType: sexType,
-            userNickName: 'NICK_NAME',
+            userNickName: nickName,
             userMail: email,
             userBrthDate: new Date(birthDate)
         };

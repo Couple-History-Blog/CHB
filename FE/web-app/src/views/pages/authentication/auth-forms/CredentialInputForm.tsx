@@ -211,7 +211,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                             .nullable()
                         : Yup.string(),
                     nickName: formType === REGISTER_FORM_TYPE
-                        ? Yup.string().required(KOR_VALID_MESSAGE.sexTypeNullValid)
+                        ? Yup.string().required(KOR_VALID_MESSAGE.nickNameNullValid)
                             .nullable()
                         : Yup.string(),
                     birthDate: formType === REGISTER_FORM_TYPE
@@ -238,7 +238,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                 onSubmit={async (values, {setErrors, setStatus, setSubmitting}) => {
                     try {
                         if (checked) {
-                            if (formType === REGISTER_FORM_TYPE) await register(isAvailableId, values.userId, values.sexType, values.birthDate, values.email, values.password, values.firstName, values.lastName);
+                            if (formType === REGISTER_FORM_TYPE) await register(isAvailableId, values.userId, values.sexType, values.birthDate, values.email, values.password, values.firstName, values.lastName, values.nickName);
                             else if (formType === LOGIN_FORM_TYPE) await login(values.userId, values.password);
                         } else {
                             dispatchAlert(
@@ -361,7 +361,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                                     </Field>
                                 </Grid>
                             </Grid>
-                                <Field name='NickName'>
+                                <Field name='nickName'>
                                     {({field}: { field: FieldInputProps<string>; }) => (
                                         <TextField
                                             fullWidth
@@ -442,7 +442,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                                         endAdornment: formType === REGISTER_FORM_TYPE && (
                                             <InputAdornment position="end">
                                                 <IconButton
-                                                    disabled={!isUsernameMinLengthValid}
+                                                    disabled={!isUsernameMinLengthValid || isAvailableId}
                                                     aria-label="toggle password visibility"
                                                     onClick={() => checkAvailableId(values.userId)}
                                                     onMouseDown={handleMouseDownPassword}

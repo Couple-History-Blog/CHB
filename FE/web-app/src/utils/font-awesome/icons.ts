@@ -1,7 +1,10 @@
 // style-solid
 import { 
     faAddressCard as fasAddressCard,
-    faUserMagnifyingGlass as fasUserMagnifyingGlass
+    faUserMagnifyingGlass as fasUserMagnifyingGlass,
+    faCircleHeart as fasCircleHeart,
+    faUserHairLong as fasUserHairLong,
+    faUserHair as fasUserHair
 } from "@fortawesome/pro-solid-svg-icons";
 
 // style-regular
@@ -25,11 +28,15 @@ import {
 // style-duotone
 import { 
     faAddressCard as fadAddressCard,
-    faUserMagnifyingGlass as fadUserMagnifyingGlass
+    faUserMagnifyingGlass as fadUserMagnifyingGlass,
+    faCircleHeart as fadCircleHeart
 } from '@fortawesome/pro-duotone-svg-icons'
 
 // [[ ===================== fontawesome ===================== ]]
 export {
     fasAddressCard, farAddressCard, falAddressCard, fatAddressCard, fadAddressCard,
-    fasUserMagnifyingGlass, farUserMagnifyingGlass, falUserMagnifyingGlass, fatUserMagnifyingGlass, fadUserMagnifyingGlass
+    fasUserMagnifyingGlass, farUserMagnifyingGlass, falUserMagnifyingGlass, fatUserMagnifyingGlass, fadUserMagnifyingGlass,
+    fasCircleHeart, fadCircleHeart,
+    fasUserHairLong,
+    fasUserHair
 }

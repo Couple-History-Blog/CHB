@@ -14,3 +14,5 @@ export const WEB_TYPE_ALERT = 'WEB';
 
 export const REGISTER_FORM_TYPE = 'REGISTER';
 export const LOGIN_FORM_TYPE = 'LOGIN';
+
+export const APPLY_COUPLE_ACCOUNT_FORM_TYPE = 'APPLY_COUPLE_ACCOUNT';

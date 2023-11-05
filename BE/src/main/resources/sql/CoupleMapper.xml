@@ -22,14 +22,12 @@
         INSERT INTO BE_COUPLE_WAIT_STATUS (
                                            OWN_USER_ID
                                          , OTHER_USER_ID
-                                         , OWN_USER_ACCEPT_YN
-                                         , OTHER_USER_ACCEPT_YN
+                                         , BE_COUPLE_DATE
                                           )
         VALUES (
                 #{userId}
               , #{otherUserId}
-              , #{ownUserAcceptYn}
-              , #{otherUserAcceptYn}
+              , #{beCoupleDate}
                )
     </insert>
 
@@ -38,7 +36,7 @@
         INSERT INTO COUPLE_INFO (
                                  USER_ID
                                , COUPLE_ID
-                               , START_COUPLE_DATE
+                               , BE_COUPLE_DATE
                                , COUPLE_ING_DATE
                                , LOAD_DTM
                                 )

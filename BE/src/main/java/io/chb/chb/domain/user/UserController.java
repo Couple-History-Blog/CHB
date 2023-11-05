@@ -32,11 +32,9 @@ public class UserController {
         throw new BaseException(ErrorType.CURRENT_USER_NOT_EXISTS);
     }
 
-    @ApiOperation(value = "아이디 중복 확인", notes = "아이디가 이미 존재하는지 확인.")
-    @GetMapping("/check-available-id")
+    @ApiOperation(value = "존재하는 사용자인지 확인", notes = "아이디가 이미 존재하는지 확인.")
+    @GetMapping("/check-exist-user")
     public boolean checkAvailableId(@RequestParam(value = "userId", required = false) String userId) {
         return userService.canUseId(userId);
     }
-
-
 }

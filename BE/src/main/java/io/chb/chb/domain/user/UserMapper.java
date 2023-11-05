@@ -7,5 +7,5 @@ public interface UserMapper {
 
     UserDTO findByUserId(String userId);
 
-    Boolean canUseId(String userId);
+    boolean canUseId(String userId);
 }

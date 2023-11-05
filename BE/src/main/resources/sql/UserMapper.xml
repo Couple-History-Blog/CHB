@@ -22,10 +22,9 @@
     <select id="canUseId"
             parameterType="java.lang.String"
             resultType="java.lang.Boolean">
-        SELECT NOT EXISTS(
-                            SELECT 1
-                              FROM USER_INFO
-                             WHERE USER_ID = #{userId}
-                        ) as result
+        SELECT IF( COUNT(1) = 1, 1, 0 )
+          FROM USER_INFO
+         WHERE USER_ID = #{userId}
     </select>
+
 </mapper>

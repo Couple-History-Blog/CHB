@@ -162,6 +162,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         try {
             const response = await signInAsync({userId, userPassword});
             const {accessToken, user} = response.data;
+            localStorage.setItem('userId', user);
             setSession(accessToken);
             dispatch({
                 type: LOGIN,
@@ -209,7 +210,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             userSexType: sexType,
             userNickName: nickName,
             userMail: email,
-            userBrthDate: new Date(birthDate)
+            userBrthDate: new Date(birthDate).toLocaleDateString('fr-CA')
         };
         const response = await signUpAsync(body).then();
         let users = response.data;
@@ -249,6 +250,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                 alertType: LOGOUT_TYPE_ALERT
             })
         );
+        removeUserLocalStorage();
         setSession(null);
         dispatch({type: LOGOUT});
     };

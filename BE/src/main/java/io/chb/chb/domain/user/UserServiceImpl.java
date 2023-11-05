@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean canUseId(String userId) {
+    public boolean canUseId(String userId) {
         return userMapper.canUseId(userId);
     }
 }

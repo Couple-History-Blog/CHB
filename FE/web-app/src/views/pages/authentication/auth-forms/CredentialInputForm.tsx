@@ -15,7 +15,7 @@ import {useSelector} from "react-redux";
 import {useDispatch} from "../../../../store";
 import {StringColorProps} from "../../../../types";
 import useAuth from "../../../../hooks/useAuth";
-import {checkAvailableIdAsync} from "../../../../constant/api";
+import {checkExistUser} from "../../../../constant/api";
 import {strengthColor, strengthIndicator} from "../../../../utils/password-strength";
 import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
 
@@ -127,7 +127,23 @@ const CredentialInputForm = ({formType, ...others}) => {
                     alertType: SERVER_TYPE_ALERT
                 }));
             } else {
-                const response = await checkAvailableIdAsync({id});
+                const response = await checkExistUser({id});
+                const isExistUser = response.data;
+                if (isExistUser) {
+                    setIsAvailableId(false);
+                    dispatchAlert(showErrorAlert({
+                        errorMessage: KOR_SERVER_MESSAGE.alreadyExistUserId,
+                        alertType: SERVER_TYPE_ALERT
+                    }));
+                } else {
+                    if (isFirstAvailableId) setIsFirstAvailableId(false);
+                    setIsAvailableId(true);
+                    dispatchAlert(showSuccessAlert({
+                        successMessage: KOR_SERVER_MESSAGE.canUseId,
+                        alertType: SERVER_TYPE_ALERT
+                    }));
+                }
+/*
                 const canUseId = response.data;
                 if (canUseId) {
                     if (isFirstAvailableId) setIsFirstAvailableId(false);
@@ -143,6 +159,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                         alertType: SERVER_TYPE_ALERT
                     }));
                 }
+*/
             }
         } catch (err) {
             // @ts-ignore

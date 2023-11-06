@@ -101,7 +101,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "start:custom": "export PORT=7200 && react-scripts start",
+    "start:custom": "export PUBLIC_URL=/chb PORT=7200 && react-scripts start",
     "build": "react-app-rewired build",
     "lint": "eslint --ext .ts,.tsx ./src",
     "test": "react-scripts test",

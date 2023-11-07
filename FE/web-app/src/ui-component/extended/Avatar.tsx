@@ -19,7 +19,7 @@ interface avatarProps extends AvatarProps {
     sx?: AvatarProps['sx'];
     children?: ReactNode;
     outline?: boolean;
-    size?: 'badge' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'customXl';
+    size?: 'badge' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'customXl' | 'customXxl';
 }
 
 const Avatar = ({ className, color, outline, size, sx, ...others }: avatarProps) => {
@@ -68,6 +68,12 @@ const Avatar = ({ className, color, outline, size, sx, ...others }: avatarProps)
             sizeSX = {
                 width: theme.spacing(28.75), // 28.75 * 8px = 230px
                 height: theme.spacing(28.75) // 28.75 * 8px = 230px
+            };
+            break;
+        case 'customXxl':
+            sizeSX = {
+                width: theme.spacing(41.25),
+                height: theme.spacing(41.25),
             };
             break;
         case 'md':

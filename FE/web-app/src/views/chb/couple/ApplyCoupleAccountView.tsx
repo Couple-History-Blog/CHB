@@ -13,9 +13,9 @@ import {
 	LOGIN_FORM_TYPE,
 	SERVER_TYPE_ALERT, SIGNUP_TYPE_ALERT, WEB_TYPE_ALERT
 } from "../../../store/actions";
-import User1 from 'assets/images/users/JAKE.png';
 import Avatar from 'ui-component/extended/Avatar';
 import React, {useEffect, useState} from "react";
+import { convertImageToBase64 } from 'utils/UserProfileUtils';
 
 // fontawesome
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -37,17 +37,11 @@ import {useDispatch} from "../../../store";
 import {errorSweetAlert, successSweetAlert} from "../../../utils/alertUtil";
 import {useTheme} from "@mui/material/styles";
 import {StringColorProps} from "../../../types";
-import {applyCoupleAccount, checkExistUser, getCurrentUserGender} from "../../../constant/api";
+import {applyCoupleAccountAsync, checkExistUserAsync, getCurrentUserGenderAsync} from "../../../constant/api";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
-
-
-
-// const userGender: string = 'MALE';
-// const userGender: string = 'FEMALE';
-
-
+import {getCookie} from "../../../utils/CookieUtils";
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
@@ -84,8 +78,16 @@ const SamplePage = ({...others}) => {
 
 	const [userGender, setUserGender] = useState('');
 
-	const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
+	// const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
+	const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
 
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const [otherUser, setOtherUser] = useState('');
+	const [findOtherUser, setFindOtherUser] = useState<boolean>(false);
+
+	const [loginUserProfile, setLoginUserProfile] = useState('');
+	const [otherUserProfile, setOtherUserProfile] = useState('');
 
 
 	// [[ ===================== useEffect ===================== ]]
@@ -103,9 +105,15 @@ const SamplePage = ({...others}) => {
 	// ID Valid useEffect
 	useEffect(() => {
 		// 아이디 중복체크 한 후 값 변경하는지 체크
-		if (!isFirstAvailableId && isAvailableId) setIsAvailableId(false);
+		if (!isFirstAvailableId && isAvailableId) {
+			setIsAvailableId(false);
+			setFindOtherUser(false);
+		}
 		// 아이디 최소 입력 글자 수 만족하지 않거나 공백 포함되어 있으면 중복여부 확인 불가능
-		if (inputUserId.length >= 5 && !isGap(inputUserId)) setIsUsernameMinLengthValid(true);
+		if (inputUserId.length >= 5 && !isGap(inputUserId)) {
+			setIsUsernameMinLengthValid(true);
+			setFindOtherUser(false);
+		}
 		else setIsUsernameMinLengthValid(false);
 	}, [inputUserId]);
 
@@ -114,11 +122,22 @@ const SamplePage = ({...others}) => {
 		fetchUserGender();
 	}, [])
 
+	useEffect(() => {
+		const fetchProfileData = async () => {
+			try {
+				const profile64Data = await convertImageToBase64(currentUserId);
+				setLoginUserProfile(profile64Data);
+			} catch (error) {
+				alert("ERR_APPLY_COUPLE_ACCOUNT");
+			}
+		};
+		fetchProfileData();
+	}, [currentUserId]);
 
 	// [[ ===================== Function ===================== ]]
 	async function fetchUserGender() {
 		try {
-			const response = await getCurrentUserGender({currentUserId});
+			const response = await getCurrentUserGenderAsync({currentUserId});
 			const currentUserGender = response.data;
 			setUserGender(currentUserGender);
 		} catch (err) {
@@ -139,9 +158,10 @@ const SamplePage = ({...others}) => {
 					alertType: SERVER_TYPE_ALERT
 				}));
 			} else {
-				const response = await checkExistUser({id});
+				const response = await checkExistUserAsync({id});
 				const existUser = response.data;
-				const currentUser = localStorage.getItem('userId');
+				// const currentUser = localStorage.getItem('userId');
+				const currentUser = getCookie('jwt', 'sub');
 				if (currentUser === id) {
 					dispatchAlert(showErrorAlert({
 						errorMessage: KOR_APPLY_MESSAGE.pleaseSearchOtherUser,
@@ -150,6 +170,10 @@ const SamplePage = ({...others}) => {
 				} else if (existUser) {
 					if (isFirstAvailableId) setIsFirstAvailableId(false);
 					setIsAvailableId(true);
+					setFindOtherUser(true);
+					setOtherUser(id);
+					const response = await convertImageToBase64(id);
+					setOtherUserProfile(response);
 					dispatchAlert(showSuccessAlert({
 						successMessage: KOR_APPLY_MESSAGE.findUser,
 						alertType: SERVER_TYPE_ALERT
@@ -192,22 +216,29 @@ const SamplePage = ({...others}) => {
             <MainCard title="커플 연결 중...">
                 <Grid container spacing={3} justifyContent="center">
                     <Grid item>
-                        <Avatar color='primary' alt="Avatar 1" src={User1} size='customXl'/>
+                        <Avatar color='primary' alt="Avatar 1" src={ loginUserProfile } size='customXl'/>
                     </Grid>
                     <Grid item>
                         <FontAwesomeIcon icon={circleHeartIcon} size="2xl" className={'heart-style'}/>
                     </Grid>
                     <Grid item>
-                        {userGender === 'MALE' && (
-                            <Avatar sx={{bgcolor: '#e1e1e1'}} size='customXl'>
-                                <FontAwesomeIcon icon={femaleUserIcon} style={{fontSize: '140px', color: '#b26376'}}/>
-                            </Avatar>
-                        )}
-                        {userGender === 'FEMALE' && (
-                            <Avatar sx={{bgcolor: '#E0E0E0'}} size='customXl'>
-                                <FontAwesomeIcon icon={maleUserIcon} style={{fontSize: '140px', color: '#1E3050'}}/>
-                            </Avatar>
-                        )}
+						{ !findOtherUser && (
+							<>
+								{userGender === 'MALE' && (
+									<Avatar sx={{bgcolor: '#e1e1e1'}} size='customXl'>
+										<FontAwesomeIcon icon={femaleUserIcon} style={{fontSize: '140px', color: '#b26376'}}/>
+									</Avatar>
+								)}
+								{userGender === 'FEMALE' && (
+									<Avatar sx={{bgcolor: '#E0E0E0'}} size='customXl'>
+										<FontAwesomeIcon icon={maleUserIcon} style={{fontSize: '140px', color: '#1E3050'}}/>
+									</Avatar>
+								)}
+							</>
+						)}
+						{ findOtherUser && isAvailableId && (
+							<Avatar alt="User 1" src={ otherUserProfile } size='customXl' />
+						)}
                     </Grid>
                 </Grid>
                 <Formik
@@ -240,13 +271,15 @@ const SamplePage = ({...others}) => {
 								beCoupleDate: new Date(values.beCoupleDate).toLocaleDateString('fr-CA'),
 								otherUserId: values.userId
 							};
-							await applyCoupleAccount(body);
-                            dispatchAlert(
-                                showSuccessAlert({
-                                    successMessage: KOR_APPLY_MESSAGE.applyCoupleAccountSuccess,
-                                    alertType: SERVER_TYPE_ALERT
-                                })
-                            );
+							await applyCoupleAccountAsync(body);
+
+							setIsLoading(true);
+							setTimeout(() => {  // 로딩 구현
+								setIsLoading(false);
+								dispatchAlert(
+									showSuccessAlert({successMessage: KOR_APPLY_MESSAGE.applyCoupleAccountSuccess,
+										alertType: SERVER_TYPE_ALERT}));
+							}, 1500);
                         } catch (err: any) {
                             const errMsg = err.message;
                             dispatchAlert(
@@ -292,6 +325,7 @@ const SamplePage = ({...others}) => {
 																<IconButton
 																	disabled={!isUsernameMinLengthValid || isAvailableId}
 																	aria-label="toggle password visibility"
+																	onChange={handleChange}
 																	onClick={() => isExistUser(values.userId)}
 																	onMouseDown={handleMouseDownPassword}
 																	edge="end"

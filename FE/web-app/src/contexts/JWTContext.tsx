@@ -3,36 +3,39 @@ import React, {createContext, useEffect, useReducer, useState} from 'react';
 // third-party
 import {Chance} from 'chance';
 import jwtDecode from 'jwt-decode';
-
 // reducer - state management
 import {
     LOGIN,
     LOGIN_TYPE_ALERT,
     LOGOUT,
-    LOGOUT_TYPE_ALERT, SIGNUP_TYPE_ALERT,
+    LOGOUT_TYPE_ALERT,
     SERVER_TYPE_ALERT,
+    SIGNUP_TYPE_ALERT,
     WEB_TYPE_ALERT
 } from 'store/actions';
 import {BASE_PATH} from '../config';
 import accountReducer from 'store/accountReducer';
 import {clearAlert, showErrorAlert, showSuccessAlert} from '../store/slices/alert'; // Redux Toolkit의 알림 액션 import 추가
 
-
 // project imports
 import Loader from 'ui-component/Loader';
 import axios from 'utils/axios';
 import Load from 'utils/loadUtil';
-
+import {convertImageToBase64} from "../utils/UserProfileUtils";
+import { setCookie, removeCookie, decodeJwtToken, getJwtFromCookie, verifyToken } from 'utils/CookieUtils';
 
 // types
 import {KeyedObject} from 'types';
 import {InitialLoginContextProps, JWTContextType} from 'types/auth';
 import ko from "../assets/language/ko.json";
-import {signInAsync, signUpAsync, userInfoAsync} from '../constant/api';
+import {getUserProfileAsync, signInAsync, signUpAsync, userInfoAsync} from '../constant/api';
 import {useDispatch, useSelector} from 'react-redux';
 import {errorSweetAlert, successSweetAlert} from "../utils/alertUtil";
 import {useNavigate} from "react-router-dom";
 
+
+
+import express from "express";
 
 const KOR_LOGIN_MESSAGE = ko['sign-in'];
 const KOR_LOGOUT_MESSAGE = ko['sign-out'];
@@ -40,7 +43,7 @@ const KOR_SERVER_MESSAGE = ko['server'];
 const KOR_VALID_MESSAGE = ko['valid'];
 const KOR_WEB_MESSAGE = ko['web'];
 const chance = new Chance();
-
+const PROFILE_TYPE: string = "프로필 사진";
 
 // constant
 const initialState: InitialLoginContextProps = {
@@ -49,16 +52,7 @@ const initialState: InitialLoginContextProps = {
     user: null
 };
 
-const verifyToken: (st: string | null) => boolean = (serviceToken) => {
-    if (!serviceToken) {
-        return false;
-    }
-    const decoded: KeyedObject = jwtDecode(serviceToken);
-    /**
-     * Property 'exp' does not exist on type '<T = unknown>(token: string, options?: JwtDecodeOptions | undefined) => T'.
-     */
-    return decoded.exp > Date.now() / 1000;
-};
+
 
 const setSession = (serviceToken?: string | null) => {
     if (serviceToken) {
@@ -72,13 +66,14 @@ const setSession = (serviceToken?: string | null) => {
 };
 
 const setUserInfoToLocalStorage = (userInfo: any) => {
-    localStorage.setItem('userId', userInfo.sub);
-    localStorage.setItem('userRoles', userInfo.roles);
+    // localStorage.setItem('userId', userInfo.sub);
+    // localStorage.setItem('userRoles', userInfo.roles);
 }
 
 const removeUserLocalStorage = () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userRoles');
+    removeCookie('jwt');
+    // localStorage.removeItem('userId');
+    // localStorage.removeItem('userRoles');
 }
 
 // ==============================|| JWT CONTEXT & PROVIDER ||============================== //
@@ -160,9 +155,14 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     const login = async (userId: string, userPassword: string) => {
 
         try {
-            const response = await signInAsync({userId, userPassword});
+            const response = await signInAsync({ userId, userPassword });
+            const userProfileResponse = await getUserProfileAsync({ userId, PROFILE_TYPE });
             const {accessToken, user} = response.data;
-            localStorage.setItem('userId', user);
+            const userProfileImage = userProfileResponse.data;
+            setCookie('jwt', accessToken);
+            // localStorage.setItem('userId', user);
+            localStorage.setItem('userProfileImage', userProfileImage);
+            convertImageToBase64(user, userProfileImage);
             setSession(accessToken);
             dispatch({
                 type: LOGIN,

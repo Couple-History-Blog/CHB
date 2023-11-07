@@ -15,7 +15,7 @@ import {useSelector} from "react-redux";
 import {useDispatch} from "../../../../store";
 import {StringColorProps} from "../../../../types";
 import useAuth from "../../../../hooks/useAuth";
-import {checkExistUser} from "../../../../constant/api";
+import {checkExistUserAsync} from "../../../../constant/api";
 import {strengthColor, strengthIndicator} from "../../../../utils/password-strength";
 import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
 
@@ -127,7 +127,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                     alertType: SERVER_TYPE_ALERT
                 }));
             } else {
-                const response = await checkExistUser({id});
+                const response = await checkExistUserAsync({id});
                 const isExistUser = response.data;
                 if (isExistUser) {
                     setIsAvailableId(false);

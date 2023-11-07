@@ -6,6 +6,7 @@ import {WEB_TYPE_ALERT} from "../store/actions";
 
 import ko from "../assets/language/ko.json";
 import {errorSweetAlert, successSweetAlert} from "../utils/alertUtil";
+import {getCookie, getJwtFromCookie} from "../utils/CookieUtils";
 
 const KOR_WEB_MESSAGE = ko['web'];
 
@@ -18,7 +19,9 @@ interface ConditionalRouteProps {
 
 // 권한 가져오는 로직
 const getUserRoles = (): string | null => {
-    return localStorage.getItem('userRoles');
+    const userRoles = getCookie('jwt', 'roles');
+    return userRoles ? userRoles : null;
+    // return localStorage.getItem('userRoles');
 }
 
 // 필요로 하는 권한이 있는지 확인하는 로직

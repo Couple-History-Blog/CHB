@@ -4,7 +4,8 @@ import {
     faUserMagnifyingGlass as fasUserMagnifyingGlass,
     faCircleHeart as fasCircleHeart,
     faUserHairLong as fasUserHairLong,
-    faUserHair as fasUserHair
+    faUserHair as fasUserHair,
+    faXmark as fasXmark
 } from "@fortawesome/pro-solid-svg-icons";
 
 // style-regular
@@ -38,5 +39,6 @@ export {
     fasUserMagnifyingGlass, farUserMagnifyingGlass, falUserMagnifyingGlass, fatUserMagnifyingGlass, fadUserMagnifyingGlass,
     fasCircleHeart, fadCircleHeart,
     fasUserHairLong,
-    fasUserHair
+    fasUserHair,
+    fasXmark
 }

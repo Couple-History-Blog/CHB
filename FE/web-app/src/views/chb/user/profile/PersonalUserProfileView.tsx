@@ -1,4 +1,5 @@
-import {Button, CardActions, CardContent, Divider, Grid, Tab, Tabs, Typography} from "@mui/material";
+// project
+import {Box, Button, CardActions, CardContent, Divider, Grid, Modal, Tab, Tabs, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {convertImageToBase64} from "../../../../utils/UserProfileUtils";
 import MainCard from "../../../../ui-component/cards/MainCard";
@@ -9,7 +10,10 @@ import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import {useTheme} from "@mui/material/styles";
 import Avatar from "../../../../ui-component/extended/Avatar";
 import {getCookie} from "../../../../utils/CookieUtils";
+import ProfileModalView from "views/chb/user/profile/ProfileModalView";
 
+// assets
+import './user-profile-style.scss';
 
 // ==============================|| PERSONAL USER PROFILE VIEW ||============================== //
 const PersonalUserProfileView = () => {
@@ -19,6 +23,7 @@ const PersonalUserProfileView = () => {
     // const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
     const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
     const [loginUserProfile, setLoginUserProfile] = useState<string | undefined>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -39,9 +44,13 @@ const PersonalUserProfileView = () => {
                     {/*<Grid container spacing={gridSpacing}>*/}
                     <Grid container >
                         <Grid item xs={12} lg={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <CardContent>
+                            <CardContent onClick={() => setIsModalOpen(true) }>
                                 <Avatar alt="User 1" size='customXxl' src={ loginUserProfile } />
                             </CardContent>
+                            <ProfileModalView
+                                isModalOpen={ isModalOpen }
+                                setIsModalOpen={ setIsModalOpen }
+                            />
                         </Grid>
                         <Grid item xs={12} lg={8}>
                             <CardContent

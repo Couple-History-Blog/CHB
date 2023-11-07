@@ -34,12 +34,12 @@ import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
 import UpgradePlanCard from './UpgradePlanCard';
 import useAuth from 'hooks/useAuth';
-// import User1 from 'assets/images/users/user-round.svg';
-import User1 from 'assets/images/users/JAKE.png';
+import { convertImageToBase64 } from 'utils/UserProfileUtils';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
 import useConfig from 'hooks/useConfig';
+import {getCookie} from "../../../../utils/CookieUtils";
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -54,6 +54,10 @@ const ProfileSection = () => {
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const { logout, user } = useAuth();
     const [open, setOpen] = useState(false);
+
+    // const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
+    const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
+    const [loginUserProfile, setLoginUserProfile] = useState('');
     /**
      * anchorRef is used on different components and specifying one type leads to other components throwing an error
      * */
@@ -92,6 +96,19 @@ const ProfileSection = () => {
         prevOpen.current = open;
     }, [open]);
 
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                const profile64Data = await convertImageToBase64(currentUserId);
+                setLoginUserProfile(profile64Data);
+            } catch (error) {
+                alert("ERR_PROFILESECTION");
+            }
+        };
+        fetchProfileData();
+    }, [currentUserId]);
+
+
     return (
         <>
             <Chip
@@ -116,7 +133,7 @@ const ProfileSection = () => {
                 }}
                 icon={
                     <Avatar
-                        src={User1}
+                        src={ loginUserProfile }
                         alt="user-images"
                         sx={{
                             ...theme.typography.mediumAvatar,

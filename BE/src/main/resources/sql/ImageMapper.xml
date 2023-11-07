@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.chb.chb.domain.image.ImageMapper">
+
+    <resultMap id="imageMap" type="java.util.Map">
+        <result property="imageData" column="IMG" jdbcType="BLOB" javaType="byte[]"/>
+    </resultMap>
+
+    <insert id="uploadImage"
+                    parameterType="io.chb.chb.domain.image.ImageDTO">
+        INSERT INTO USER_IMAGE (
+                                USER_ID
+                              , IMAGE_DATA
+                              , IMAGE_NAME
+                              , IMAGE_USAGE
+                                )
+        VALUES (
+                #{userId}
+              , #{imageData, jdbcType=BLOB}
+              , #{imageName}
+              , #{imageUsage}
+                )
+    </insert>
+
+    <select id="getImageData"
+            parameterType="io.chb.chb.domain.image.ImageDTO"
+            resultMap="imageMap">
+        SELECT IMAGE_DATA
+          FROM USER_IMAGE
+         WHERE USER_ID      = #{userId}
+           AND IMAGE_USAGE  = #{imageUsage}
+    </select>
+</mapper>

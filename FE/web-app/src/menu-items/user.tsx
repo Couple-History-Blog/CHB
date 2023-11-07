@@ -23,7 +23,7 @@ const couple: NavItemType = {
     children: [
         {
             id: 'user-profile',
-            title: KOR_WEB_MESSAGE.ProfileTitle,
+            title: '개인 프로필',
             type: 'item',
             url: '/profile/user',
             icon: icons.IconDeviceAnalytics,

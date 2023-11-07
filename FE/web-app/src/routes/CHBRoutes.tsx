@@ -2,10 +2,11 @@
 import MainLayout from 'layout/MainLayout';
 import CoupleProfileView from 'views/chb/couple/CoupleProfileView';
 import DateScheduleView from 'views/chb/couple/DateScheduleView';
-import UserProfileView from 'views/chb/user/UserProfileView';
+import Index from 'views/chb/user/profile';
 import AdminMainView from 'views/chb/admin/AdminView';
 import ApplyCoupleAccountView from "../views/chb/couple/ApplyCoupleAccountView";
 import RolesConditionRoute, { hasPermission } from '../routes/RolesConditionRoute';
+import PersonalUserProfileView from 'views/chb/user/profile/PersonalUserProfileView';
 import { ADMIN, USER, COUPLE } from './Roles';
 
 // sample page routing
@@ -55,8 +56,8 @@ const CHBRoutes = {
             )
         },
         {
-            path: '/profile/user',
-            element: <UserProfileView />
+          path: '/profile/user',
+          element: <PersonalUserProfileView />
         },
         {
             path: '/admin-main',

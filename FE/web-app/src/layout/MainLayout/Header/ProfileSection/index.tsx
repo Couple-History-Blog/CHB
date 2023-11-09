@@ -57,6 +57,11 @@ const ProfileSection = () => {
 
     const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
     const [loginUserProfile, setLoginUserProfile] = useState(getUserProfile64Data() || '');
+
+    useEffect(() => {
+        setLoginUserProfile(getUserProfile64Data());
+    }, [sessionStorage.getItem('userProfileImage')])
+
     /**
      * anchorRef is used on different components and specifying one type leads to other components throwing an error
      * */

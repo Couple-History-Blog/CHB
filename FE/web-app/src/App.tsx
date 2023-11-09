@@ -17,9 +17,7 @@ import { getMenu } from 'store/slices/menu';
 
 // auth provider
 import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
-// import { FirebaseProvider as AuthProvider } from 'contexts/FirebaseContext';
-// import { AWSCognitoProvider as AuthProvider } from 'contexts/AWSCognitoContext';
-// import { Auth0Provider as AuthProvider } from 'contexts/Auth0Context';
+import { UserInfoProvider } from 'views/chb/provider/UserInfoProvider';
 
 // ==============================|| APP ||============================== //
 
@@ -42,10 +40,10 @@ const App = () => {
                 <Locales>
                     <NavigationScroll>
                         <AuthProvider >
-                            <>
+                            <UserInfoProvider >
                                 <Routes />
                                 <Snackbar />
-                            </>
+                            </UserInfoProvider>
                         </AuthProvider>
                     </NavigationScroll>
                 </Locales>

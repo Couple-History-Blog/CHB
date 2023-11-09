@@ -5,7 +5,7 @@ import {
     SIGN_UP,
     CHECK_EXIST_USER,
     GET_CURRENT_USER_GENDER,
-    APPLY_COUPLE_ACCOUNT, GET_USER_PROFILE
+    APPLY_COUPLE_ACCOUNT, GET_USER_PROFILE, UPLOAD_PROFILE_IMAGE
 } from './ApiUrls';
 
 
@@ -20,6 +20,10 @@ export const signUpAsync = async (body: any) => {
 
 export const applyCoupleAccountAsync = async (body: any) => {
     return axios.post(APPLY_COUPLE_ACCOUNT, body);
+}
+
+export const saveUserProfileImage = async (body: any) => {
+    return axios.post(UPLOAD_PROFILE_IMAGE, body);
 }
 
 

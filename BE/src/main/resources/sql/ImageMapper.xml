@@ -8,8 +8,15 @@
         <result property="imageData" column="IMG" jdbcType="BLOB" javaType="byte[]"/>
     </resultMap>
 
+    <delete id="deleteProfileImage"
+            parameterType="io.chb.chb.domain.image.ImageDTO">
+        DELETE FROM USER_IMAGE
+         WHERE USER_ID      = #{userId}
+           AND IMAGE_USAGE  = #{imageUsage}
+    </delete>
+
     <insert id="uploadImage"
-                    parameterType="io.chb.chb.domain.image.ImageDTO">
+            parameterType="io.chb.chb.domain.image.ImageDTO">
         INSERT INTO USER_IMAGE (
                                 USER_ID
                               , IMAGE_DATA

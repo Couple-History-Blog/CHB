@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.chb.chb.core.ImageUsage.IMAGE_PROFILE;
+import static io.chb.chb.core.ResponseCode.UPLOAD_PROFILE_SUCCESS;
 
 @Slf4j
 @RestController
@@ -27,7 +28,19 @@ public class ImageController {
 
     private ImageService imageService;
 
+
     @PostMapping("/upload-image")
+    public ResponseEntity<?> insertImage(@RequestBody ImageDTO imageInfo) {
+
+//        imageInfo.decodeImageData();
+
+        imageService.deleteProfileImage(imageInfo);
+        imageService.uploadImage(imageInfo);
+
+        return ResponseEntity.ok().body(UPLOAD_PROFILE_SUCCESS.getMessage());
+    }
+
+/*    @PostMapping("/upload-image")
     public ResponseEntity<?> insertImage(@RequestParam("file" )MultipartFile file,
                                          @RequestParam("userId") String userId) {
 
@@ -48,7 +61,7 @@ public class ImageController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 오류 시 500 응답
         }
-    }
+    }*/
 
     @GetMapping("/fetch-user-profile")
     public ResponseEntity<?> getImage(@RequestParam("userId") String userId) {

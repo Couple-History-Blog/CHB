@@ -23,27 +23,12 @@ public class ImageServiceImpl implements ImageService {
         this.userMapper = userMapper;
     }
 
-    public void uploadImage(String userId, String imageUsage, MultipartFile file) {
-        if (!file.isEmpty()) {
-            byte[] imageData;
-            try {
-                imageData = file.getBytes();
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to read image data");
-            }
-            String imageName = file.getOriginalFilename();
+    public void deleteProfileImage(ImageDTO imageInfo) {
+        imageMapper.deleteProfileImage(imageInfo);
+    }
 
-            ImageDTO imageInfo = ImageDTO.builder()
-                    .userId(userId)
-                    .imageData(imageData)
-                    .imageName(imageName)
-                    .imageUsage(imageUsage)
-                    .build();
-
-            imageMapper.uploadImage(imageInfo);
-        } else {
-            throw new RuntimeException("Image file is empty");
-        }
+    public void uploadImage(ImageDTO imageInfo) {
+        imageMapper.uploadImage(imageInfo);
     }
 
     public String getImageData(ImageDTO imageInfo) {

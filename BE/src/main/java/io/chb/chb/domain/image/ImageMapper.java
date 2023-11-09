@@ -7,6 +7,7 @@ import java.util.Map;
 
 @Mapper
 public interface ImageMapper {
+    void deleteProfileImage(ImageDTO imageInfo);
     void uploadImage(ImageDTO imageInfo);
     Map<String, Object> getImageData(ImageDTO imageInfo);
 }

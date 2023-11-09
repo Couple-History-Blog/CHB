@@ -158,11 +158,10 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             const response = await signInAsync({ userId, userPassword });
             const userProfileResponse = await getUserProfileAsync({ userId, PROFILE_TYPE });
             const {accessToken, user} = response.data;
-            const userProfileImage = userProfileResponse.data;
             setCookie('jwt', accessToken);
-            // localStorage.setItem('userId', user);
-            localStorage.setItem('userProfileImage', userProfileImage);
-            convertImageToBase64(user, userProfileImage);
+            sessionStorage.setItem('userProfileImage', userProfileResponse.data);
+            // @ts-ignore
+            sessionStorage.setItem('userProfileImageType', userProfileResponse.headers['content-type']);
             setSession(accessToken);
             dispatch({
                 type: LOGIN,

@@ -5,7 +5,11 @@ import {
     faCircleHeart as fasCircleHeart,
     faUserHairLong as fasUserHairLong,
     faUserHair as fasUserHair,
-    faXmark as fasXmark
+    faXmark as fasXmark,
+    faImagesUser as fasImageUser,
+    faFolderImage as fasFolderImage,
+    faTrashCan as fasTrashCan,
+    faFloppyDisk as fasFloppyDisk
 } from "@fortawesome/pro-solid-svg-icons";
 
 // style-regular
@@ -40,5 +44,9 @@ export {
     fasCircleHeart, fadCircleHeart,
     fasUserHairLong,
     fasUserHair,
-    fasXmark
+    fasXmark,
+    fasImageUser,
+    fasFolderImage,
+    fasTrashCan,
+    fasFloppyDisk
 }

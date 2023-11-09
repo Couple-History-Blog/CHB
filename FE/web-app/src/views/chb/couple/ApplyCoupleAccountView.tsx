@@ -6,16 +6,12 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
-import CredentialInputForm from 'views/pages/authentication/auth-forms/CredentialInputForm';
 import {
-	REGISTER_FORM_TYPE,
-	APPLY_COUPLE_ACCOUNT_FORM_TYPE,
-	LOGIN_FORM_TYPE,
-	SERVER_TYPE_ALERT, SIGNUP_TYPE_ALERT, WEB_TYPE_ALERT
+	SERVER_TYPE_ALERT, WEB_TYPE_ALERT
 } from "../../../store/actions";
 import Avatar from 'ui-component/extended/Avatar';
 import React, {useEffect, useState} from "react";
-import { convertImageToBase64 } from 'utils/UserProfileUtils';
+import {convertImageToBase64, getUserProfile64Data} from 'utils/UserProfileUtils';
 
 // fontawesome
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -36,7 +32,6 @@ import {useSelector} from "react-redux";
 import {useDispatch} from "../../../store";
 import {errorSweetAlert, successSweetAlert} from "../../../utils/alertUtil";
 import {useTheme} from "@mui/material/styles";
-import {StringColorProps} from "../../../types";
 import {applyCoupleAccountAsync, checkExistUserAsync, getCurrentUserGenderAsync} from "../../../constant/api";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
@@ -78,7 +73,6 @@ const SamplePage = ({...others}) => {
 
 	const [userGender, setUserGender] = useState('');
 
-	// const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
 	const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -86,7 +80,7 @@ const SamplePage = ({...others}) => {
 	const [otherUser, setOtherUser] = useState('');
 	const [findOtherUser, setFindOtherUser] = useState<boolean>(false);
 
-	const [loginUserProfile, setLoginUserProfile] = useState('');
+	const [loginUserProfile, setLoginUserProfile] = useState(getUserProfile64Data() || '');
 	const [otherUserProfile, setOtherUserProfile] = useState('');
 
 
@@ -122,17 +116,6 @@ const SamplePage = ({...others}) => {
 		fetchUserGender();
 	}, [])
 
-	useEffect(() => {
-		const fetchProfileData = async () => {
-			try {
-				const profile64Data = await convertImageToBase64(currentUserId);
-				setLoginUserProfile(profile64Data);
-			} catch (error) {
-				alert("ERR_APPLY_COUPLE_ACCOUNT");
-			}
-		};
-		fetchProfileData();
-	}, [currentUserId]);
 
 	// [[ ===================== Function ===================== ]]
 	async function fetchUserGender() {
@@ -160,7 +143,6 @@ const SamplePage = ({...others}) => {
 			} else {
 				const response = await checkExistUserAsync({id});
 				const existUser = response.data;
-				// const currentUser = localStorage.getItem('userId');
 				const currentUser = getCookie('jwt', 'sub');
 				if (currentUser === id) {
 					dispatchAlert(showErrorAlert({
@@ -195,7 +177,6 @@ const SamplePage = ({...others}) => {
 			}));
 		}
 	}
-
 
 	// 공백 여부 확인
 	const isGap = (inputValue: string) => {
@@ -372,46 +353,6 @@ const SamplePage = ({...others}) => {
 												</LocalizationProvider>
 											)}
 										</Field>
-{/*
-										<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<DatePicker
-												label="사귄 날"
-												value={selectedDate}
-												inputFormat="yyyy년 MM월 dd일"
-												InputProps={{
-													style: {height: '62.12px'}
-												}}
-												onChange={(newValue) => setSelectedDate(newValue)}
-												renderInput={(params) => <TextField fullWidth {...params} />}
-											/>
-										</LocalizationProvider>
-*/}
-
-{/*
-										<Field name='beCoupleDate'>
-                                            {({field}: {
-                                                field: FieldInputProps<string>;
-                                            }) => (
-												<TextField
-													fullWidth
-													error={Boolean(touched.beCoupleDate && errors.beCoupleDate)}
-													helperText={Boolean(touched.beCoupleDate && errors.beCoupleDate) ? errors.beCoupleDate : null}
-													label="생일"
-													margin="normal"
-													type="date"
-													{...field}
-													onBlur={handleBlur}
-													onChange={handleChange}
-													InputProps={{
-														style: {height: '62.12px', marginTop: '-20px'}
-													}}
-													InputLabelProps={{
-														shrink: true,
-														style: {position: 'relative', top: '-15px', display: 'block'}
-													}}/>
-											)}
-                                        </Field>
-*/}
                                     </Grid>
 									<Box sx={{mt: 2, width: '69%'}}>
 										<AnimateButton>
@@ -430,7 +371,6 @@ const SamplePage = ({...others}) => {
                                 </Grid>
                             </>
                         </form>
-						{/*</Grid>*/}
 						</Grid>
                     )}
                 </Formik>

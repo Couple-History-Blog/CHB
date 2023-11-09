@@ -1,7 +1,7 @@
 // project
-import {Box, Button, CardActions, CardContent, Divider, Grid, Modal, Tab, Tabs, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {convertImageToBase64} from "../../../../utils/UserProfileUtils";
+import {Box, Button, CardActions, CardContent, Chip, Divider, Grid, Modal, Tab, Tabs, Typography} from "@mui/material";
+import React, {useContext, useEffect, useState} from "react";
+import {convertImageToBase64, getUserProfile64Data} from "../../../../utils/UserProfileUtils";
 import MainCard from "../../../../ui-component/cards/MainCard";
 import {gridSpacing} from "../../../../store/constant";
 import UserProfile from "./ProfileView";
@@ -14,40 +14,39 @@ import ProfileModalView from "views/chb/user/profile/ProfileModalView";
 
 // assets
 import './user-profile-style.scss';
+import UserInfoContext from "../../provider/UserInfoProvider";
 
 // ==============================|| PERSONAL USER PROFILE VIEW ||============================== //
 const PersonalUserProfileView = () => {
 
+    const userInfo = useContext(UserInfoContext);
+
     const theme = useTheme();
 
-    // const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
-    const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
-    const [loginUserProfile, setLoginUserProfile] = useState<string | undefined>('');
+    const [currentUserId, setCurrentUserId] = useState(userInfo?.userId || null);
+    const [loginUserProfile, setLoginUserProfile] = useState<string | undefined>(getUserProfile64Data() || '');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isUpdateProfile, setIsUpdateProfile] = useState<boolean>(false);
+
 
     useEffect(() => {
-        const fetchProfileData = async () => {
-            try {
-                const profile64Data = await convertImageToBase64(currentUserId);
-                setLoginUserProfile(profile64Data);
-            } catch (error) {
-                alert("ERR");
-            }
-        };
-        fetchProfileData();
-    }, [currentUserId]);
+        setLoginUserProfile(getUserProfile64Data());
+        setIsUpdateProfile(false);
+    }, [isUpdateProfile]);
 
     return (
         <Grid>
             <Grid item xs={12}>
                 <MainCard title="프로필 설정" content={false}>
-                    {/*<Grid container spacing={gridSpacing}>*/}
                     <Grid container >
                         <Grid item xs={12} lg={4} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <CardContent onClick={() => setIsModalOpen(true) }>
-                                <Avatar alt="User 1" size='customXxl' src={ loginUserProfile } />
+                            <CardContent onClick={() => setIsModalOpen(true) } >
+                                <Grid className={`user-profile-back hover-color`}>
+                                    <Avatar alt="User 1" size='customXxl' src={ loginUserProfile } />
+                                </Grid>
                             </CardContent>
                             <ProfileModalView
+                                setIsUpdateProfile = { setIsUpdateProfile }
                                 isModalOpen={ isModalOpen }
                                 setIsModalOpen={ setIsModalOpen }
                             />

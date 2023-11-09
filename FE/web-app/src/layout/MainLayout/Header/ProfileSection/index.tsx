@@ -34,7 +34,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
 import UpgradePlanCard from './UpgradePlanCard';
 import useAuth from 'hooks/useAuth';
-import { convertImageToBase64 } from 'utils/UserProfileUtils';
+import { getUserProfile64Data } from 'utils/UserProfileUtils';
 
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
@@ -55,9 +55,8 @@ const ProfileSection = () => {
     const { logout, user } = useAuth();
     const [open, setOpen] = useState(false);
 
-    // const [currentUserId, setCurrentUserId] = useState(localStorage.getItem('userId'));
     const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
-    const [loginUserProfile, setLoginUserProfile] = useState('');
+    const [loginUserProfile, setLoginUserProfile] = useState(getUserProfile64Data() || '');
     /**
      * anchorRef is used on different components and specifying one type leads to other components throwing an error
      * */
@@ -95,18 +94,6 @@ const ProfileSection = () => {
 
         prevOpen.current = open;
     }, [open]);
-
-    useEffect(() => {
-        const fetchProfileData = async () => {
-            try {
-                const profile64Data = await convertImageToBase64(currentUserId);
-                setLoginUserProfile(profile64Data);
-            } catch (error) {
-                alert("ERR_PROFILESECTION");
-            }
-        };
-        fetchProfileData();
-    }, [currentUserId]);
 
 
     return (

@@ -1,6 +1,5 @@
 // 이미지 데이터를 Base64 문자열로 변환하는 함수
 import {getUserProfileAsync} from "../constant/api";
-import {useState} from "react";
 import {getCookie} from "./CookieUtils";
 
 const PROFILE_TYPE: string = "프로필 사진";
@@ -12,12 +11,13 @@ let loginUserProfile: string | null = null;
 let otherUserProfile: string | null = null;
 
 let otherUserId: string | null = null;
-// const [existLoginUserProfile, setExistLoginUserProfile] = useState(false);
-// const [existOtherUserProfile, setExistOtherUserProfile] = useState(false);
 
-// const [loginUserProfile, setLoginUserProfile] = useState<string | null>(null);
-// const [otherUserProfile, setOtherUserProfile] = useState<string | null>(null);
 
+export const getUserProfile64Data = () => {
+    const base64Image = sessionStorage.getItem('userProfileImage');
+    const imageType = sessionStorage.getItem('userProfileImageType');
+    return `data:${imageType};base64,${base64Image}`;
+}
 
 export async function convertImageToBase64(userId: string | null, profileData?: string | null) {
     // const currentUserId = localStorage.getItem('userId');
@@ -29,9 +29,7 @@ export async function convertImageToBase64(userId: string | null, profileData?: 
         loginUserProfile = profileData;
     } else if (userId && userId == currentUserId) {      // 로그인 사용자
         if (!existLoginUserProfile) {
-            // const response = await getUserProfileAsync({userId, PROFILE_TYPE});
-            // loginUserProfile = response.data;
-            loginUserProfile = localStorage.getItem('userProfileImage');
+            loginUserProfile = sessionStorage.getItem('userProfileImage');
             existLoginUserProfile = true;
         }
         base64Image = loginUserProfile;
@@ -51,16 +49,6 @@ export async function convertImageToBase64(userId: string | null, profileData?: 
     return `data:image/png;base64,${base64Image}`;
 }
 
-/*
-export function convertImageToBase64(userId: string | null) {
-    let base64Image: string | null = '';
-    if (userId) getUserProfileToBase64(userId).then(res => base64Image = res);
-    // @ts-ignore
-    console.log("1: ", userId);
-    // alert("1 : ", userId);
-    return `data:image/png;base64,${base64Image}`;
-}
-*/
 
 export function getUserProfileToBase64(userId: string) {
     // @ts-ignore

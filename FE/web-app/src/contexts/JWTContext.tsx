@@ -22,7 +22,14 @@ import Loader from 'ui-component/Loader';
 import axios from 'utils/axios';
 import Load from 'utils/loadUtil';
 import {convertImageToBase64} from "../utils/UserProfileUtils";
-import { setCookie, removeCookie, decodeJwtToken, getJwtFromCookie, verifyToken } from 'utils/CookieUtils';
+import {
+    setCookie,
+    removeCookie,
+    decodeJwtToken,
+    getJwtFromCookie,
+    verifyToken,
+    loadLoginUserInfoData
+} from 'utils/CookieUtils';
 
 // types
 import {KeyedObject} from 'types';
@@ -49,10 +56,9 @@ const PROFILE_TYPE: string = "프로필 사진";
 const initialState: InitialLoginContextProps = {
     isLoggedIn: false,
     isInitialized: false,
-    user: null
+    user: null,
+    userInfoData: null
 };
-
-
 
 const setSession = (serviceToken?: string | null) => {
     if (serviceToken) {
@@ -97,11 +103,13 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     const response = await userInfoAsync({serviceToken});         // 현재 로그인한 사용자 확인
                     const {user} = response.data;
                     setUserInfoToLocalStorage(response.data);
+                    const userInfoData = loadLoginUserInfoData();
                     dispatch({
                         type: LOGIN,
                         payload: {
                             isLoggedIn: true,
-                            user
+                            user,
+                            userInfoData,
                         }
                     });
                 } else {
@@ -163,13 +171,16 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             // @ts-ignore
             sessionStorage.setItem('userProfileImageType', userProfileResponse.headers['content-type']);
             setSession(accessToken);
+            const userInfoData = loadLoginUserInfoData();
             dispatch({
                 type: LOGIN,
                 payload: {
                     isLoggedIn: true,
-                    user
+                    user,
+                    userInfoData,
                 }
             });
+            console.log(state.userInfoData);
             dispatchAlert(
                 showSuccessAlert({
                     successMessage: KOR_LOGIN_MESSAGE.signInSuccess,

@@ -44,5 +44,6 @@ export const getCurrentUserGenderAsync = async (param: any) => {
 }
 
 export const getUserProfileAsync = async (params: any) => {
-    return axios.get(GET_USER_PROFILE, { params });
+    const data = { userId: params.userId, useOtherUserId: params.useOtherUserId }
+    return axios.get(GET_USER_PROFILE, { params: data });
 }

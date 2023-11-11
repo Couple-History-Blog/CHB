@@ -12,17 +12,23 @@ import SubCard from "../../../../ui-component/cards/SubCard";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 import PhonelinkRingTwoToneIcon from "@mui/icons-material/PhonelinkRingTwoTone";
 import { gridSpacing } from "../../../../store/constant";
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
-import {getCookie} from "../../../../utils/CookieUtils";
+import {decodeJwtToken, getCookie} from "../../../../utils/CookieUtils";
+import JWTContext from "../../../../contexts/JWTContext";
+import {useSelector} from "react-redux";
 
 
 const Profile = () => {
 
+    const userInfo = React.useContext(JWTContext)?.userInfoData;
+
     // [[ ===================== useState ===================== ]]
-    const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
-    const [currentUserNickName, setCurrentUserNickName] = useState(getCookie('jwt', 'userNickName'));
-    const [currentUserName, setCurrentUserName] = useState(getCookie('jwt', 'userName'));
+    const [currentUserId, setCurrentUserId] = useState(userInfo?.userId);
+    const [currentUserMail, setCurrentUserMail] = useState(userInfo?.userEmail);
+    const [currentUserNickName, setCurrentUserNickName] = useState(userInfo?.userNickName);
+    const [currentUserName, setCurrentUserName] = useState(userInfo?.userName);
+    const [currentUseBirthDate, setCurrentUseBirthDate] = useState(userInfo?.userBirthDate);
 
     const [pictures, setPictures] = useState([]);
 
@@ -58,7 +64,7 @@ const Profile = () => {
                             <ListItemText primary={<Typography variant="subtitle1">아이디</Typography>}/>
                             <ListItemSecondaryAction>
                                 <Typography variant="subtitle2" align="right">
-                                    이것은 아이디
+                                    { currentUserId }
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItemButton>
@@ -69,7 +75,7 @@ const Profile = () => {
                             <ListItemText primary={<Typography variant="subtitle1">이메일</Typography>}/>
                             <ListItemSecondaryAction>
                                 <Typography variant="subtitle2" align="right">
-                                    이것은 메일
+                                    { currentUserMail }
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItemButton>
@@ -81,7 +87,7 @@ const Profile = () => {
                             <ListItemText primary={<Typography variant="subtitle1">생일</Typography>}/>
                             <ListItemSecondaryAction>
                                 <Typography variant="subtitle2" align="right">
-                                    이것은 생일
+                                    { currentUseBirthDate }
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItemButton>

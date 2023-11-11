@@ -13,9 +13,9 @@ let otherUserProfile: string | null = null;
 let otherUserId: string | null = null;
 
 
-export const getUserProfile64Data = () => {
-    const base64Image = sessionStorage.getItem('userProfileImage');
-    const imageType = sessionStorage.getItem('userProfileImageType');
+export const getUserProfile64Data = (base64Image?: string | null, imageType?: string | null) => {
+    if (!base64Image) base64Image = sessionStorage.getItem('userProfileImage');
+    if (!imageType) imageType = sessionStorage.getItem('userProfileImageType');
     return `data:${imageType};base64,${base64Image}`;
 }
 

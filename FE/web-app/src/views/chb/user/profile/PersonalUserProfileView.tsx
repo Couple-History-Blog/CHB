@@ -14,12 +14,12 @@ import ProfileModalView from "views/chb/user/profile/ProfileModalView";
 
 // assets
 import './user-profile-style.scss';
-import UserInfoContext from "../../provider/UserInfoProvider";
+import JWTContext from "../../../../contexts/JWTContext";
 
 // ==============================|| PERSONAL USER PROFILE VIEW ||============================== //
 const PersonalUserProfileView = () => {
 
-    const userInfo = useContext(UserInfoContext);
+    const userInfo = React.useContext(JWTContext)?.userInfoData;
 
     const theme = useTheme();
 

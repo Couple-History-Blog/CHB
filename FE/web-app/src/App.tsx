@@ -17,7 +17,6 @@ import { getMenu } from 'store/slices/menu';
 
 // auth provider
 import { JWTProvider as AuthProvider } from 'contexts/JWTContext';
-import { UserInfoProvider } from 'views/chb/provider/UserInfoProvider';
 
 // ==============================|| APP ||============================== //
 
@@ -40,10 +39,10 @@ const App = () => {
                 <Locales>
                     <NavigationScroll>
                         <AuthProvider >
-                            <UserInfoProvider >
+                            <>
                                 <Routes />
                                 <Snackbar />
-                            </UserInfoProvider>
+                            </>
                         </AuthProvider>
                     </NavigationScroll>
                 </Locales>

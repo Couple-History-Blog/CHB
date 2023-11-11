@@ -10,7 +10,7 @@ import {
 	SERVER_TYPE_ALERT, WEB_TYPE_ALERT
 } from "../../../store/actions";
 import Avatar from 'ui-component/extended/Avatar';
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {convertImageToBase64, getUserProfile64Data} from 'utils/UserProfileUtils';
 
 // fontawesome
@@ -32,15 +32,24 @@ import {useSelector} from "react-redux";
 import {useDispatch} from "../../../store";
 import {errorSweetAlert, successSweetAlert} from "../../../utils/alertUtil";
 import {useTheme} from "@mui/material/styles";
-import {applyCoupleAccountAsync, checkExistUserAsync, getCurrentUserGenderAsync} from "../../../constant/api";
+import {
+	applyCoupleAccountAsync,
+	checkExistUserAsync,
+	getCurrentUserGenderAsync,
+	getUserProfileAsync
+} from "../../../constant/api";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
 import {getCookie} from "../../../utils/CookieUtils";
+import JWTContext from "../../../contexts/JWTContext";
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
 const SamplePage = ({...others}) => {
+
+	const userInfo = React.useContext(JWTContext)?.userInfoData;
+
 
 	// [[ ===================== Message ===================== ]]
 	const KOR_LOGIN_MESSAGE = ko['sign-in'];
@@ -83,7 +92,11 @@ const SamplePage = ({...others}) => {
 	const [loginUserProfile, setLoginUserProfile] = useState(getUserProfile64Data() || '');
 	const [otherUserProfile, setOtherUserProfile] = useState('');
 
+	const [beCouple, setBeCouple] = useState(userInfo?.beCoupleYn);
+	const [appliedCoupleAccount, setAppliedCoupleAccount] = useState(userInfo?.appliedCoupleAccount);
+	const [ownUserAcceptYn, setOwnUserAcceptYn] = useState(userInfo?.ownUserAcceptYn);
 
+	console.log(otherUserProfile);
 	// [[ ===================== useEffect ===================== ]]
     // alert useEffect
     useEffect(() => {
@@ -114,10 +127,32 @@ const SamplePage = ({...others}) => {
 	// getUserGender
 	useEffect(() => {
 		fetchUserGender();
+		getOtherUserProfile();
 	}, [])
 
 
 	// [[ ===================== Function ===================== ]]
+	async function getOtherUserProfile() {
+
+		let userProfile = '';
+
+		// 커플 계정 신청이 된 사용자면 상대방 프로필 가져옴
+		if (appliedCoupleAccount) {
+			const useOtherUserId = true;
+			const userId = currentUserId;
+			const response = await getUserProfileAsync({ userId, useOtherUserId });
+
+			const userProfileImage = response.data;
+			const userProfileImageType = response.headers['content-type'];
+
+			userProfile = getUserProfile64Data(userProfileImage, userProfileImageType);
+			setFindOtherUser(true);
+			setIsAvailableId(true);
+		}
+
+		setOtherUserProfile(userProfile);
+	}
+
 	async function fetchUserGender() {
 		try {
 			const response = await getCurrentUserGenderAsync({currentUserId});
@@ -131,6 +166,10 @@ const SamplePage = ({...others}) => {
 				alertType: WEB_TYPE_ALERT
 			}));
 		}
+	}
+
+	const doAccept = () => {
+
 	}
 
 	const isExistUser = async (id: string | null) => {
@@ -222,6 +261,49 @@ const SamplePage = ({...others}) => {
 						)}
                     </Grid>
                 </Grid>
+				{ appliedCoupleAccount && ownUserAcceptYn && (
+					<Grid container justifyContent="center" style={{ display: 'grid', marginTop: '5%' }}>
+						<TextField
+							style={{ width: '300px' }}
+							disabled
+							id="outlined-disabled"
+							label="커플 계정 요청"
+							multiline
+							rows={2}
+							defaultValue="상대방이 아직 요청을 수락하지 않았습니다."
+						/>
+					</Grid>
+				)}
+				{ appliedCoupleAccount && !ownUserAcceptYn && (
+					<Grid container justifyContent="center" style={{ display: 'grid', marginTop: '5%' }}>
+						<TextField
+							style={{ width: '265px' }}
+							disabled
+							id="outlined-disabled"
+							label="커플 계정 요청"
+							multiline
+							rows={2}
+							defaultValue="커플 계정 요청이왔습니다.
+							커플 계정 요청을 수락하시겠습니까?"
+						/>
+						<Box sx={{mt: 2, width: '40%'}}>
+							<AnimateButton>
+								<Button
+									onClick={ doAccept }
+									style={{backgroundColor: isAvailableId ? '#673ab7' : 'gray'}}
+									fullWidth
+									size="large"
+									type="submit"
+									variant="contained"
+									color="secondary"
+								>
+									수락하기
+								</Button>
+							</AnimateButton>
+						</Box>
+					</Grid>
+				)}
+				{!appliedCoupleAccount && (
                 <Formik
                     initialValues={{
                         userId: '',
@@ -374,6 +456,7 @@ const SamplePage = ({...others}) => {
 						</Grid>
                     )}
                 </Formik>
+				)}
             </MainCard>
         </>
     )

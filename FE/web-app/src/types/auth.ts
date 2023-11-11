@@ -44,6 +44,7 @@ export type JWTContextType = {
     register: (isAvailableId: boolean, userId:string, sexType: string, birthDate: string, email: string, password: string, firstName: string, lastName: string, nickName: string) => Promise<void>;
     resetPassword: (email: string) => void;
     updateProfile: VoidFunction;
+    userInfoData?: UserInfoType | null;
 };
 
 export type AWSCognitoContextType = {
@@ -60,4 +61,17 @@ export interface InitialLoginContextProps {
     isLoggedIn: boolean;
     isInitialized?: boolean;
     user?: UserProfile | null | undefined;
+    userInfoData?: UserInfoType | null;
+}
+
+export interface UserInfoType {
+    userId: string | null;
+    userNickName: string | null;
+    userName: string | null;
+    userEmail: string | null;
+    userBirthDate: string | null;
+    updateProfile: boolean;
+    beCoupleYn: boolean;
+    appliedCoupleAccount: boolean;
+    ownUserAcceptYn: boolean;
 }

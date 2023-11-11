@@ -12,7 +12,8 @@ interface AccountReducerActionProps {
 const initialState: InitialLoginContextProps = {
     isLoggedIn: false,
     isInitialized: false,
-    user: null
+    user: null,
+    userInfoData: null,
 };
 
 // eslint-disable-next-line
@@ -26,12 +27,13 @@ const accountReducer = (state = initialState, action: AccountReducerActionProps)
             };
         }
         case LOGIN: {
-            const { user } = action.payload!;
+            const { user, userInfoData } = action.payload!;
             return {
                 ...state,
                 isLoggedIn: true,
                 isInitialized: true,
-                user
+                user,
+                userInfoData
             };
         }
         case LOGOUT: {
@@ -39,7 +41,8 @@ const accountReducer = (state = initialState, action: AccountReducerActionProps)
                 ...state,
                 isInitialized: true,
                 isLoggedIn: false,
-                user: null
+                user: null,
+                userInfoData: null,
             };
         }
         default: {

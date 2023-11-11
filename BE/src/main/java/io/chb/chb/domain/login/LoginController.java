@@ -48,7 +48,7 @@ public class LoginController {
             throw new BaseException(ErrorType.PASSWORD_NOT_MATCHED);
         }
 
-        UserDTO.TokenInfo userTokenInfo = jwtTokenProvider.generateToken(userId, userInfo.getUserNickName(), userInfo.getUsername(), Collections.singletonList(userInfo.getUserRole()));
+        UserDTO.TokenInfo userTokenInfo = jwtTokenProvider.generateToken(userId, userInfo, Collections.singletonList(userInfo.getUserRole()));
 
         redisTemplate.opsForValue()
                 .set("RT:" + userId, userTokenInfo.getRefreshToken(), userTokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);

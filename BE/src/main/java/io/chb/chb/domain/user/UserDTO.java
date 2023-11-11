@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.FetchType;
+import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,8 +28,10 @@ public class UserDTO implements UserDetails {
 
     // 일반 계정 전용
     private Boolean beCoupleYn;
+    private Boolean appliedCoupleAccount;
+    private Boolean ownUserAcceptYn;
     private String userRole;
-    private Date userBrthDate;
+    private String userBrthDate;
     private String userMail;            // TODO 회원가입 때 로직 추가
 
 

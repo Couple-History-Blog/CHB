@@ -13,8 +13,8 @@ public class CoupleDTO {
 
     // 커플 계정 전용
     private String coupleId;
-    private Date beCoupleDate;
-    private Date coupleIngDate;
+    private String beCoupleDate;
+    private String coupleIngDate;
 
     private String userId;
     private String otherUserId;

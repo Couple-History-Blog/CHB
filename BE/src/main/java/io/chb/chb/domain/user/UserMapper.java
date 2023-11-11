@@ -8,4 +8,6 @@ public interface UserMapper {
     UserDTO findByUserId(String userId);
 
     boolean canUseId(String userId);
+
+    String getOtherUserId(String userId);
 }

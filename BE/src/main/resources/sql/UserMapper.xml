@@ -9,12 +9,27 @@
             resultType="io.chb.chb.domain.user.UserDTO">
         SELECT USER_ID
              , USER_PASSWORD
+             , USER_MAIL
              , USER_NAME
              , USER_SEX_TYPE
              , BE_COUPLE_YN
              , USER_ROLE
              , USER_BRTH_DATE
              , USER_NICK_NAME
+             , EXISTS(
+                        SELECT 1
+                          FROM BE_COUPLE_WAIT_STATUS
+                         WHERE 1 = 1
+                           AND ( OWN_USER_ID = #{userId} OR OTHER_USER_ID = #{userId} )
+                    ) AS appliedCoupleAccount
+             , (
+                 SELECT CASE WHEN OWN_USER_ID = #{userId} THEN OWN_USER_ACCEPT_YN
+                             WHEN OTHER_USER_ID = #{userId} THEN OTHER_USER_ACCEPT_YN
+                             ELSE FALSE
+                        END
+                   FROM BE_COUPLE_WAIT_STATUS
+                  WHERE ( OWN_USER_ID = #{userId} OR OTHER_USER_ID = #{userId} )
+                ) AS ownUserAcceptYn
           FROM USER_INFO
          WHERE USER_ID = #{userId}
     </select>
@@ -25,6 +40,17 @@
         SELECT IF( COUNT(1) = 1, 1, 0 )
           FROM USER_INFO
          WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="getOtherUserId"
+            parameterType="java.lang.String"
+            resultType="java.lang.String">
+        SELECT CASE WHEN OWN_USER_ID = #{userId} THEN OTHER_USER_ID
+                    WHEN OTHER_USER_ID = #{userId} THEN OWN_USER_ID
+                    ELSE FALSE
+               END
+          FROM BE_COUPLE_WAIT_STATUS
+         WHERE ( OWN_USER_ID = #{userId} OR OTHER_USER_ID = #{userId} )
     </select>
 
 </mapper>

@@ -23,4 +23,9 @@ public class UserServiceImpl implements UserService {
     public boolean canUseId(String userId) {
         return userMapper.canUseId(userId);
     }
+
+    @Override
+    public String getOtherUserId(String userId) {
+        return userMapper.getOtherUserId(userId);
+    }
 }

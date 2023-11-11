@@ -2,6 +2,7 @@ package io.chb.chb.domain.image;
 
 import io.chb.chb.core.exception.BaseException;
 import io.chb.chb.core.exception.ErrorType;
+import io.chb.chb.domain.user.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -27,12 +28,11 @@ import static io.chb.chb.core.ResponseCode.UPLOAD_PROFILE_SUCCESS;
 public class ImageController {
 
     private ImageService imageService;
+    private UserService userService;
 
 
     @PostMapping("/upload-image")
     public ResponseEntity<?> insertImage(@RequestBody ImageDTO imageInfo) {
-
-//        imageInfo.decodeImageData();
 
         imageService.deleteProfileImage(imageInfo);
         imageService.uploadImage(imageInfo);
@@ -40,33 +40,12 @@ public class ImageController {
         return ResponseEntity.ok().body(UPLOAD_PROFILE_SUCCESS.getMessage());
     }
 
-/*    @PostMapping("/upload-image")
-    public ResponseEntity<?> insertImage(@RequestParam("file" )MultipartFile file,
-                                         @RequestParam("userId") String userId) {
-
-        try {
-            byte[] imageData = file.getBytes();
-            String imageDataToString = Base64.getEncoder().encodeToString(imageData);
-            String fileExtension = file.getOriginalFilename().split("\\.")[1]; // 확장자 추출
-            String mimeType = "image/" + fileExtension; // MIME 타입 설정 (예: image/jpeg)
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Content-Type", mimeType);
-            headers.set("Content-Disposition", "inline; filename=image." + fileExtension);
-
-            // 원래 이미지 삭제 로직
-//            imageService.uploadImage(userId, IMAGE_PROFILE.getImageType(), file);
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(imageDataToString); // 바이트 배열을 응답 본문에 설정
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 오류 시 500 응답
-        }
-    }*/
 
     @GetMapping("/fetch-user-profile")
-    public ResponseEntity<?> getImage(@RequestParam("userId") String userId) {
+    public ResponseEntity<?> getImage(@RequestParam("userId") String userId,
+                                      @RequestParam(value = "useOtherUserId", required = false, defaultValue = "false") boolean useOtherUserId) {
         ImageDTO imageInfo = ImageDTO.builder()
-                .userId(userId)
+                .userId(useOtherUserId ? userService.getOtherUserId(userId) : userId)
                 .imageUsage(IMAGE_PROFILE.getImageType())
                 .build();
         String imageDataToString = imageService.getImageData(imageInfo);

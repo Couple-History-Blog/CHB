@@ -19,7 +19,8 @@
     "findUser": "find the user.",
     "pleaseSearchOtherUser": "Please find for other user.",
     "beCoupleDateNullValid": "Be Couple Date is required.",
-    "applyCoupleAccountSuccess": "Apply couple account is success."
+    "applyCoupleAccountSuccess": "Apply couple account is success.",
+    "acceptBeCouple": "Accept Couple Account."
   },
   "valid": {
     "spaceValid": "Please erase the gap.",

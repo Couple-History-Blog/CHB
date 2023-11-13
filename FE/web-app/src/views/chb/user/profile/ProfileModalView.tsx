@@ -16,7 +16,7 @@ import {
 } from 'utils/font-awesome/icons';
 import {useDropzone} from "react-dropzone";
 import {getCookie} from "../../../../utils/CookieUtils";
-import {saveUserProfileImage} from "../../../../constant/api";
+import {saveUserProfileImageAsync} from "../../../../constant/api";
 import {clearAlert, showErrorAlert, showSuccessAlert} from "../../../../store/slices/alert";
 import {SERVER_TYPE_ALERT, SIGNUP_TYPE_ALERT, WEB_TYPE_ALERT} from "../../../../store/actions";
 import {useDispatch, useSelector} from "react-redux";
@@ -68,7 +68,7 @@ const ProfileModalView: React.FC<ProfileModalProps> = ({ setIsUpdateProfile, isM
                 imageUsage: '프로필 사진'
             };
 
-            saveUserProfileImage(body)
+            saveUserProfileImageAsync(body)
                 .then(res => {
                     if (uploadedImage) {
                         setIsUpdateProfile(true);

@@ -180,7 +180,6 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     userInfoData,
                 }
             });
-            console.log(state.userInfoData);
             dispatchAlert(
                 showSuccessAlert({
                     successMessage: KOR_LOGIN_MESSAGE.signInSuccess,

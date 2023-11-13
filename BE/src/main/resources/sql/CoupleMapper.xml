@@ -4,18 +4,6 @@
 
 <mapper namespace="io.chb.chb.domain.couple.CoupleMapper">
 
-    <select id="getCoupleStatusByUserId"
-            parameterType="java.lang.String"
-            resultType="io.chb.chb.domain.couple.CoupleDTO">
-        SELECT OWN_USER_ID      AS USER_ID
-             , OTHER_USER_ID
-             , OWN_USER_ACCEPT_YN
-             , OTHER_USER_ACCEPT_YN
-        FROM BE_COUPLE_WAIT_STATUS
-        WHERE OWN_USER_ID = #{userId}
-    </select>
-
-
 
     <insert id="applyBeCouple"
             parameterType="io.chb.chb.domain.couple.CoupleDTO">
@@ -31,38 +19,43 @@
                )
     </insert>
 
-    <insert id="createNewCouple"
+    <insert id="createCoupleAccount"
             parameterType="io.chb.chb.domain.couple.CoupleDTO">
         INSERT INTO COUPLE_INFO (
                                  USER_ID
                                , COUPLE_ID
                                , BE_COUPLE_DATE
-                               , COUPLE_ING_DATE
+                               , COUPLE_ING_DAY
                                , LOAD_DTM
                                 )
-        VALUES (
-                #{ownUserId}
-              , CONCAT(#{ownUserId}, '_', #{otherUserId})
-               )
+        SELECT USER_ID
+             , CONCAT(#{userId}, 'LOVE', #{otherUserId})                                                        AS COUPLE_ID
+             , (SELECT BE_COUPLE_DATE FROM BE_COUPLE_WAIT_STATUS WHERE OTHER_USER_ID = #{userId})               AS BE_COUPLE_DATE
+             , DATEDIFF(current_date
+                     , (SELECT BE_COUPLE_DATE FROM BE_COUPLE_WAIT_STATUS WHERE OTHER_USER_ID = #{userId})) + 1  AS COUPLE_ING_DAY
+             , CURRENT_TIMESTAMP
+          FROM USER_INFO
+         WHERE 1 = 1
+          AND USER_ID IN (#{userId}, #{otherUserId})
     </insert>
 
 
 
-    <update id="updateUserStatus"
+    <update id="updateWaitStatusBeCouple"
             parameterType="io.chb.chb.domain.couple.CoupleDTO">
         UPDATE BE_COUPLE_WAIT_STATUS
            SET OTHER_USER_ACCEPT_YN = 1
          WHERE 1 = 1
-           AND OWN_USER_ID          = #{ownUserId}
-           AND OTHER_USER_ID        = #{otherUserId}
+           AND OTHER_USER_ID    = #{userId}
+           AND OWN_USER_ID      = #{otherUserId}
     </update>
 
-    <update id="updateUserCoupleYn"
+    <update id="updateUserBeCouple"
             parameterType="io.chb.chb.domain.couple.CoupleDTO">
         UPDATE USER_INFO
            SET BE_COUPLE_YN = 1
          WHERE 1 = 1
-           AND USER_ID      = #{ownUserId}
+           AND USER_ID IN (#{userId}, #{otherUserId})
     </update>
 
 

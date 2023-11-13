@@ -36,13 +36,15 @@ import {
 	applyCoupleAccountAsync,
 	checkExistUserAsync,
 	getCurrentUserGenderAsync,
-	getUserProfileAsync
+	getUserProfileAsync,
+	acceptForBeCoupleAsync, userInfoAsync
 } from "../../../constant/api";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
 import {getCookie} from "../../../utils/CookieUtils";
 import JWTContext from "../../../contexts/JWTContext";
+import Load from "../../../utils/loadUtil";
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
@@ -96,7 +98,6 @@ const SamplePage = ({...others}) => {
 	const [appliedCoupleAccount, setAppliedCoupleAccount] = useState(userInfo?.appliedCoupleAccount);
 	const [ownUserAcceptYn, setOwnUserAcceptYn] = useState(userInfo?.ownUserAcceptYn);
 
-	console.log(otherUserProfile);
 	// [[ ===================== useEffect ===================== ]]
     // alert useEffect
     useEffect(() => {
@@ -132,6 +133,7 @@ const SamplePage = ({...others}) => {
 
 
 	// [[ ===================== Function ===================== ]]
+
 	async function getOtherUserProfile() {
 
 		let userProfile = '';
@@ -168,8 +170,20 @@ const SamplePage = ({...others}) => {
 		}
 	}
 
-	const doAccept = () => {
+	const acceptForBeCouple = async () => {
+		const body = {
+			userId: currentUserId,
+			otherUserId: otherUser,
+		};
+		await acceptForBeCoupleAsync(body);
 
+		setIsLoading(true);
+		setTimeout(() => {  // 로딩 구현
+			setIsLoading(false);
+			dispatchAlert(
+				showSuccessAlert({successMessage: KOR_APPLY_MESSAGE.acceptBeCouple,
+					alertType: SERVER_TYPE_ALERT}));
+		}, 1500);
 	}
 
 	const isExistUser = async (id: string | null) => {
@@ -233,6 +247,7 @@ const SamplePage = ({...others}) => {
 
 	return (
         <>
+			<Load isLoading={isLoading} setIsLoading={setIsLoading} />
             <MainCard title="커플 연결 중...">
                 <Grid container spacing={3} justifyContent="center">
                     <Grid item>
@@ -289,7 +304,7 @@ const SamplePage = ({...others}) => {
 						<Box sx={{mt: 2, width: '40%'}}>
 							<AnimateButton>
 								<Button
-									onClick={ doAccept }
+									onClick={ acceptForBeCouple }
 									style={{backgroundColor: isAvailableId ? '#673ab7' : 'gray'}}
 									fullWidth
 									size="large"

@@ -6,3 +6,4 @@ export const GET_CURRENT_USER_GENDER: string = '/currentUser-gender';
 export const APPLY_COUPLE_ACCOUNT: string = '/apply-couple-account';
 export const GET_USER_PROFILE: string = '/fetch-user-profile';
 export const UPLOAD_PROFILE_IMAGE:string = '/upload-image';
+export const ACCEPT_BE_COUPLE: string = '/accept-be-couple'

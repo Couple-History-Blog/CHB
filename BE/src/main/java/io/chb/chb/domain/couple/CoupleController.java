@@ -20,6 +20,15 @@ public class CoupleController {
         this.userService = userService;
     }
 
+    @PostMapping("/accept-be-couple")
+    public ResponseEntity<?> acceptCoupleAccount(@RequestBody CoupleDTO userInfo) {
+
+        userInfo.setOtherUserId(userService.getOtherUserId(userInfo.getUserId()));
+        coupleService.updateUserBeCouple(userInfo);
+
+        return ResponseEntity.ok().body(true);
+    }
+
     // TODO 아이디로 커플 신청
     @PostMapping("/apply-couple-account")
     public ResponseEntity<String> coupleApplyUp(@RequestBody CoupleDTO userInfo) {
@@ -29,18 +38,6 @@ public class CoupleController {
         return ResponseEntity.ok().body(ResponseCode.APPLY_COUPLE_SUCCESS.getMessage());
     }
 
-    @GetMapping("/apply-couple-account")
-    public ResponseEntity<String> coupleWaitPage(CoupleDTO couple) {
-        CoupleDTO coupleInfo = coupleService.getCoupleStatusByUserId(couple.getUserId());
-
-        if (coupleInfo.isOtherUserAcceptYn()) {
-            coupleService.updateUserForCouple(couple);
-            coupleService.createNewCouple(couple);
-            return ResponseEntity.ok().body(ResponseCode.BE_COUPLE_SUCCESS.getMessage());
-        }
-
-        return ResponseEntity.ok().body(ResponseCode.NOT_APPLY_COUPLE.getMessage());
-    }
 
     @GetMapping("/currentUser-gender")
     public ResponseEntity<String> getCurrentUserGender(@RequestParam(value = "userId", required = false) String userId) {

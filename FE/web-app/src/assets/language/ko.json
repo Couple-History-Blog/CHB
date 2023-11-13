@@ -19,7 +19,8 @@
     "findUser": "사용자를 찾았습니다.",
     "pleaseSearchOtherUser": "상대방 계정을 입력해주세요.",
     "beCoupleDateNullValid": "사귄 날을 기입해주세요",
-    "applyCoupleAccountSuccess": "커플 계정 신청이 완료되었습니다."
+    "applyCoupleAccountSuccess": "커플 계정 신청이 완료되었습니다.",
+    "acceptBeCouple": "커플 계정이 생성되었습니다."
   },
   "valid": {
     "spaceValid": "공백은 기입할 수 없습니다.",

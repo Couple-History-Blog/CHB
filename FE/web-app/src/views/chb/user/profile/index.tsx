@@ -105,11 +105,9 @@ const UserProfileView = () => {
             .post("/upload-image", formData, )
             .then((response) => {
                 // 성공적으로 업로드된 경우 이미지를 표시
-                console.log(response);
                 const mimeType = response.headers['content-type'];
                 const base64String = response.data;
                 const dataUrl = `data:${mimeType};base64,${base64String}`;
-                console.log(dataUrl);
                 // @ts-ignore
                 setUploadedImage(dataUrl);
             })

@@ -13,10 +13,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static io.chb.chb.core.ImageUsage.IMAGE_PROFILE;
 import static io.chb.chb.core.ResponseCode.UPLOAD_PROFILE_SUCCESS;
@@ -51,6 +48,7 @@ public class ImageController {
         String imageDataToString = imageService.getImageData(imageInfo);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG); // 이미지 형식에 따라 변경
+
 
         return new ResponseEntity<>(imageDataToString, headers, HttpStatus.OK);
     }

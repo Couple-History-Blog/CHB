@@ -14,22 +14,27 @@ interface ConditionalRouteProps {
     permission: string;
     truePath: string;
     falsePath: string;
-    element: ReactElement;
+    // element: ReactElement;
+    trueElement: ReactElement;
+    falseElement: ReactElement;
 }
 
 
-export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ permission, truePath, falsePath, element }) => {
+// export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ permission, truePath, falsePath, element }) => {
+export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ permission, truePath, falsePath, trueElement, falseElement }) => {
     const navigate = useNavigate();
-
+    const isPermission = ROUTE_MAP.get(permission);
+    console.log("ROLE_ROUTE\nTRUE_OR_FALSE => ", isPermission, "\nPERMISSION => ", permission, "\nTRUE_PATH => ", truePath, "\nFALSE_PATH => ", falsePath);
     // @ts-ignore
     const alertState = useSelector((state) => state.alert); // Redux Toolkit의 알림 상태
     const dispatchAlert = useDispatch(); // Redux Toolkit의 디스패치 함수
 
     // 권한 useEffect
     useEffect(() => {
-        if (ROUTE_MAP.get(permission)) navigate(truePath);
-        else {
-            navigate(falsePath);
+        if (isPermission) {
+            // navigate(truePath);
+        } else {
+            // navigate(falsePath);
             dispatchAlert(
                 showErrorAlert({
                     errorMessage: KOR_WEB_MESSAGE.blockedByAuth,
@@ -39,19 +44,8 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ permission, 
         }
     }, [ permission ]);
 
-    // alert useEffect
-    useEffect(() => {
-        if (alertState.showErrorAlert) {
-            errorSweetAlert(alertState.errorMessage, alertState.alertType);
-            dispatchAlert(clearAlert());
-        }
-        if (alertState.showSuccessAlert) {
-            successSweetAlert(alertState.successMessage, alertState.alertType);
-            dispatchAlert(clearAlert());
-        }
-    }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
-
-    return element;
+    return isPermission ? trueElement : falseElement;
+    // return element;
 };
 
 export default ConditionalRoute;

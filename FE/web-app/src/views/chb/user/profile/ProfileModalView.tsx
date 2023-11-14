@@ -45,7 +45,7 @@ const ProfileModalView: React.FC<ProfileModalProps> = ({ setIsUpdateProfile, isM
             successSweetAlert(alertState.successMessage, alertState.alertType);
         }
         dispatchAlert(clearAlert());
-    }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
+    }, []);
 
 
 

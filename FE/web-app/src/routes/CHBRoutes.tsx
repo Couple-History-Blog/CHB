@@ -12,6 +12,7 @@ import { ADMIN, USER, COUPLE } from './Roles';
 // sample page routing
 import SamplePage from 'views/sample-page/index';
 import AuthGuard from "../utils/route-guard/AuthGuard";
+import Dashboard from "../views/dashboard/Default";
 
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -36,7 +37,9 @@ const CHBRoutes = {
                     permission={ USER }
                     truePath={ applyCoupleAccountPath }
                     falsePath='/profile/couple'
-                    element={ <ApplyCoupleAccountView /> }
+                    // element={ <ApplyCoupleAccountView /> }
+                    trueElement={ <ApplyCoupleAccountView /> }
+                    falseElement={ <CoupleProfileView /> }
                 />
             ),
         },
@@ -47,7 +50,9 @@ const CHBRoutes = {
                     permission={ COUPLE }
                     truePath='/profile/couple'
                     falsePath={ applyCoupleAccountPath }
-                    element={ <CoupleProfileView /> }
+                    // element={ <CoupleProfileView /> }
+                    trueElement={ <CoupleProfileView /> }
+                    falseElement={ <ApplyCoupleAccountView /> }
                 />
                 )
         },
@@ -58,7 +63,9 @@ const CHBRoutes = {
                     permission={ COUPLE }
                     truePath='/date/schedule'
                     falsePath={ applyCoupleAccountPath }
-                    element={ <DateScheduleView /> }
+                    // element={ <DateScheduleView /> }
+                    trueElement={ <DateScheduleView /> }
+                    falseElement={ <ApplyCoupleAccountView /> }
                 />
             )
         },
@@ -73,7 +80,9 @@ const CHBRoutes = {
                     permission={ ADMIN }
                     truePath='/admin-main'
                     falsePath='/'
-                    element={ <AdminMainView /> }
+                    // element={ <AdminMainView /> }
+                    trueElement={ <AdminMainView /> }
+                    falseElement={ <Dashboard /> }
                 />
             )
         }

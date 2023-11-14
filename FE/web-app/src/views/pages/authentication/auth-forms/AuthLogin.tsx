@@ -31,7 +31,6 @@ import useScriptRef from 'hooks/useScriptRef';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ko from '../../../../assets/language/ko.json';
-import alertReducer from "../../../../store/alertReducer";
 import {AlertState} from "../../../../types/alert";
 import { LOGIN_FORM_TYPE } from "../../../../store/actions";
 import {showErrorAlert} from "../../../../store/slices/alert";

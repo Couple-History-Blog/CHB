@@ -103,7 +103,7 @@ const CredentialInputForm = ({formType, ...others}) => {
             successSweetAlert(alertState.successMessage, alertState.alertType);
         }
         dispatchAlert(clearAlert());
-    }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
+    }, []);
 
     useEffect(() => {
         // 아이디 중복체크 한 후 값 변경하는지 체크

@@ -51,7 +51,7 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ permission, 
         }
     }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
 
-    return null;
+    return element;
 };
 
 export default ConditionalRoute;

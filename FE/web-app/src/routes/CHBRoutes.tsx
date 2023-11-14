@@ -30,7 +30,7 @@ const CHBRoutes = {
             element: <SamplePage />
         },
         {
-            path: '/apply-couple-account',
+            path: applyCoupleAccountPath,
             element: (
                 <RolesConditionRoute
                     permission={ USER }
@@ -38,7 +38,7 @@ const CHBRoutes = {
                     falsePath='/profile/couple'
                     element={ <ApplyCoupleAccountView /> }
                 />
-            )
+            ),
         },
         {
             path: '/profile/couple',

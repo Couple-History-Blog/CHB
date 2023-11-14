@@ -45,13 +45,13 @@ import PersonSearchTwoToneIcon from "@mui/icons-material/PersonSearchTwoTone";
 import {getCookie} from "../../../utils/CookieUtils";
 import JWTContext from "../../../contexts/JWTContext";
 import Load from "../../../utils/loadUtil";
+import {useNavigate} from "react-router-dom";
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
 const SamplePage = ({...others}) => {
-
+	const navigate = useNavigate();
 	const userInfo = React.useContext(JWTContext)?.userInfoData;
-
 
 	// [[ ===================== Message ===================== ]]
 	const KOR_LOGIN_MESSAGE = ko['sign-in'];
@@ -183,6 +183,7 @@ const SamplePage = ({...others}) => {
 			dispatchAlert(
 				showSuccessAlert({successMessage: KOR_APPLY_MESSAGE.acceptBeCouple,
 					alertType: SERVER_TYPE_ALERT}));
+			navigate('/profile/couple', { replace: true });  // true는 뒤로가기 X
 		}, 1500);
 	}
 

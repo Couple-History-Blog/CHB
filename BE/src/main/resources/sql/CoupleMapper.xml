@@ -54,6 +54,7 @@
             parameterType="io.chb.chb.domain.couple.CoupleDTO">
         UPDATE USER_INFO
            SET BE_COUPLE_YN = 1
+             , USER_ROLE = 'COUPLE'
          WHERE 1 = 1
            AND USER_ID IN (#{userId}, #{otherUserId})
     </update>

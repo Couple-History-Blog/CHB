@@ -10,7 +10,7 @@ import {
 	SERVER_TYPE_ALERT, WEB_TYPE_ALERT
 } from "../../../store/actions";
 import Avatar from 'ui-component/extended/Avatar';
-import React, {useContext, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {convertImageToBase64, getUserProfile64Data} from 'utils/UserProfileUtils';
 
 // fontawesome
@@ -37,7 +37,7 @@ import {
 	checkExistUserAsync,
 	getCurrentUserGenderAsync,
 	getUserProfileAsync,
-	acceptForBeCoupleAsync, userInfoAsync
+	acceptForBeCoupleAsync
 } from "../../../constant/api";
 import PermIdentityTwoToneIcon from "@mui/icons-material/PermIdentityTwoTone";
 import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
@@ -49,7 +49,7 @@ import {useNavigate} from "react-router-dom";
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
-const SamplePage = ({...others}) => {
+const ApplyCoupleAccountPage = ({...others}) => {
 	const navigate = useNavigate();
 	const userInfo = React.useContext(JWTContext)?.userInfoData;
 
@@ -58,8 +58,9 @@ const SamplePage = ({...others}) => {
 	const KOR_APPLY_MESSAGE = ko['apply-couple-account'];
 	const KOR_SERVER_MESSAGE = ko['server'];
 	const KOR_VALID_MESSAGE = ko['valid'];
-	
-	
+
+	console.log("COUPLE_ACCOUNT_PAGE");
+
 	
     // [[ ===================== Alert ===================== ]]
     // @ts-ignore
@@ -108,7 +109,7 @@ const SamplePage = ({...others}) => {
             successSweetAlert(alertState.successMessage, alertState.alertType);
         }
         dispatchAlert(clearAlert());
-    }, [alertState.showErrorAlert, alertState.showSuccessAlert, alertState.errorMessage, alertState.alertType]);
+    }, []);
 
 	// ID Valid useEffect
 	useEffect(() => {
@@ -478,4 +479,4 @@ const SamplePage = ({...others}) => {
     )
 };
 
-export default SamplePage;
+export default ApplyCoupleAccountPage;

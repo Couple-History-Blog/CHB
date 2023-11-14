@@ -1,4 +1,4 @@
-import {ReactElement, useEffect} from 'react';
+import React, {ReactElement, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {clearAlert, showErrorAlert} from "../store/slices/alert";
@@ -6,31 +6,19 @@ import {WEB_TYPE_ALERT} from "../store/actions";
 
 import ko from "../assets/language/ko.json";
 import {errorSweetAlert, successSweetAlert} from "../utils/alertUtil";
-import {getCookie, getJwtFromCookie} from "../utils/CookieUtils";
+import {ROUTE_MAP} from "./routeAuth";
 
 const KOR_WEB_MESSAGE = ko['web'];
 
 interface ConditionalRouteProps {
-    condition: boolean;
+    permission: string;
     truePath: string;
     falsePath: string;
     element: ReactElement;
 }
 
-// 권한 가져오는 로직
-const getUserRoles = (): string | null => {
-    const userRoles = getCookie('jwt', 'roles');
-    return userRoles ? userRoles : null;
-    // return localStorage.getItem('userRoles');
-}
 
-// 필요로 하는 권한이 있는지 확인하는 로직
-export const hasPermission = (requiredPermission: string): boolean => {
-    const userRoles = getUserRoles();
-    return userRoles ? userRoles.includes(requiredPermission) : false;
-}
-
-export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ condition, truePath, falsePath, element }) => {
+export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ permission, truePath, falsePath, element }) => {
     const navigate = useNavigate();
 
     // @ts-ignore
@@ -39,7 +27,7 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ condition, t
 
     // 권한 useEffect
     useEffect(() => {
-        if (condition) navigate(truePath);
+        if (ROUTE_MAP.get(permission)) navigate(truePath);
         else {
             navigate(falsePath);
             dispatchAlert(
@@ -49,7 +37,7 @@ export const ConditionalRoute: React.FC<ConditionalRouteProps> = ({ condition, t
                 })
             );
         }
-    }, []);
+    }, [ permission ]);
 
     // alert useEffect
     useEffect(() => {

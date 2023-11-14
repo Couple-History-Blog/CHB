@@ -3,10 +3,6 @@ import firebase from 'firebase/compat/app';
 
 // project imports
 import { UserProfile } from 'types/user-profile';
-import {Dispatch, SetStateAction} from "react";
-import {StringColorProps} from "./index";
-import {FormikErrors, FormikTouched} from "formik";
-import {Theme} from "@mui/material/styles";
 
 export type FirebaseContextType = {
     isLoggedIn: boolean;
@@ -68,10 +64,14 @@ export interface UserInfoType {
     userId: string | null;
     userNickName: string | null;
     userName: string | null;
+    userRoles: string | null;
     userEmail: string | null;
     userBirthDate: string | null;
     updateProfile: boolean;
     beCoupleYn: boolean;
     appliedCoupleAccount: boolean;
     ownUserAcceptYn: boolean;
+    isAdmin: boolean;
+    isCouple: boolean;
+    isUser: boolean;
 }

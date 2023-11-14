@@ -5,7 +5,7 @@ import DateScheduleView from 'views/chb/couple/DateScheduleView';
 import Index from 'views/chb/user/profile';
 import AdminMainView from 'views/chb/admin/AdminView';
 import ApplyCoupleAccountView from "../views/chb/couple/ApplyCoupleAccountView";
-import RolesConditionRoute, { hasPermission } from '../routes/RolesConditionRoute';
+import RolesConditionRoute from '../routes/RolesConditionRoute';
 import PersonalUserProfileView from 'views/chb/user/profile/PersonalUserProfileView';
 import { ADMIN, USER, COUPLE } from './Roles';
 
@@ -30,14 +30,21 @@ const CHBRoutes = {
             element: <SamplePage />
         },
         {
-            path: applyCoupleAccountPath,
-            element: <ApplyCoupleAccountView />
+            path: '/apply-couple-account',
+            element: (
+                <RolesConditionRoute
+                    permission={ USER }
+                    truePath={ applyCoupleAccountPath }
+                    falsePath='/profile/couple'
+                    element={ <ApplyCoupleAccountView /> }
+                />
+            )
         },
         {
             path: '/profile/couple',
             element: (
                 <RolesConditionRoute
-                    condition={ hasPermission(COUPLE) }
+                    permission={ COUPLE }
                     truePath='/profile/couple'
                     falsePath={ applyCoupleAccountPath }
                     element={ <CoupleProfileView /> }
@@ -48,7 +55,7 @@ const CHBRoutes = {
             path: '/date/schedule',
             element: (
                 <RolesConditionRoute
-                    condition={ hasPermission(COUPLE) }
+                    permission={ COUPLE }
                     truePath='/date/schedule'
                     falsePath={ applyCoupleAccountPath }
                     element={ <DateScheduleView /> }
@@ -63,7 +70,7 @@ const CHBRoutes = {
             path: '/admin-main',
             element: (
                 <RolesConditionRoute
-                    condition={ hasPermission(ADMIN) }
+                    permission={ ADMIN }
                     truePath='/admin-main'
                     falsePath='/'
                     element={ <AdminMainView /> }

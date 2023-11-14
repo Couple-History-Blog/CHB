@@ -43,6 +43,7 @@ import {useNavigate} from "react-router-dom";
 
 
 import express from "express";
+import {setRouteMap} from "../routes/routeAuth";
 
 const KOR_LOGIN_MESSAGE = ko['sign-in'];
 const KOR_LOGOUT_MESSAGE = ko['sign-out'];
@@ -104,6 +105,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     const {user} = response.data;
                     setUserInfoToLocalStorage(response.data);
                     const userInfoData = loadLoginUserInfoData();
+                    setRouteMap(userInfoData);
                     dispatch({
                         type: LOGIN,
                         payload: {
@@ -172,6 +174,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             sessionStorage.setItem('userProfileImageType', userProfileResponse.headers['content-type']);
             setSession(accessToken);
             const userInfoData = loadLoginUserInfoData();
+            setRouteMap(userInfoData);
             dispatch({
                 type: LOGIN,
                 payload: {

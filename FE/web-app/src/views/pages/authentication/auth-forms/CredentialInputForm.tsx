@@ -366,6 +366,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                                         {({field}: { field: FieldInputProps<string>; }) => (
                                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                 <DatePicker
+                                                    showDaysOutsideCurrentMonth
                                                     onChange={(newValue) => {
                                                         newValue ? values.birthDate = newValue.toString() : values.birthDate = '';
                                                         newValue ? setSelectedDate(new Date(newValue)) : console.log('XXXXX');

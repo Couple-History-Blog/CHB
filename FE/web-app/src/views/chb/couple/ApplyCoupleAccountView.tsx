@@ -429,6 +429,7 @@ const ApplyCoupleAccountPage = ({...others}) => {
 											{({field}: { field: FieldInputProps<string>; }) => (
 												<LocalizationProvider dateAdapter={AdapterDateFns}>
 													<DatePicker
+														showDaysOutsideCurrentMonth
 														onChange={(newValue) => {
 															newValue ? values.beCoupleDate = newValue.toString() : values.beCoupleDate = '';
 															newValue ? setSelectedDate(new Date(newValue)) : console.log('XXXXX');

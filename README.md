@@ -14,6 +14,9 @@
 - `NPM`          : 7.11.2
 - `type-script`   : 4.9.4
 
+# Java
+- `JAVA`          : 11
+
 # 실행
 - `FE`           : npm run start:custom
 - `BE`           : server

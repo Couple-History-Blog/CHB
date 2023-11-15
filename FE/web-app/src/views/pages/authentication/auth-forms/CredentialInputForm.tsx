@@ -48,6 +48,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fasAddressCard as addressCardIcon } from 'utils/font-awesome/icons';
 import {DateField} from "@mui/x-date-pickers/DateField/DateField";
+import dayjs from "dayjs";
 
 // @ts-ignore
 const CredentialInputForm = ({formType, ...others}) => {
@@ -366,6 +367,9 @@ const CredentialInputForm = ({formType, ...others}) => {
                                         {({field}: { field: FieldInputProps<string>; }) => (
                                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                                 <DatePicker
+                                                    shouldDisableDate={day => {
+                                                        return dayjs().isBefore(day)
+                                                    }}
                                                     showDaysOutsideCurrentMonth
                                                     onChange={(newValue) => {
                                                         newValue ? values.birthDate = newValue.toString() : values.birthDate = '';

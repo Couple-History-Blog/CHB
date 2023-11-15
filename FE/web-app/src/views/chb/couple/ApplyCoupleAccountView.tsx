@@ -46,6 +46,7 @@ import {getCookie} from "../../../utils/CookieUtils";
 import JWTContext from "../../../contexts/JWTContext";
 import Load from "../../../utils/loadUtil";
 import {useNavigate} from "react-router-dom";
+import dayjs, { Dayjs } from 'dayjs';
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
@@ -66,8 +67,7 @@ const ApplyCoupleAccountPage = ({...others}) => {
     // @ts-ignore
     const alertState = useSelector((state) => state.alert); // Redux Toolkit의 알림 상태
     const dispatchAlert = useDispatch(); // Redux Toolkit의 디스패치 함수
-	
-	
+
 	
     // [[ ===================== Normal ===================== ]]
     const theme = useTheme();
@@ -429,6 +429,9 @@ const ApplyCoupleAccountPage = ({...others}) => {
 											{({field}: { field: FieldInputProps<string>; }) => (
 												<LocalizationProvider dateAdapter={AdapterDateFns}>
 													<DatePicker
+														shouldDisableDate={day => {
+															return dayjs().isBefore(day)
+														}}
 														showDaysOutsideCurrentMonth
 														onChange={(newValue) => {
 															newValue ? values.beCoupleDate = newValue.toString() : values.beCoupleDate = '';

@@ -25,7 +25,7 @@ import {
 import 'assets/scss/style.scss';
 import {Field, FieldInputProps, Formik} from "formik";
 import * as Yup from "yup";
-import ko from "../../../assets/language/ko.json";
+import koJson from "../../../assets/language/ko.json";
 import {clearAlert, showErrorAlert, showSuccessAlert} from "../../../store/slices/alert";
 import AnimateButton from "../../../ui-component/extended/AnimateButton";
 import {useSelector} from "react-redux";
@@ -47,6 +47,7 @@ import JWTContext from "../../../contexts/JWTContext";
 import Load from "../../../utils/loadUtil";
 import {useNavigate} from "react-router-dom";
 import dayjs, { Dayjs } from 'dayjs';
+import { ko } from 'date-fns/locale';
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
@@ -55,10 +56,10 @@ const ApplyCoupleAccountPage = ({...others}) => {
 	const userInfo = React.useContext(JWTContext)?.userInfoData;
 
 	// [[ ===================== Message ===================== ]]
-	const KOR_LOGIN_MESSAGE = ko['sign-in'];
-	const KOR_APPLY_MESSAGE = ko['apply-couple-account'];
-	const KOR_SERVER_MESSAGE = ko['server'];
-	const KOR_VALID_MESSAGE = ko['valid'];
+	const KOR_LOGIN_MESSAGE = koJson['sign-in'];
+	const KOR_APPLY_MESSAGE = koJson['apply-couple-account'];
+	const KOR_SERVER_MESSAGE = koJson['server'];
+	const KOR_VALID_MESSAGE = koJson['valid'];
 
 	console.log("COUPLE_ACCOUNT_PAGE");
 
@@ -427,7 +428,7 @@ const ApplyCoupleAccountPage = ({...others}) => {
                                     <Grid item xs={12} sm={4} style={{ marginLeft: '16px' }}>
 										<Field name='beCoupleDate'>
 											{({field}: { field: FieldInputProps<string>; }) => (
-												<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ ko }>
 													<DatePicker
 														shouldDisableDate={day => {
 															return dayjs().isBefore(day)

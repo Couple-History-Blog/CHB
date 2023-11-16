@@ -10,7 +10,7 @@ import {
 } from "../../../../store/actions";
 import AnimateButton from "../../../../ui-component/extended/AnimateButton";
 import React, {useEffect, useState} from "react";
-import ko from "../../../../assets/language/ko.json";
+import koJson from "../../../../assets/language/ko.json";
 import {useSelector} from "react-redux";
 import {useDispatch} from "../../../../store";
 import {StringColorProps} from "../../../../types";
@@ -48,7 +48,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fasAddressCard as addressCardIcon } from 'utils/font-awesome/icons';
 import {DateField} from "@mui/x-date-pickers/DateField/DateField";
+
+// ETC
 import dayjs from "dayjs";
+import { ko } from 'date-fns/locale';
+
 
 // @ts-ignore
 const CredentialInputForm = ({formType, ...others}) => {
@@ -71,9 +75,9 @@ const CredentialInputForm = ({formType, ...others}) => {
 
 
     // [[ ===================== Message ===================== ]]
-    const KOR_LOGIN_MESSAGE = ko['sign-in'];
-    const KOR_SERVER_MESSAGE = ko['server'];
-    const KOR_VALID_MESSAGE = ko['valid'];
+    const KOR_LOGIN_MESSAGE = koJson['sign-in'];
+    const KOR_SERVER_MESSAGE = koJson['server'];
+    const KOR_VALID_MESSAGE = koJson['valid'];
 
 
     // [[ ===================== Normal ===================== ]]
@@ -365,7 +369,7 @@ const CredentialInputForm = ({formType, ...others}) => {
                                 <Grid item xs={12} sm={6} style={{ marginTop: '-16px' }}>
                                     <Field name='birthDate'>
                                         {({field}: { field: FieldInputProps<string>; }) => (
-                                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ ko }>
                                                 <DatePicker
                                                     shouldDisableDate={day => {
                                                         return dayjs().isBefore(day)

@@ -48,6 +48,7 @@ import Load from "../../../utils/loadUtil";
 import {useNavigate} from "react-router-dom";
 import dayjs, { Dayjs } from 'dayjs';
 import { ko } from 'date-fns/locale';
+import CoupleProfileElement from "./CoupleProfileElement";
 
 
 // ==============================|| 커플 계정 신청 페이지 ||============================== //
@@ -84,7 +85,6 @@ const ApplyCoupleAccountPage = ({...others}) => {
 
 	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-	const [userGender, setUserGender] = useState('');
 
 	const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
 
@@ -93,7 +93,6 @@ const ApplyCoupleAccountPage = ({...others}) => {
 	const [otherUser, setOtherUser] = useState('');
 	const [findOtherUser, setFindOtherUser] = useState<boolean>(false);
 
-	const [loginUserProfile, setLoginUserProfile] = useState(getUserProfile64Data() || '');
 	const [otherUserProfile, setOtherUserProfile] = useState('');
 
 	const [beCouple, setBeCouple] = useState(userInfo?.beCoupleYn);
@@ -129,48 +128,10 @@ const ApplyCoupleAccountPage = ({...others}) => {
 
 	// getUserGender
 	useEffect(() => {
-		fetchUserGender();
-		getOtherUserProfile();
 	}, [])
 
 
 	// [[ ===================== Function ===================== ]]
-
-	async function getOtherUserProfile() {
-
-		let userProfile = '';
-
-		// 커플 계정 신청이 된 사용자면 상대방 프로필 가져옴
-		if (appliedCoupleAccount) {
-			const useOtherUserId = true;
-			const userId = currentUserId;
-			const response = await getUserProfileAsync({ userId, useOtherUserId });
-
-			const userProfileImage = response.data;
-			const userProfileImageType = response.headers['content-type'];
-
-			userProfile = getUserProfile64Data(userProfileImage, userProfileImageType);
-			setFindOtherUser(true);
-			setIsAvailableId(true);
-		}
-
-		setOtherUserProfile(userProfile);
-	}
-
-	async function fetchUserGender() {
-		try {
-			const response = await getCurrentUserGenderAsync({currentUserId});
-			const currentUserGender = response.data;
-			setUserGender(currentUserGender);
-		} catch (err) {
-			// @ts-ignore
-			let errMsg = (err.message ?? err) === 'Wrong Services' ? KOR_SERVER_MESSAGE.serverConnectFail : err.message;
-			dispatchAlert(showErrorAlert({
-				errorMessage: errMsg,
-				alertType: WEB_TYPE_ALERT
-			}));
-		}
-	}
 
 	const acceptForBeCouple = async () => {
 		const body = {
@@ -252,33 +213,16 @@ const ApplyCoupleAccountPage = ({...others}) => {
         <>
 			<Load isLoading={isLoading} setIsLoading={setIsLoading} />
             <MainCard title="커플 연결 중...">
-                <Grid container spacing={3} justifyContent="center">
-                    <Grid item>
-                        <Avatar color='primary' alt="Avatar 1" src={ loginUserProfile } size='customXl'/>
-                    </Grid>
-                    <Grid item>
-                        <FontAwesomeIcon icon={circleHeartIcon} size="2xl" className={'heart-style'}/>
-                    </Grid>
-                    <Grid item>
-						{ !findOtherUser && (
-							<>
-								{userGender === 'MALE' && (
-									<Avatar sx={{bgcolor: '#e1e1e1'}} size='customXl'>
-										<FontAwesomeIcon icon={femaleUserIcon} style={{fontSize: '140px', color: '#b26376'}}/>
-									</Avatar>
-								)}
-								{userGender === 'FEMALE' && (
-									<Avatar sx={{bgcolor: '#E0E0E0'}} size='customXl'>
-										<FontAwesomeIcon icon={maleUserIcon} style={{fontSize: '140px', color: '#1E3050'}}/>
-									</Avatar>
-								)}
-							</>
-						)}
-						{ findOtherUser && isAvailableId && (
-							<Avatar alt="User 1" src={ otherUserProfile } size='customXl' />
-						)}
-                    </Grid>
-                </Grid>
+				<CoupleProfileElement
+					currentUserId={ currentUserId }
+					findOtherUser={ findOtherUser }
+					isAvailableId={ isAvailableId }
+					appliedCoupleAccount={ appliedCoupleAccount }
+					otherUserProfile={ otherUserProfile }
+					onUpdateFindOtherUser={ setFindOtherUser }
+					onUpdateIsAvailableId={ setIsAvailableId }
+					onUpdateOtherUserProfile={ setOtherUserProfile }
+				/>
 				{ appliedCoupleAccount && ownUserAcceptYn && (
 					<Grid container justifyContent="center" style={{ display: 'grid', marginTop: '5%' }}>
 						<TextField

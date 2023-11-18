@@ -37,7 +37,6 @@ const CHBRoutes = {
                     permission={ USER }
                     truePath={ applyCoupleAccountPath }
                     falsePath='/profile/couple'
-                    // element={ <ApplyCoupleAccountView /> }
                     trueElement={ <ApplyCoupleAccountView /> }
                     falseElement={ <CoupleProfileView /> }
                 />
@@ -45,16 +44,18 @@ const CHBRoutes = {
         },
         {
             path: '/profile/couple',
+            element: <CoupleProfileView />
+/*
             element: (
                 <RolesConditionRoute
                     permission={ COUPLE }
                     truePath='/profile/couple'
                     falsePath={ applyCoupleAccountPath }
-                    // element={ <CoupleProfileView /> }
                     trueElement={ <CoupleProfileView /> }
                     falseElement={ <ApplyCoupleAccountView /> }
                 />
                 )
+*/
         },
         {
             path: '/date/schedule',
@@ -63,7 +64,6 @@ const CHBRoutes = {
                     permission={ COUPLE }
                     truePath='/date/schedule'
                     falsePath={ applyCoupleAccountPath }
-                    // element={ <DateScheduleView /> }
                     trueElement={ <DateScheduleView /> }
                     falseElement={ <ApplyCoupleAccountView /> }
                 />
@@ -80,7 +80,6 @@ const CHBRoutes = {
                     permission={ ADMIN }
                     truePath='/admin-main'
                     falsePath='/'
-                    // element={ <AdminMainView /> }
                     trueElement={ <AdminMainView /> }
                     falseElement={ <Dashboard /> }
                 />

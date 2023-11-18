@@ -25,10 +25,10 @@ import {errorSweetAlert, successSweetAlert} from "../../../../utils/alertUtil";
 interface ProfileModalProps {
     setIsUpdateProfile: (isUpdate: boolean) => void;
     isModalOpen: boolean;
-    setIsModalOpen: (isOpen: boolean) => void;
+    updateIsModalOpen: (isOpen: boolean) => void;
 }
 
-const ProfileModalView: React.FC<ProfileModalProps> = ({ setIsUpdateProfile, isModalOpen, setIsModalOpen }) => {
+const ProfileModalView: React.FC<ProfileModalProps> = ({ setIsUpdateProfile, isModalOpen, updateIsModalOpen }) => {
 
     const [currentUserId, setCurrentUserId] = useState(getCookie('jwt', 'sub'));
     const [uploadedImage, setUploadedImage] = useState<string | null>(null);
@@ -119,7 +119,7 @@ const ProfileModalView: React.FC<ProfileModalProps> = ({ setIsUpdateProfile, isM
     return (
         <Modal
             open={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
+            onClose={() => updateIsModalOpen(false)}
         >
                 <Grid className='profile-modal'>
                     <Grid className='modal-header' style={{ borderBottom: 'double' }}>
@@ -130,7 +130,7 @@ const ProfileModalView: React.FC<ProfileModalProps> = ({ setIsUpdateProfile, isM
                             style={{ zIndex: '20' }}
                             className='close-btn'
                             icon={closeIcon}
-                            onClick={() => setIsModalOpen(false)}
+                            onClick={() => updateIsModalOpen(false)}
                             size="2xl"
                         />
                     </Grid>

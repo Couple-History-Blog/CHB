@@ -48,7 +48,7 @@ const PersonalUserProfileView = () => {
                             <ProfileModalView
                                 setIsUpdateProfile = { setIsUpdateProfile }
                                 isModalOpen={ isModalOpen }
-                                setIsModalOpen={ setIsModalOpen }
+                                updateIsModalOpen={ setIsModalOpen }
                             />
                         </Grid>
                         <Grid item xs={12} lg={8}>

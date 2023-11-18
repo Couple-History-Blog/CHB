@@ -58,6 +58,14 @@
       justify-content: center;
     }
   }
+  .hover-color {
+    background-color: #00000000;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    /* 마우스 오버 시 배경색 변경 */
+    &:hover {
+      background-color: #dac3ff;
+    }
+  }
   .dateContainer {
     display: grid;
     grid-template-columns: repeat(7, 1fr);

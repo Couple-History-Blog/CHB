@@ -91,7 +91,7 @@ const DateCalendar = () => {
                     );
                 })}
             </div>
-            <div className={"dateContainer"}>
+            <div className={`dateContainer`}>
                 {createMonth.map((v, i) => {
                     const validation = getMonth(currentDate) === getMonth(v);
                     const today = format(new Date(), "yyyyMMdd") === format(v, "yyyyMMdd");
@@ -102,7 +102,7 @@ const DateCalendar = () => {
                     return (
                         <div
                             key={`date${i}`}
-                            className={validation ? "currentMonth" : "diffMonth"}
+                            className={validation ? "currentMonth hover-color" : "diffMonth hover-color"}
                             style={ style }
                         >
                             <div className={"topLine"}>

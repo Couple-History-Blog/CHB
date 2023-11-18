@@ -14,6 +14,7 @@ const initialState: InitialLoginContextProps = {
     isInitialized: false,
     user: null,
     userInfoData: null,
+    otherUserInfoData: null,
 };
 
 // eslint-disable-next-line
@@ -27,13 +28,14 @@ const accountReducer = (state = initialState, action: AccountReducerActionProps)
             };
         }
         case LOGIN: {
-            const { user, userInfoData } = action.payload!;
+            const { user, userInfoData, otherUserInfoData } = action.payload!;
             return {
                 ...state,
                 isLoggedIn: true,
                 isInitialized: true,
                 user,
-                userInfoData
+                userInfoData,
+                otherUserInfoData,
             };
         }
         case LOGOUT: {
@@ -43,6 +45,7 @@ const accountReducer = (state = initialState, action: AccountReducerActionProps)
                 isLoggedIn: false,
                 user: null,
                 userInfoData: null,
+                otherUserInfoData: null,
             };
         }
         default: {

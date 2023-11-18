@@ -6,6 +6,7 @@ import io.chb.chb.core.exception.ErrorType;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,15 @@ public class UserController {
         }
 
         throw new BaseException(ErrorType.CURRENT_USER_NOT_EXISTS);
+    }
+
+    @ApiOperation(value  = "상대 사용자 정보", notes = "상대 사용자 정보를 반환한다.")
+    @GetMapping("/other-user")
+    public ResponseEntity<?> loadOtherUser(@RequestParam(value = "userId", required = false) String userId) {
+        String otherUserId = userService.getOtherUserId(userId);
+
+        UserDTO user = userService.findByUserId(otherUserId);
+        return ResponseEntity.ok().body(user);
     }
 
     @ApiOperation(value = "존재하는 사용자인지 확인", notes = "아이디가 이미 존재하는지 확인.")

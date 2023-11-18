@@ -62,9 +62,7 @@ const ApplyCoupleAccountPage = ({...others}) => {
 	const KOR_SERVER_MESSAGE = koJson['server'];
 	const KOR_VALID_MESSAGE = koJson['valid'];
 
-	console.log("COUPLE_ACCOUNT_PAGE");
 
-	
     // [[ ===================== Alert ===================== ]]
     // @ts-ignore
     const alertState = useSelector((state) => state.alert); // Redux Toolkit의 알림 상태

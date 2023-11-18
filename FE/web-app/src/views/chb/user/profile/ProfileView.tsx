@@ -19,19 +19,33 @@ import JWTContext from "../../../../contexts/JWTContext";
 import {useSelector} from "react-redux";
 
 
-const Profile = () => {
+interface PropsUserCard {
+    isForOtherUser: boolean;
+}
 
+const Profile: React.FC<PropsUserCard> = ({ isForOtherUser }) => {
+
+    // [[ ===================== useContext ===================== ]]
     const userInfo = React.useContext(JWTContext)?.userInfoData;
+    const otherUserInfo = React.useContext(JWTContext)?.otherUserInfoData;
+
 
     // [[ ===================== useState ===================== ]]
     const [currentUserId, setCurrentUserId] = useState(userInfo?.userId);
     const [currentUserMail, setCurrentUserMail] = useState(userInfo?.userEmail);
     const [currentUserNickName, setCurrentUserNickName] = useState(userInfo?.userNickName);
     const [currentUserName, setCurrentUserName] = useState(userInfo?.userName);
-    const [currentUseBirthDate, setCurrentUseBirthDate] = useState(userInfo?.userBirthDate);
+    const [currentUserBirthDate, setCurrentUserBirthDate] = useState(userInfo?.userBirthDate);
+
+    const [otherUserId, setOtherUserId] = useState(otherUserInfo?.userId);
+    const [otherUserMail, setOtherUserMail] = useState(otherUserInfo?.userEmail);
+    const [otherUserNickName, setOtherUserNickName] = useState(otherUserInfo?.userNickName);
+    const [otherUserName, setOtherUserName] = useState(otherUserInfo?.userName);
+    const [otherUserBirthDate, setOtherUserBirthDate] = useState(otherUserInfo?.userBirthDate);
 
     const [pictures, setPictures] = useState([]);
 
+    console.log("EE => ", otherUserInfo);
 
     // [[ ===================== useEffect ===================== ]]
 
@@ -47,10 +61,10 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs zeroMinWidth>
                                 <Typography align="left" style={{fontSize: '20px'}} variant="subtitle1">
-                                    { currentUserName }
+                                    { isForOtherUser ? otherUserName : currentUserName }
                                 </Typography>
                                 <Typography align="left" style={{ fontSize: '15px' }} variant="subtitle2">
-                                    { currentUserNickName }
+                                    { isForOtherUser ? otherUserNickName : currentUserNickName }
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -64,7 +78,7 @@ const Profile = () => {
                             <ListItemText primary={<Typography variant="subtitle1">아이디</Typography>}/>
                             <ListItemSecondaryAction>
                                 <Typography variant="subtitle2" align="right">
-                                    { currentUserId }
+                                    { isForOtherUser ? otherUserId : currentUserId }
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItemButton>
@@ -75,7 +89,7 @@ const Profile = () => {
                             <ListItemText primary={<Typography variant="subtitle1">이메일</Typography>}/>
                             <ListItemSecondaryAction>
                                 <Typography variant="subtitle2" align="right">
-                                    { currentUserMail }
+                                    { isForOtherUser ? otherUserMail : currentUserMail }
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItemButton>
@@ -87,7 +101,7 @@ const Profile = () => {
                             <ListItemText primary={<Typography variant="subtitle1">생일</Typography>}/>
                             <ListItemSecondaryAction>
                                 <Typography variant="subtitle2" align="right">
-                                    { currentUseBirthDate }
+                                    { isForOtherUser ? otherUserBirthDate : currentUserBirthDate }
                                 </Typography>
                             </ListItemSecondaryAction>
                         </ListItemButton>

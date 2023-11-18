@@ -59,7 +59,9 @@ const PersonalUserProfileView = () => {
                                     height: '100%'
                                 }}
                             >
-                                    <UserProfile />
+                                    <UserProfile
+                                        isForOtherUser = { false }
+                                    />
                             </CardContent>
                         </Grid>
                     </Grid>

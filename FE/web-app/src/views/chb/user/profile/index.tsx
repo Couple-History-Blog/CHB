@@ -203,7 +203,9 @@ const UserProfileView = () => {
                             >
                                 <TabPanel value={value} index={0}>
                                     {/*<UserProfile loginUserProfile={ loginUserProfile } />*/}
-                                    <UserProfile />
+                                    <UserProfile
+                                        isForOtherUser={ false }
+                                    />
                                 </TabPanel>
 {/*                                <TabPanel value={value} index={1}>
                                     <Billing />

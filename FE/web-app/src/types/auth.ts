@@ -41,6 +41,7 @@ export type JWTContextType = {
     resetPassword: (email: string) => void;
     updateProfile: VoidFunction;
     userInfoData?: UserInfoType | null;
+    otherUserInfoData?: UserInfoType | null;
 };
 
 export type AWSCognitoContextType = {
@@ -58,6 +59,7 @@ export interface InitialLoginContextProps {
     isInitialized?: boolean;
     user?: UserProfile | null | undefined;
     userInfoData?: UserInfoType | null;
+    otherUserInfoData?: UserInfoType | null;
 }
 
 export interface UserInfoType {

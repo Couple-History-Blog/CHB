@@ -1,5 +1,5 @@
 // material-ui
-import { Typography } from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
@@ -38,7 +38,14 @@ const CoupleProfilePage = () => {
                 onUpdateIsAvailableId={ setIsAvailableId }
                 onUpdateOtherUserProfile={ setOtherUserProfile }
             />
-            <ProfileView />
+            <Box style={{ display: 'flex', marginTop: '3%' }}>
+                <ProfileView
+                    isForOtherUser={ false }
+                />
+                <ProfileView
+                    isForOtherUser={ true }
+                />
+            </Box>
         </MainCard>
     )
 };

@@ -28,22 +28,22 @@ import {
     decodeJwtToken,
     getJwtFromCookie,
     verifyToken,
-    loadLoginUserInfoData
+    loadLoginUserInfoData, getCookie
 } from 'utils/CookieUtils';
 
 // types
 import {KeyedObject} from 'types';
 import {InitialLoginContextProps, JWTContextType} from 'types/auth';
 import ko from "../assets/language/ko.json";
-import {getUserProfileAsync, signInAsync, signUpAsync, userInfoAsync} from '../constant/api';
+import {getOtherUserInfoAsync, getUserProfileAsync, signInAsync, signUpAsync, userInfoAsync} from '../constant/api';
 import {useDispatch, useSelector} from 'react-redux';
 import {errorSweetAlert, successSweetAlert} from "../utils/alertUtil";
 import {useNavigate} from "react-router-dom";
 
 
-
 import express from "express";
 import {setRouteMap} from "../routes/routeAuth";
+import {ADMIN, COUPLE, USER} from "../routes/Roles";
 
 const KOR_LOGIN_MESSAGE = ko['sign-in'];
 const KOR_LOGOUT_MESSAGE = ko['sign-out'];
@@ -58,7 +58,8 @@ const initialState: InitialLoginContextProps = {
     isLoggedIn: false,
     isInitialized: false,
     user: null,
-    userInfoData: null
+    userInfoData: null,
+    otherUserInfoData: null
 };
 
 const setSession = (serviceToken?: string | null) => {
@@ -77,6 +78,28 @@ const setUserInfoToLocalStorage = (userInfo: any) => {
     // localStorage.setItem('userRoles', userInfo.roles);
 }
 
+const setOtherUserInfoData = async (isCouple: boolean, loginUserId: string) => {
+    if (isCouple) {
+        const response = await getOtherUserInfoAsync({loginUserId});
+        return {
+            userId: response.data.userId,
+            userNickName: response.data.userNickName,
+            userName: response.data.username,
+            userRoles: response.data.userRole,
+            userEmail: response.data.userMail,
+            userBirthDate: response.data.userBrthDate,
+            updateProfile: false,
+            appliedCoupleAccount: true,
+            ownUserAcceptYn: true,
+            beCoupleYn: true,
+            isAdmin: false,
+            isCouple: true,
+            isUser: false
+        };
+    }
+    return null;
+}
+
 const removeUserLocalStorage = () => {
     removeCookie('jwt');
     // localStorage.removeItem('userId');
@@ -86,7 +109,7 @@ const removeUserLocalStorage = () => {
 // ==============================|| JWT CONTEXT & PROVIDER ||============================== //
 const JWTContext = createContext<JWTContextType | null>(null);
 
-export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
+export const JWTProvider = ({children}: { children: React.ReactElement }) => {
     const navigate = useNavigate();
     const [state, dispatch] = useReducer(accountReducer, initialState);
     const dispatchAlert = useDispatch(); // Redux Toolkit의 디스패치 함수
@@ -105,6 +128,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     const {user} = response.data;
                     setUserInfoToLocalStorage(response.data);
                     const userInfoData = loadLoginUserInfoData();
+                    const otherUserInfoData = await setOtherUserInfoData(userInfoData.isCouple, userInfoData.userId);
                     setRouteMap(userInfoData);
                     dispatch({
                         type: LOGIN,
@@ -112,6 +136,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                             isLoggedIn: true,
                             user,
                             userInfoData,
+                            otherUserInfoData,
                         }
                     });
                 } else {
@@ -165,8 +190,8 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     const login = async (userId: string, userPassword: string) => {
 
         try {
-            const response = await signInAsync({ userId, userPassword });
-            const userProfileResponse = await getUserProfileAsync({ userId, PROFILE_TYPE });
+            const response = await signInAsync({userId, userPassword});
+            const userProfileResponse = await getUserProfileAsync({userId, PROFILE_TYPE});
             const {accessToken, user} = response.data;
             setCookie('jwt', accessToken);
             sessionStorage.setItem('userProfileImage', userProfileResponse.data);
@@ -174,6 +199,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
             sessionStorage.setItem('userProfileImageType', userProfileResponse.headers['content-type']);
             setSession(accessToken);
             const userInfoData = loadLoginUserInfoData();
+            const otherUserInfoData = await setOtherUserInfoData(userInfoData.isCouple, userInfoData.userId);
             setRouteMap(userInfoData);
             dispatch({
                 type: LOGIN,
@@ -181,6 +207,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     isLoggedIn: true,
                     user,
                     userInfoData,
+                    otherUserInfoData,
                 }
             });
             dispatchAlert(
@@ -207,10 +234,12 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
         }
     };
 
-    const register = async (isAvailableId: boolean, userId: string, sexType:string, birthDate: string, email: string, password: string, firstName: string, lastName: string, nickName: string) => {
+    const register = async (isAvailableId: boolean, userId: string, sexType: string, birthDate: string, email: string, password: string, firstName: string, lastName: string, nickName: string) => {
         if (!isAvailableId) {
-            dispatchAlert(showErrorAlert({errorMessage: KOR_VALID_MESSAGE.idCheckCanUse,
-                alertType: SERVER_TYPE_ALERT}));
+            dispatchAlert(showErrorAlert({
+                errorMessage: KOR_VALID_MESSAGE.idCheckCanUse,
+                alertType: SERVER_TYPE_ALERT
+            }));
             return;
         }
         const id = chance.bb_pin();
@@ -251,7 +280,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
                     alertType: SIGNUP_TYPE_ALERT
                 })
             );
-            navigate('/login', { replace: true });  // true는 뒤로가기 X
+            navigate('/login', {replace: true});  // true는 뒤로가기 X
         }, 1500);
     };
 
@@ -279,7 +308,7 @@ export const JWTProvider = ({ children }: { children: React.ReactElement }) => {
     return (
         <JWTContext.Provider value={{...state, login, logout, register, resetPassword, updateProfile}}>
             {children}
-            <Load isLoading={isLoading} setIsLoading={setIsLoading} />
+            <Load isLoading={isLoading} setIsLoading={setIsLoading}/>
         </JWTContext.Provider>
     );
 };

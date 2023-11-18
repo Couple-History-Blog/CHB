@@ -5,7 +5,7 @@ import {
     SIGN_UP,
     CHECK_EXIST_USER,
     GET_CURRENT_USER_GENDER,
-    APPLY_COUPLE_ACCOUNT, GET_USER_PROFILE, UPLOAD_PROFILE_IMAGE, ACCEPT_BE_COUPLE
+    APPLY_COUPLE_ACCOUNT, GET_USER_PROFILE, UPLOAD_PROFILE_IMAGE, ACCEPT_BE_COUPLE, GET_OTHER_USER_INFO
 } from './ApiUrls';
 
 
@@ -52,4 +52,9 @@ export const getCurrentUserGenderAsync = async (param: any) => {
 export const getUserProfileAsync = async (params: any) => {
     const data = { userId: params.userId, useOtherUserId: params.useOtherUserId }
     return axios.get(GET_USER_PROFILE, { params: data });
+}
+
+export const getOtherUserInfoAsync = async (param: any) => {
+    const data = { userId: param.loginUserId };
+    return axios.get(GET_OTHER_USER_INFO, { params: data });
 }

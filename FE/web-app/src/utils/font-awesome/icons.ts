@@ -15,7 +15,9 @@ import {
 // style-regular
 import { 
     faAddressCard as farAddressCard,
-    faUserMagnifyingGlass as farUserMagnifyingGlass
+    faUserMagnifyingGlass as farUserMagnifyingGlass,
+    faRight as farRightArrow,
+    faLeft as farLeftArrow,
 } from '@fortawesome/pro-regular-svg-icons'
 
 // style-light
@@ -48,5 +50,7 @@ export {
     fasImageUser,
     fasFolderImage,
     fasTrashCan,
-    fasFloppyDisk
+    fasFloppyDisk,
+    farRightArrow,
+    farLeftArrow
 }

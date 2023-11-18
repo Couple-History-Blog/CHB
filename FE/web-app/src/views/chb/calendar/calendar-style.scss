@@ -1,0 +1,88 @@
+.calendar {
+  padding: 10px;
+  .yearTitle {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-color: #ae88fa;
+    //color: v.$subColor2;
+    margin-top: 10px;
+  }
+  .monthTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: #ae88fa;
+    padding: 0 10px;
+    .month {
+      font-size: 2.5rem;
+      line-height: 1;
+      margin: 0 20px;
+      //color: v.$subColor2;
+      font-weight: bold;
+    }
+    .prevButton,
+    .nextButton {
+      all: unset;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      svg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        //color: v.$subColor2;
+      }
+    }
+  }
+  .dayContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 20px;
+    > div {
+      padding: 10px;
+      text-align: center;
+      //color: v.$subColor;
+      //border: 2px solid v.$subColor2;
+      border: 2px solid #ae88fa;
+      font-weight: bold;
+      height: 40px;
+      border-radius: 10px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .dateContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+    > div {
+      //border: 1px solid v.$subColor;
+      border: 1px solid #ae88fa;
+      height: 80px;
+      //color: v.$subColor2;
+      .topLine {
+        display: flex;
+        gap: 5px;
+        padding: 0 3px;
+        align-items: center;
+        .today {
+          font-size: 0.9rem;
+        }
+      }
+    }
+    .currentMonth {
+      font-weight: bold;
+    }
+    .diffMonth {
+      color: #ddd;
+    }
+  }
+}

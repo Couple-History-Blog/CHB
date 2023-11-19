@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {fasXmark as closeIcon} from "../../../utils/font-awesome/icons";
 import SubCard from "../../../ui-component/cards/SubCard";
 import CustomizedTimeline from "../../ui-elements/advance/UITimeline/CustomizedTimeline";
+import ScheduleTimeline from "../schedule/ScheduleTimeline";
 
 interface DateModalProps {
     isModalOpen: boolean;
@@ -33,7 +34,7 @@ const DateModal: React.FC<DateModalProps> = ({isModalOpen, updateIsModalOpen}) =
                     size="2xl"
                 />
                 <Grid style={scrollableContainerStyles}>
-                    <CustomizedTimeline />
+                    <ScheduleTimeline />
                 </Grid>
             </Grid>
         </Modal>

@@ -9,7 +9,10 @@ import {
     faImagesUser as fasImageUser,
     faFolderImage as fasFolderImage,
     faTrashCan as fasTrashCan,
-    faFloppyDisk as fasFloppyDisk
+    faFloppyDisk as fasFloppyDisk,
+    faCircleArrowDown as fasCircleArrowDown,
+    faCirclePlus as farCirclePlus,
+    faCircleMinus as farCircleMinus
 } from "@fortawesome/pro-solid-svg-icons";
 
 // style-regular
@@ -52,5 +55,8 @@ export {
     fasTrashCan,
     fasFloppyDisk,
     farRightArrow,
-    farLeftArrow
+    farLeftArrow,
+    fasCircleArrowDown,
+    farCirclePlus,
+    farCircleMinus
 }

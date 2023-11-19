@@ -103,6 +103,51 @@ export default function CustomizedTimeline() {
                     </Paper>
                 </TimelineContent>
             </TimelineItem>
+            <TimelineItem>
+                <TimelineSeparator>
+                    <TimelineDot color="primary">
+                        <RepeatIcon />
+                    </TimelineDot>
+                </TimelineSeparator>
+                <TimelineContent>
+                    <Paper elevation={3} sx={paper}>
+                        <Typography variant="h5" component="h1">
+                            Repeat
+                        </Typography>
+                        <Typography>Because this is the life you love!</Typography>
+                    </Paper>
+                </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+                <TimelineSeparator>
+                    <TimelineDot color="primary">
+                        <RepeatIcon />
+                    </TimelineDot>
+                </TimelineSeparator>
+                <TimelineContent>
+                    <Paper elevation={3} sx={paper}>
+                        <Typography variant="h5" component="h1">
+                            Repeat
+                        </Typography>
+                        <Typography>Because this is the life you love!</Typography>
+                    </Paper>
+                </TimelineContent>
+            </TimelineItem>
+            <TimelineItem>
+                <TimelineSeparator>
+                    <TimelineDot color="primary">
+                        <RepeatIcon />
+                    </TimelineDot>
+                </TimelineSeparator>
+                <TimelineContent>
+                    <Paper elevation={3} sx={paper}>
+                        <Typography variant="h5" component="h1">
+                            Repeat
+                        </Typography>
+                        <Typography>Because this is the life you love!</Typography>
+                    </Paper>
+                </TimelineContent>
+            </TimelineItem>
         </Timeline>
     );
 }

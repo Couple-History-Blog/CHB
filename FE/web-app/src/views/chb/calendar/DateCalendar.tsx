@@ -20,8 +20,11 @@ import {
     farLeftArrow as leftArrowIcon,
 } from 'utils/font-awesome/icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import DateModal from "./DateModal";
 
 const DateCalendar = () => {
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
     const [currentDate, setCurrentDate] = useState(new Date());
     const monthStart = startOfMonth(currentDate);
     const monthEnd = endOfMonth(currentDate);
@@ -61,6 +64,10 @@ const DateCalendar = () => {
 
     return (
         <section className={"calendar"}>
+            <DateModal
+                isModalOpen={ isModalOpen }
+                updateIsModalOpen={ setIsModalOpen }
+            />
             <div className={"yearTitle"}>{format(currentDate, "yyyy년")}</div>
             <div className={"monthTitle"}>
                 <button className={"prevButton"} onClick={prevMonthHandler}>
@@ -101,6 +108,7 @@ const DateCalendar = () => {
                     }
                     return (
                         <div
+                            onClick={() => setIsModalOpen(true)}
                             key={`date${i}`}
                             className={validation ? "currentMonth hover-color" : "diffMonth hover-color"}
                             style={ style }
@@ -108,6 +116,7 @@ const DateCalendar = () => {
                             <div className={"topLine"}>
                                 <span className={"day"}>{format(v, "d")}</span>
                             </div>
+                            {today && <div style={{ border: '2px solid', width: '70%', height: '15%', borderRadius: '160px', backgroundColor: '#ee93fb', borderColor: '#ee93fb' }}/>}
                         </div>
                     );
                 })}
